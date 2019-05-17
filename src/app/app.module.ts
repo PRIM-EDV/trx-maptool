@@ -1,11 +1,11 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MapModule } from './map/map.module';
-import { MapComponent } from './map/map.component';
 import { HttpBackendService } from './map/backend/http-backend.service';
+
 
 @NgModule({
   declarations: [
@@ -13,6 +13,7 @@ import { HttpBackendService } from './map/backend/http-backend.service';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     MapModule
   ],
