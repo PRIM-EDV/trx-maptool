@@ -17,7 +17,7 @@ import { HttpBackendService } from './map/backend/http-backend.service';
     AppRoutingModule,
     MapModule
   ],
-  providers: [HttpBackendService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
