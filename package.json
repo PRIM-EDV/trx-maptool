@@ -1,9 +1,11 @@
 {
   "name": "rld-maptool",
   "version": "0.0.0",
+  "main": "index.js",
   "scripts": {
     "ng": "ng",
     "start": "concurrently \"ng serve\" \"npm run electron\"",
+    "electron-build": "ng build --base-href && electron dist",
     "electron": "electron ./src/electron/electron.dev",
     "build": "ng build",
     "build-windows": "npm run build && cross-var electron-packager dist maptool-$npm_package_version --out=build --platform=win32 --arch=all --overwrite",
@@ -26,6 +28,7 @@
     "hammerjs": "^2.0.8",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
+    "uuid": "^3.3.2",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
@@ -35,6 +38,7 @@
     "@angular/language-service": "~7.2.0",
     "@types/hammerjs": "^2.0.36",
     "@types/node": "~8.9.4",
+    "@types/uuid": "^3.4.4",
     "concurrently": "^4.1.0",
     "cross-var": "^1.1.0",
     "electron-packager": "^13.1.1",
