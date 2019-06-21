@@ -3,15 +3,12 @@ import { HttpBackendService } from './map/backend/http-backend.service';
 
 @Component({
   selector: 'app-root',
-  template: `
-    <map [_backend]= backend></map>
-  `,
-  styles: []
+  styleUrls: ['./app.component.scss'],
+  templateUrl: 'app.component.html',
 })
 export class AppComponent {
   public title = 'rld-maptool';
 
-  constructor(backend: HttpBackendService) {
-
+  constructor(public backend: HttpBackendService) {
   }
 }
