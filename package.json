@@ -1,13 +1,14 @@
 {
   "name": "rld-maptool",
   "version": "0.0.0",
+  "main": "index.js",
   "scripts": {
     "ng": "ng",
     "start": "concurrently \"ng serve\" \"npm run electron\"",
     "electron": "electron ./src/electron/electron.dev",
-    "build": "ng build",
-    "build-windows": "npm run build && cross-var electron-packager dist maptool-$npm_package_version --out=build --platform=win32 --arch=all --overwrite",
-    "build-linux": "npm run build && cross-var electron-packager dist maptool-$npm_package_version --out=build --platform=linux --arch=all --overwrite"
+    "build": "ng build && node scripts/bundle.js",
+    "build-windows": "npm run build && cross-var electron-packager dist/rld-maptool maptool-$npm_package_version --out=build --platform=win32 --arch=all --overwrite",
+    "build-linux": "npm run build && cross-var electron-packager dist/rld-maptool maptool-$npm_package_version --out=build --platform=linux --arch=all --overwrite"
   },
   "private": true,
   "dependencies": {
