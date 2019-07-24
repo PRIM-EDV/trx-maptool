@@ -9,9 +9,7 @@ cache:
     - node_modules
 
 before_install:
-  - sudo dpkg --add-architecture i386
-  - sudo apt-get -qq update
-  - sudo apt-get install wine1.6
+ add
 
 # env:
 #   global:
@@ -25,7 +23,7 @@ jobs:
       deploy:
         provider: releases
         api_key: ${GH_OAUTH_TOKEN}
-        file: "release/rld-maptool-0.0.0-win32-x64.zip"
+        file: "release/rld-maptool-0.1.0-win32-x64.zip"
         skip_cleanup: true
         on:
           tags: true
