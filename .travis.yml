@@ -14,20 +14,12 @@ cache:
 
 jobs:
   include:
-    - stage: Build-Test
-      script:
-        - npm run build
-    # - stage: Deploy Windows & Mac
-    #   if: tag IS present
-    #   os: osx
-    #   osx_image: xcode10.1
-    #   script:
-    #     - npm run release -- --mac --win
-    #   before_cache:
-    #     - rm -rf $HOME/.cache/electron-builder/wine
-    # - stage: Deploy linux
-    #   if: tag IS present
-    #   os: linux
-    #   dist: trusty
-    #   script:
-    #     - npm run release
+    - stage: deploy
+      script: npm run deploy-windows
+      deploy:
+        provider: releases
+        api_key: ${GH_OAUTH_TOKEN}
+        file: "release/rld-maptool-0.0.0-win32-x64.zip"
+        skip_cleanup: true
+        on:
+          tags: true

@@ -8,7 +8,8 @@
     "electron": "electron ./src/electron/electron.dev",
     "build": "ng build && node scripts/bundle.js",
     "build-windows": "npm run build && cross-var electron-packager dist/rld-maptool maptool-$npm_package_version --out=build --platform=win32 --arch=all --overwrite",
-    "build-linux": "npm run build && cross-var electron-packager dist/rld-maptool maptool-$npm_package_version --out=build --platform=linux --arch=all --overwrite"
+    "build-linux": "npm run build && cross-var electron-packager dist/rld-maptool maptool-$npm_package_version --out=build --platform=linux --arch=all --overwrite",
+    "deploy-windows": "node scripts/deploy.js"
   },
   "private": true,
   "dependencies": {
@@ -38,6 +39,7 @@
     "@types/hammerjs": "^2.0.36",
     "@types/node": "~8.9.4",
     "@types/uuid": "^3.4.4",
+    "archiver": "^3.0.3",
     "concurrently": "^4.1.0",
     "cross-var": "^1.1.0",
     "electron-packager": "^13.1.1",
