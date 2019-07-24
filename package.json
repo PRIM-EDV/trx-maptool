@@ -1,6 +1,6 @@
 {
   "name": "rld-maptool",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "main": "index.js",
   "scripts": {
     "ng": "ng",
@@ -9,7 +9,7 @@
     "build": "ng build && node scripts/bundle.js",
     "build-windows": "npm run build && cross-var electron-packager dist/rld-maptool maptool-$npm_package_version --out=build --platform=win32 --arch=all --overwrite",
     "build-linux": "npm run build && cross-var electron-packager dist/rld-maptool maptool-$npm_package_version --out=build --platform=linux --arch=all --overwrite",
-    "deploy-windows": "node scripts/deploy.js"
+    "deploy-windows": "npm run build-windows && node scripts/deploy.js"
   },
   "private": true,
   "dependencies": {
