@@ -1,0 +1,33 @@
+dist: trusty
+sudo: true
+
+language: node_js
+node_js: "9.11.1"
+
+cache:
+  directories:
+    - node_modules
+
+before_install:
+  - sudo dpkg --add-architecture i386
+  - sudo apt-get -qq update
+  - sudo apt-get install wine1.6
+
+# env:
+#   global:
+#     - ELECTRON_CACHE=$HOME/.cache/electron
+#     - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
+
+jobs:
+  include:
+    - stage: deploy
+      script: npm run deploy-windows
+      script: npm run deploy-linux
+      deploy:
+        provider: releases
+        api_key: ${GH_OAUTH_TOKEN}
+        file: "release/rld-maptool-0.1.0-win32-x64.zip"
+        file: "release/rld-maptool-0.1.0-win32-ia32.zip"
+        skip_cleanup: true
+        on:
+          tags: true
