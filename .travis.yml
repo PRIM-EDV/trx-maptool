@@ -27,7 +27,7 @@ jobs:
         provider: releases
         api_key: ${GH_OAUTH_TOKEN}
         file: "release/rld-maptool-0.3.0-win32-x64.zip"
-        file: "release/rld-maptool-0.3.0-win32-ia32.zip"
+        # file: "release/rld-maptool-0.3.0-win32-ia32.zip"
         skip_cleanup: true
         on:
           tags: true
