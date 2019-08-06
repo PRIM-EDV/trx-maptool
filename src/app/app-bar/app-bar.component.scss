@@ -1,0 +1,121 @@
+::-webkit-scrollbar {     
+    background-color: #1e1e1e;
+    width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #424242;
+}
+
+div.app-bar {
+    display: flex;
+    height: 36px;
+    width: 100%;
+
+    background-color: #2d2d2d;
+    color: #dddddd;
+    font-size: 18px;
+    // box-shadow: 0 1px 6px 0 rgba(32,33,36,0.28);
+    box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
+    
+    padding-left: 8px;
+    // padding-right: 8px;
+
+    div.spacer {
+        flex-grow: 1;
+    }
+
+    div.button {
+        padding: 0px 8px 0px 8px;
+        height: 36px;
+        line-height: 36px;
+        color: #dddddd;
+        font-size: 14px;
+        user-select: none;
+        cursor: pointer;
+
+        img {
+            margin: -4px 2px 0px 0px;
+            height: 20px;
+            vertical-align: middle;
+        }
+    }
+
+    div.button.active {
+        background-color: #151515;
+    }
+
+    div.tab {
+        padding: 0px 8px 0px 8px;
+        height: 36px;
+        line-height: 36px;
+        margin-right: 8px;
+        color: #dddddd;
+        font-size: 14px;
+        
+        img {
+            margin: -4px 2px 0px 0px;
+            height: 20px;
+            vertical-align: middle;
+        }
+    }
+
+    div.tab.active {
+        border-bottom: 2px solid #007acc;
+    }
+}
+
+div.side-menu {
+    position: fixed;
+    top: 36px;
+    right: 0px;
+    bottom: 0px;
+    width: 280px;
+    overflow-y: scroll;
+
+    z-index: 1000;
+    background-color: #151515;
+
+    div.item {
+        height: 56px;
+        display: grid;
+        grid-template-columns: 56px auto 96px;
+        grid-template-rows: 56px;
+
+        div.button-panel {
+            display: flex;
+            
+            div.button {
+                margin: 16px 0 0 16px;
+                width: 24px;
+                height: 24px;
+
+                background-size: contain;
+            }
+        }
+
+        div.labels {
+            padding: 4px 12px 4px 12px;
+            line-height: 24px;
+            font-size: 14px;
+            color: #a0a0a0;
+        }
+
+        img {
+            margin: 4px;
+            width: 48px;
+        }
+    }
+
+    div.item:hover {
+        background-color: #2d2d2d;
+    }
+}
+
+div.side-menu.active {
+    visibility: initial;
+}
+
+div.side-menu.in-active {
+    visibility: hidden;
+}

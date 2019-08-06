@@ -1,0 +1,36 @@
+<div class="app-bar">
+    <div class="tab active">
+        <img src="../assets/icons/map.png" />
+        Map
+    </div>
+    <div class="tab">
+        <img src="../assets/icons/tab_friend.png" />
+        Radio Operators
+    </div>
+    <div class="spacer"></div>
+    <div class="button" (click)="_onButtonClick('friend')" [ngClass]="this._activeType=='friend' ? 'active' : 'in-active'">
+        <img src="../assets/icons/btn_friend.png" />
+        {{nbFriends}}
+    </div>
+    <div class="button" (click)="_onButtonClick('foe')" [ngClass]="this._activeType=='foe' ? 'active' : 'in-active'">
+        <img src="../assets/icons/btn_foe.png" />
+        {{nbFoes}}
+    </div>
+    <div class="button" (click)="_onButtonClick('object')" [ngClass]="this._activeType=='object' ? 'active' : 'in-active'">
+        <img src="../assets/icons/btn_object.png" />
+        {{nbObjects}}
+    </div>
+</div>
+<div #sideMenu class="side-menu" [ngClass]="this._activeType!='' ? 'active' : 'in-active'">
+    <div class="item" *ngFor="let mapObject of _activeMapObjects">
+        <img src="../assets/icons/{{mapObject.type}}.svg" (click)="_onMapObjectClick(mapObject)" [ngStyle]="{'background-image': this._activeType =='friend' ? 'url(\'../assets/icons/unit_size/s' + mapObject.meta.size + '.svg\')' : 'None' }" />
+        <div class="labels" (click)="_onMapObjectClick(mapObject)">
+            {{_activeType == 'friend' ? mapObject.meta.callsign : mapObject.name}} <br />
+            {{_activeType == 'friend' ? mapObject.name : ''}}
+        </div>
+        <div class="button-panel">
+            <div class="button" (click)="_onEdit(mapObject)" style="background-image: url('../assets/icons/edit_object.png')"></div>
+            <div class="button" (click)="_onCancel()" style="background-image: url('../assets/icons/btn_delete_object.png')"></div>
+        </div>
+    </div>
+</div>
