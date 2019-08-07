@@ -1,9 +1,8 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { HttpBackendService } from '../map/backend/http-backend.service';
-import { BrowserPlatformLocation } from '@angular/platform-browser/src/browser/location/browser_platform_location';
 import { MapObject } from '../map/backend/backend.service';
 import { MapService } from '../map/map.service';
-import { ContextMenuService } from '../map/context-menu/context-menu.service';
+import { ContextMenuService } from '../map/shared/context-menu.service';
 
 
 @Component({
