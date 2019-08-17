@@ -11,7 +11,7 @@ import { ContextMenuService } from '../map/shared/context-menu.service';
   templateUrl: 'app-bar.component.html',
 })
 export class AppBarComponent {
-    @ViewChild('sideMenu') sideMenu: ElementRef<HTMLDivElement>
+    @ViewChild('sideMenu', {static: true}) sideMenu: ElementRef<HTMLDivElement>
 
     public title = 'rld-maptool';
     public nbFriends = 0;
@@ -78,7 +78,18 @@ export class AppBarComponent {
                 this._menuService.popupMenu.friendContext.open(this._mapService.map.getCenter(), mapObject);
                 break;
             }
+            case 'object': {
+                this._menuService.popupMenu.objectContext.open(this._mapService.map.getCenter(), mapObject);
+                break;
+            }
+            case 'foe': {
+                this._menuService.popupMenu.foeContext.open(this._mapService.map.getCenter(), mapObject);
+                break;
+            }
         }
+    }
 
+    private _onDelete(mapObject: MapObject) {
+        this.backend.deleteMapObject(mapObject.id).then();
     }
 }
