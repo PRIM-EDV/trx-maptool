@@ -2,7 +2,7 @@ dist: trusty
 sudo: true
 
 language: node_js
-node_js: "9.11.1"
+node_js: "10.9.0"
 
 cache:
   directories:
