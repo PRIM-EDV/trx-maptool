@@ -1,3 +1,11 @@
 [submodule "src\\app\\map"]
 	path = src/app/map
 	url = https://github.com/PRIM-EDV/rld-map
+
+[submodule "src\\app\\core"]
+	path = src/app/core
+	url = https://github.com/PRIM-EDV/rld-core
+
+[submodule "src\\assets"]
+	path = src/assets
+	url = https://github.com/PRIM-EDV/rld-assets
