@@ -9,3 +9,6 @@
 [submodule "src\\assets"]
 	path = src/assets
 	url = https://github.com/PRIM-EDV/rld-assets
+[submodule "src/rld-assets"]
+	path = src/rld-assets
+	url = https://github.com/PRIM-EDV/rld-assets
