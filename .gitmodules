@@ -1,14 +1,6 @@
 [submodule "src\\app\\map"]
 	path = src/app/map
 	url = https://github.com/PRIM-EDV/rld-map
-
-[submodule "src\\app\\core"]
-	path = src/app/core
-	url = https://github.com/PRIM-EDV/rld-core
-
-[submodule "src\\assets"]
+[submodule "src/assets"]
 	path = src/assets
-	url = https://github.com/PRIM-EDV/rld-assets
-[submodule "src/rld-assets"]
-	path = src/rld-assets
-	url = https://github.com/PRIM-EDV/rld-assets
+	url = https://github.com/prim-edv/rld-assets
