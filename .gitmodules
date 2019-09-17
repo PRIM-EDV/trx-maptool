@@ -4,3 +4,6 @@
 [submodule "src/assets"]
 	path = src/assets
 	url = https://github.com/prim-edv/rld-assets
+[submodule "src/app/core"]
+	path = src/app/core
+	url = https://github.com/prim-edv/rld-core
