@@ -27,9 +27,11 @@
     "core-js": "^2.6.9",
     "electron": "^5.0.9",
     "hammerjs": "^2.0.8",
+    "ngx-socket-io": "^3.0.1",
     "rxjs": "~6.5.0",
     "tslib": "^1.10.0",
     "uuid": "^3.3.2",
+    "ws": "^7.1.2",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {

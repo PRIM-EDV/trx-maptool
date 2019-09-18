@@ -1,8 +1,8 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { HttpBackendService } from '../map/backend/http-backend.service';
-import { MapObject } from '../map/backend/backend.service';
 import { MapService } from '../map/map.service';
 import { ContextMenuService } from '../map/shared/context-menu.service';
+import { MapObject } from '../core/map-object';
+import { WebsocketBackendService } from '../map/backend/websocket-backend.service';
 
 
 @Component({
@@ -22,7 +22,7 @@ export class AppBarComponent {
     private _activeMapObjects: Array<MapObject> = [];
     private _activeType: string = '';
 
-    constructor(public backend: HttpBackendService, private _mapService: MapService, private _menuService: ContextMenuService) {
+    constructor(public backend: WebsocketBackendService, private _mapService: MapService, private _menuService: ContextMenuService) {
       this.backend.onSynchronise(() => {
           this._mapObjects = this.backend.getMapObjects();
 
