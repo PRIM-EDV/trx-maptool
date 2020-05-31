@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HttpBackendService } from './components/map/backend/http-backend.service';
+import { WebsocketBackendService } from './components/map/backend/websocket-backend.service';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +9,6 @@ import { HttpBackendService } from './components/map/backend/http-backend.servic
 export class AppComponent {
   public title = 'rld-maptool';
 
-  constructor(public backend: HttpBackendService) {
+  constructor(public backend: WebsocketBackendService) {
   }
 }
