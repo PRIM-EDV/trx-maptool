@@ -108,5 +108,8 @@
       }
     }
   },
-  "defaultProject": "rld-maptool"
+  "defaultProject": "rld-maptool",
+  "cli": {
+    "analytics": false
+  }
 }

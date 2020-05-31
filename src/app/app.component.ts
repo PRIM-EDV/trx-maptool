@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HttpBackendService } from './map/backend/http-backend.service';
+import { HttpBackendService } from './components/map/backend/http-backend.service';
 
 @Component({
   selector: 'app-root',
