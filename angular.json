@@ -29,8 +29,7 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [],
-            "es5BrowserSupport": true
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -108,5 +107,8 @@
       }
     }
   },
-  "defaultProject": "rld-maptool"
+  "defaultProject": "rld-maptool",
+  "cli": {
+    "analytics": false
+  }
 }

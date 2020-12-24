@@ -5,10 +5,10 @@ div.app-bar {
 
     background-color: #2d2d2d;
     color: #dddddd;
-    font-family: 'roboto';
     font-size: 18px;
-    box-shadow: 0 1px 6px 0 rgba(32,33,36,0.28);
-
+    // box-shadow: 0 1px 6px 0 rgba(32,33,36,0.28);
+    box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
+    
     padding-left: 8px;
 
     div.tab {
@@ -17,7 +17,6 @@ div.app-bar {
         line-height: 36px;
         margin-right: 8px;
         color: #dddddd;
-        font-family: 'roboto';
         font-size: 14px;
         
         img {
@@ -33,8 +32,10 @@ div.app-bar {
 }
 
 div.content{
-    height: 100%;
-    width: 100%;
-
+    position: absolute;
+    top: 36px;
+    bottom: 0;
+    left: 0;
+    right: 0;
     background-color: #000000;
 }
