@@ -12,6 +12,23 @@
     font-weight: 500;
 }
 
+@font-face {
+    font-family: 'Fira Code';
+    src: url('assets/fonts/FiraCode-Regular.ttf')
+}
+
+@font-face {
+    font-family: 'Fira Code';
+    src: url('assets/fonts/FiraCode-Medium.ttf');
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: 'Fira Code';
+    src: url('assets/fonts/FiraCode-Light.ttf');
+    font-weight: 300;
+}
+
 html, body {
     margin: 0;
     padding: 0;
@@ -22,6 +39,13 @@ html, body {
     bottom: 0;
 
     overflow: hidden;
+}
+
+body {
+    background-image: url('assets/img/grid_bg.png');
+    background-size: 2048px 2048px;
+    background-position: center;
+    background-color: #0d0d0d;
 }
 
 div {

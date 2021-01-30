@@ -1,0 +1,15 @@
+:host {
+    flex-grow: 1;
+    display: flex;
+}
+
+div.situation-map {
+    flex-grow: 1;
+    margin: 0 8px 8px 8px;
+    background-color: #0d0d0d;
+    border: solid 1px #7e7d7d 
+}
+
+@media (min-resolution: 2dppx) {
+    div.situation-map { border-bottom: solid 0.5px #7e7d7d };
+}

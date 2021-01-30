@@ -1,0 +1,11 @@
+div.button {
+    color: #ebebeb;
+    // background-color: rgba(27, 52, 102, 0.8);
+    background-image: repeating-linear-gradient(180deg, rgba(27, 52, 102, 0.8), rgba(27, 52, 102, 0.8) 1px, #dbdbdb 30px, #dbdbdb 60px);
+    
+    border: 1px solid #484848;
+    height: 34px;
+    width: 75px;
+    padding: 7px;
+    text-align: center
+}
