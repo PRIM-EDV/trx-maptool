@@ -6,6 +6,7 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { NavigationModule } from './shared/navigation/navigation.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppBarModule } from './shared/app-bar/app-bar.module';
+import { LoginModule } from './login/login.module';
 
 const wsConfig: SocketIoConfig = { 
   "url": "http://192.168.178.59:3000", 
@@ -20,6 +21,7 @@ const wsConfig: SocketIoConfig = {
     AppBarModule,
     AppRoutingModule,
     BrowserModule,
+    LoginModule,
     HttpClientModule,
     NavigationModule,
     SocketIoModule.forRoot(wsConfig)

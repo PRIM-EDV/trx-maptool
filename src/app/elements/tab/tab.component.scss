@@ -1,23 +1,23 @@
 div.tab {
     background-image: repeating-linear-gradient(180deg, rgba(27, 52, 102, 0.8), rgba(27, 52, 102, 0.8) 1px, rgba(27, 52, 102, 0.4) 1px, rgba(27, 52, 102, 0.4) 2px);
-    clip-path: polygon(calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%, 0 0);
+    clip-path: polygon(calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%, 0 0);
     color: #ebebeb;
     display: grid;
     grid-template-rows: 18px 10px;
     height: 28px;
-    width: 184px;
+    width: 156px;
     margin-right: 8px;
 }
 
 div.heading {
     font-family: 'Fira Code';
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 300;
     padding: 0 0 0 4px;
 }
 
 div.subheading {
-    border-top: 1px solid #000;
+    // border-top: 1px solid #000;
     font-family: 'Fira Code';
     font-size: 6px;
     font-weight: 300;
@@ -25,5 +25,5 @@ div.subheading {
 }
 
 @media (min-resolution: 2dppx) {
-    div.subheading { border-top: 0.75px solid #000; };
+    // div.subheading { border-top: 0.75px solid #000; };
 }

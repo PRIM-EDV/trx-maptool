@@ -4,6 +4,13 @@
 }
 
 div.situation-map {
+    color: #ebebeb;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    text-align: center;
     flex-grow: 1;
     margin: 0 8px 8px 8px;
     background-color: #0d0d0d;
@@ -11,5 +18,5 @@ div.situation-map {
 }
 
 @media (min-resolution: 2dppx) {
-    div.situation-map { border-bottom: solid 0.5px #7e7d7d };
+    div.situation-map { border: solid 0.5px #7e7d7d };
 }

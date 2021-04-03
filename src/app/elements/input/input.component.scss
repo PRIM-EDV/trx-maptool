@@ -1,0 +1,23 @@
+div.input {
+    color: #ebebeb;
+
+    display: flex;
+    flex-direction: column;
+
+    font-family: 'Fira Code';
+    font-size: 12px;
+    font-weight: 300;
+
+    margin-bottom: 12px;
+}
+
+input {
+    background-color: transparent;
+    border: 1px solid ;
+    color: #ebebeb;
+    height: 24px;
+}
+
+@media (min-resolution: 2dppx) {
+    input { border: solid 0.5px #7e7d7d };
+}
