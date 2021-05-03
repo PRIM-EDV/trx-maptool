@@ -6,12 +6,13 @@ import { GridComponent } from './grid/grid.component';
 import { ButtonComponent } from './button/button.component';
 import { TabComponent } from './tab/tab.component';
 import { InputComponent } from './input/input.component';
+import { PhWindowComponent } from './ph-window/ph-window.component';
 
 @NgModule({
     imports: [
         CommonModule,
     ],
-    declarations: [SliderComponent, DropdownComponent, GridComponent, ButtonComponent, TabComponent, InputComponent],
-    exports: [SliderComponent, DropdownComponent, GridComponent, ButtonComponent, TabComponent, InputComponent],
+    declarations: [SliderComponent, DropdownComponent, GridComponent, ButtonComponent, TabComponent, InputComponent, PhWindowComponent],
+    exports: [SliderComponent, DropdownComponent, GridComponent, ButtonComponent, TabComponent, InputComponent, PhWindowComponent],
 })
 export class ElementsModule {}

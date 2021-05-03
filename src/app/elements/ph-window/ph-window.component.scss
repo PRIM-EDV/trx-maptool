@@ -1,0 +1,34 @@
+:host {
+    display: grid;
+    grid-template-rows: 46px 1fr;
+    grid-template-columns: 1fr;
+    min-width: 362px;
+}
+
+.header {
+    display: flex;
+    flex-grow: 1;
+    height: 40px;
+    color: white;
+    flex-direction: row;
+
+    .element {
+        width: 12px;
+        background-color: #012229;
+        margin-right: 6px;
+    }
+
+    .title {
+        background-color: #012229;
+        color: #ffffff;
+        text-align: right;
+        line-height: 40px;
+        padding-left: 25px;
+        padding-right: 5px;
+        width: 100%;
+    }
+}
+
+.content {
+    background-color: rgba($color: #000000, $alpha: 0.15);
+}
