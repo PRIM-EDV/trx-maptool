@@ -1,0 +1,6 @@
+<div class="ph-input-wrapper">
+    <div class="ph-input-label" [ngClass]="{'small': inputValue != '' || hasFocus}">
+        {{label}}
+    </div>
+    <input #inputElement [(ngModel)]="inputValue">
+</div>

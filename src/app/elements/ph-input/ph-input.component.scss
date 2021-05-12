@@ -1,0 +1,64 @@
+:host {
+    display: block;
+}
+
+.ph-input-wrapper {
+    position: relative;
+    height: 36px;
+    border-top: 1px solid #14202C;
+}
+
+div.ph-input-wrapper:after {
+    display: block;
+    content: "";
+    height: 6px;
+    position: absolute;
+    top: -1px;
+    right: 0px;
+    left: 0px;
+    border-top: 1px solid #14202C;
+    border-right: 1px solid #14202C;
+    border-left: 1px solid #14202C;
+}
+
+div.ph-input-wrapper:before {
+    display: block;
+    content: "";
+    height: 6px;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    border-bottom: 1px solid #14202C;
+    border-right: 1px solid #14202C;
+    border-left: 1px solid #14202C;
+}
+
+.ph-input-label {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    color: #888888;
+    pointer-events: none;
+
+    transition: font-size 0.1s, top 0.1s;
+}
+
+.ph-input-label.small{
+    top: 2px;
+    font-size: 8px;
+}
+
+input {
+    padding: 10px 0 0 6px ;
+    background-color: transparent;
+    color: #fff;
+    border: none;
+    width: 100%;
+    height: 26px;
+}
+
+input:focus {
+    border: none;
+    outline: none;
+}

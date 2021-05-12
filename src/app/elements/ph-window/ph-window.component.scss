@@ -14,21 +14,22 @@
 
     .element {
         width: 12px;
-        background-color: #012229;
+        // background-color: #012229;
+        background-color: rgba($color: #05323b, $alpha: 0.25);
         margin-right: 6px;
     }
 
     .title {
-        background-color: #012229;
+        background-color: rgba($color: #05323b, $alpha: 0.25);
         color: #ffffff;
         text-align: right;
         line-height: 40px;
         padding-left: 25px;
-        padding-right: 5px;
+        padding-right: 8px;
         width: 100%;
     }
 }
 
 .content {
-    background-color: rgba($color: #000000, $alpha: 0.15);
+    background-color: rgba($color: #000000, $alpha: 0.25);
 }

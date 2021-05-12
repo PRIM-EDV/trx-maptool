@@ -18,10 +18,7 @@ div.login {
 
 
 div.content {
-    background-color: #0d0d0d;
-    border: solid 1px #7e7d7d;
-    display: flex;
-    flex-direction: column;
+   margin: 0 32px 0 32px;
 }
 
 div.heading {
@@ -40,7 +37,7 @@ div.heading {
     margin-bottom: 4px;
 }
 
-@media (min-resolution: 2dppx) {
-    div.content { border: solid 0.5px #7e7d7d };
-    // div.heading { border-bottom: solid 0.5px #7e7d7d };
+ph-input {
+    margin-top: 32px;
+    margin-bottom: 32px;
 }
