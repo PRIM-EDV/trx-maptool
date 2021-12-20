@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Socket } from 'ngx-socket-io';
+// import { Socket } from 'ngx-socket-io';
 
 import { BackendService } from './backend.service';
 import { MapObject } from 'src/app/core/map-object';
@@ -12,15 +12,15 @@ export class WebsocketBackendService extends BackendService {
     private _synchEvent = new Subject<void>();
     private _localDb: any;
 
-    constructor(private _socket: Socket) {
+    constructor(private _socket: any) {
         super();
 
         this.type = 'http';
         // this._localDb = this._readLocalDb();
         
-        this._socket.fromEvent<any>('map-object').subscribe((data)=> {
-            console.log(data)
-        })
+        // this._socket.fromEvent<any>('map-object').subscribe((data)=> {
+        //     console.log(data)
+        // })
     }
 
     // public async synchronise(): Promise<void> {
