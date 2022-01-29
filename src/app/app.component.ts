@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
-import { WebsocketBackendService } from './backend/websocket-backend.service';
-import { StateService } from './shared/state/state.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  styleUrls: ['./app.component.scss'],
-  templateUrl: 'app.component.html',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  public title = 'rld-maptool';
+export class AppComponent implements OnInit {
 
-  constructor(public backend: WebsocketBackendService, public stateService: StateService) {
+  constructor() { }
+
+  ngOnInit(): void {
   }
+
 }

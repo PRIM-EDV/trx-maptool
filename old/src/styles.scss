@@ -1,0 +1,62 @@
+/* You can add global styles to this file, and also import other style files */
+
+// Fonts
+@font-face {
+    font-family: roboto;
+    src: url('assets/fonts/Roboto-Regular.ttf');
+}
+
+@font-face {
+    font-family: roboto;
+    src: url('assets/fonts/Roboto-Medium.ttf');
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: 'Fira Code';
+    src: url('assets/fonts/FiraCode-Regular.ttf')
+}
+
+@font-face {
+    font-family: 'Fira Code';
+    src: url('assets/fonts/FiraCode-Medium.ttf');
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: 'Fira Code';
+    src: url('assets/fonts/FiraCode-Light.ttf');
+    font-weight: 300;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    overflow: hidden;
+}
+
+body {
+    background-image: url('assets/img/x1/grid.svg');
+    background-size: 128px 128px;
+    background-position: center;
+    background-color: #0d0d0d;
+}
+
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+    body {
+        background-image: url('assets/img/x1/grid.svg');
+        background-size: 256px 256px;
+    }
+}
+
+div {
+    box-sizing: content-box;
+    font-family: 'Fira Code';
+}
