@@ -7,18 +7,18 @@ export interface PhButtonListOption {
 } 
 
 @Component({
-  selector: 'app-ph-button-list',
+  selector: 'ph-button-list',
   templateUrl: './ph-button-list.component.html',
   styleUrls: ['./ph-button-list.component.scss']
 })
 export class PhButtonListComponent implements OnInit {
 
   public optionList: PhButtonListOption[] = [
-    {label: "Login A", func: () => {}},
-    {label: "Login B", func: () => {}}
+    {label: "Login", func: () => {}},
   ];
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }
