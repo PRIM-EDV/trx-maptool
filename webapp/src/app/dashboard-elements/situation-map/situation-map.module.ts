@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SituationMapComponent } from './situation-map.component';
+import { MapModule } from './rld-map/map.module';
 
 
 
@@ -9,7 +10,11 @@ import { SituationMapComponent } from './situation-map.component';
     SituationMapComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MapModule
+  ],
+  exports: [
+    SituationMapComponent
   ]
 })
 export class SituationMapModule { }
