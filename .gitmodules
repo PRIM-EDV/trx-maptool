@@ -1,3 +1,6 @@
 [submodule "webapp\\src\\app\\ph-elements"]
 	path = webapp\\src\\app\\ph-elements
 	url = https://github.com/PRIM-EDV/phobos-elements
+[submodule "webapp/src\\app\\dashboard-elements\\situation-map\\rld-map"]
+	path = webapp/src\\app\\dashboard-elements\\situation-map\\rld-map
+	url = https://github.com/PRIM-EDV/rld-map
