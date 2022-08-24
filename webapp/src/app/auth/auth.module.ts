@@ -5,7 +5,14 @@ import { PhElementsModule } from '../ph-elements/ph-elements.module';
 import { AuthService } from './auth.service';
 import { AuthGuardService } from './auth-guard.service';
 
-
+declare global {
+  interface Window {
+    __env: {
+      rldServerHostname: string,
+      rldServerPort: string
+    }
+  }
+}
 
 @NgModule({
   declarations: [

@@ -17,6 +17,9 @@
     font-weight: 300;
 }
 
+html {
+    background-image: url( 'assets/endless-constellation.svg' );
+}
 
 html, body {
     margin: 0;
@@ -28,21 +31,4 @@ html, body {
     bottom: 0;
 
     overflow: hidden;
-}
-
-body {
-    background-image: url('assets/img/x1/grid.svg');
-    background-size: 128px 128px;
-    background-position: center;
-    background-color: #0b0b0b;
-
-    font-family: 'Fira Code';
-}
-
-
-@media only screen and (-webkit-min-device-pixel-ratio: 2) {
-    body {
-        background-image: url('assets/img/x1/grid.svg');
-        background-size: 256px 256px;
-    }
 }
