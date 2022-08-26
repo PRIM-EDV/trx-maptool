@@ -1,7 +1,7 @@
 FROM node:18.1.0 AS webapp
 RUN apt update && apt install protobuf-compiler -y 
 
-WORKDIR /opt/lsx/webapp
+WORKDIR /opt/rld/webapp
 
 # Install webapp source dependancies
 COPY ./webapp/*.json ./
@@ -18,7 +18,7 @@ FROM node:18.1.0 AS server
 RUN apt update && apt install protobuf-compiler -y 
 
 EXPOSE 3100
-WORKDIR /opt/lsx/server
+WORKDIR /opt/rld/server
 
 # Install server source dependancies
 COPY ./server/*.json ./
@@ -32,7 +32,7 @@ RUN npm run proto:generate
 RUN npm run build
 
 # Get webapp artifact
-COPY --from=webapp /opt/lsx/webapp/dist/webapp/ ./dist/public
+COPY --from=webapp /opt/rld/webapp/dist/rld-maptool/ ./dist/public
 
 # Run startscript
 COPY ./run.sh ./

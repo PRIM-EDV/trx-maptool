@@ -7,12 +7,14 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { LoggingModule } from './logging/logging.module';
 import { GatewayModule } from './gateway/gateway.module';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
     AuthModule,
     GatewayModule,
     LoggingModule,
+    MongooseModule.forRoot(`mongodb://database/prim`),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
     }),
@@ -20,4 +22,6 @@ import { GatewayModule } from './gateway/gateway.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+
+}

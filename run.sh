@@ -1,2 +1,2 @@
 #!/bin/sh
-cd "/opt/lsx/server" && npm run start:dev
+cd "/opt/rld/server" && npm run start:dev

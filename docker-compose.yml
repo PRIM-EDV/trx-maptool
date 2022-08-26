@@ -1,15 +1,24 @@
 version: '3.1'
 
 services:
+  database:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "root"
+      MONGO_INITDB_ROOT_PASSWORD: "12345"
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data/db:/data/db
+
   server:
-    image: prim/lsx-server:1.0.0
+    image: prim/rld-server:1.0.0
     build:
       context: "."
     restart: always
-    container_name: "lsx_server"
+    container_name: "rld_server"
+    links:
+      - database
     ports:
-      - "3100:3100"
-    #   - "${WEBSTAT_INTERNAL_PORT}:3001"
-    # environment:
-    #   MYSQL_HOST: database
+      - "3000:3200"
 
