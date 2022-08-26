@@ -9,7 +9,7 @@ export interface Request {}
 /** oneof response { */
 export interface Response {}
 
-export interface LsxMessage {
+export interface RldMessage {
   id: string;
   request?: Request | undefined;
   response?: Response | undefined;
@@ -93,13 +93,13 @@ export const Response = {
   },
 };
 
-function createBaseLsxMessage(): LsxMessage {
+function createBaseRldMessage(): RldMessage {
   return { id: "", request: undefined, response: undefined };
 }
 
-export const LsxMessage = {
+export const RldMessage = {
   encode(
-    message: LsxMessage,
+    message: RldMessage,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     if (message.id !== "") {
@@ -114,10 +114,10 @@ export const LsxMessage = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): LsxMessage {
+  decode(input: _m0.Reader | Uint8Array, length?: number): RldMessage {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseLsxMessage();
+    const message = createBaseRldMessage();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -138,7 +138,7 @@ export const LsxMessage = {
     return message;
   },
 
-  fromJSON(object: any): LsxMessage {
+  fromJSON(object: any): RldMessage {
     return {
       id: isSet(object.id) ? String(object.id) : "",
       request: isSet(object.request)
@@ -150,7 +150,7 @@ export const LsxMessage = {
     };
   },
 
-  toJSON(message: LsxMessage): unknown {
+  toJSON(message: RldMessage): unknown {
     const obj: any = {};
     message.id !== undefined && (obj.id = message.id);
     message.request !== undefined &&
@@ -164,10 +164,10 @@ export const LsxMessage = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<LsxMessage>, I>>(
+  fromPartial<I extends Exact<DeepPartial<RldMessage>, I>>(
     object: I
-  ): LsxMessage {
-    const message = createBaseLsxMessage();
+  ): RldMessage {
+    const message = createBaseRldMessage();
     message.id = object.id ?? "";
     message.request =
       object.request !== undefined && object.request !== null

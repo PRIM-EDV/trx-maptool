@@ -1,9 +1,16 @@
-<rld-map (onTerrainContextMenu)="openContextMenu($event)" (onEntityContextMenu)="openUnitEditMenu()" (click)="blub2($event)"></rld-map>
+<rld-map (onTerrainContextMenu)="openContextMenu($event)" (onEntityContextMenu)="openUnitEditMenu()"></rld-map>
 
-<div class="overlay" (click)="blub($event)" (contextmenu)="blub($event)">
+<div class="overlay">
     <ph-context-menu #contextMenu>
-        <ph-context-menu-item>
+        <ph-context-menu-item (click)="openUnitCreateMenu()">
             New...
         </ph-context-menu-item>
     </ph-context-menu>
+
+    <ph-window #createPopup [title]="'NEW'" style="position: absolute; min-width: 512px;">
+        <create-popup></create-popup>
+    </ph-window>
+
+    <ph-window #editPopup [title]="'EDIT'" style="position: absolute; min-width: 512px;">
+    </ph-window>
 </div>

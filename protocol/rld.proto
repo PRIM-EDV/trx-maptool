@@ -12,7 +12,7 @@ message Response {
     // }
 }
 
-message LsxMessage {
+message RldMessage {
     string id = 1;
 
     oneof message{

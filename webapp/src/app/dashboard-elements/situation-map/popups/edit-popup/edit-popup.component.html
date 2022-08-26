@@ -1,0 +1,19 @@
+<ph-form>
+    <ph-dropdown [label]="'Type'" [(value)]="type">
+        <ph-dropdown-item [label]="'Squad'" [value]="MapEntityType.TYPE_FRIEND"></ph-dropdown-item>
+        <ph-dropdown-item [label]="'Enemy'" [value]="MapEntityType.TYPE_FOE"></ph-dropdown-item>
+        <ph-dropdown-item [label]="'Objective'" [value]="MapEntityType.TYPE_OBJECT"></ph-dropdown-item>
+
+    </ph-dropdown>
+</ph-form>
+<!-- <ph-form *ngIf="type==MapEntityType.TYPE_FRIEND">
+    <ph-input [label]="'SQUADNAME'"></ph-input>
+    <ph-input [label]="'CALLSIGN'"></ph-input>
+    <ph-input [label]="'TRACKER ID'"></ph-input>
+    <ph-input [label]="'COMBATTANTS'"></ph-input>
+    <ph-input [label]="'CASUALTIES'"></ph-input>
+</ph-form> -->
+<ph-button-list>
+    <ph-button >APPLY</ph-button>
+    <ph-button >CANCEL</ph-button>
+</ph-button-list>

@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse} from '@angular/common/http'
 import { v4 as uuidv4 } from 'uuid';
 import { Subject } from "rxjs";
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
+import { RldMessage } from "proto/rld";
 
 // import { LsxMessage, Request, Response } from "proto/lsx";
 
@@ -15,7 +16,7 @@ const WS_URL = `ws://${LSX_SERVER_HOSTNAME}:${LSX_SERVER_PORT}`;
 @Injectable({providedIn: 'root'})
 export class BackendService {
     public onRequest: Subject<{id: string, request: Request}> = new Subject<{id: string, request: Request}>();
-    public onMessage: Subject<LsxMessage> = new Subject<LsxMessage>();
+    public onMessage: Subject<RldMessage> = new Subject<RldMessage>();
     public onOpen: Subject<void> = new Subject<void>();
     public onClose: Subject<void> = new Subject<void>();
 
@@ -36,24 +37,24 @@ export class BackendService {
 
     public request(req: Request): Promise<Response> {
         return new Promise((resolve, reject) => {
-            const msg: LsxMessage = {
+            const msg: RldMessage = {
                 id: uuidv4(),
                 request: req
             }
 
             this.requests.set(msg.id, resolve.bind(this));
             setTimeout(this.rejectOnTimeout.bind(this, msg.id, reject), 5000);
-            this.ws.next({event: 'msg', data: JSON.stringify(LsxMessage.toJSON(msg))});
+            this.ws.next({event: 'msg', data: JSON.stringify(RldMessage.toJSON(msg))});
         });
 
     }
 
     public respond(id: string, res: Response) {
-        const msg: LsxMessage = {
+        const msg: RldMessage = {
             id: id,
             response: res
         }
-        this.ws.next({event: 'msg', data: JSON.stringify(LsxMessage.toJSON(msg))});
+        this.ws.next({event: 'msg', data: JSON.stringify(RldMessage.toJSON(msg))});
     }
 
     private handleMessage(buffer: {event: 'msg', data: string}) {
@@ -69,9 +70,9 @@ export class BackendService {
         //         this.requests.delete(msg.id);
         //     }
         // }
-        console.log(msg)
+        // console.log(msg)
 
-        this.onMessage.next(msg);
+        // this.onMessage.next(msg);
     }
 
     private handleClose() {

@@ -1,36 +1,46 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { BackendService } from 'src/app/backend/backend.service';
 import { PhContextMenuComponent } from 'src/app/ph-elements/ph-context-menu/ph-context-menu.component';
+import { PhWindowComponent } from 'src/app/ph-elements/ph-window/ph-window.component';
 
 @Component({
   selector: 'situation-map',
   templateUrl: './situation-map.component.html',
   styleUrls: ['./situation-map.component.scss']
 })
-export class SituationMapComponent implements OnInit {
+export class SituationMapComponent implements OnInit, AfterViewInit {
 
-  @ViewChild("contextMenu") contextMenu!: PhContextMenuComponent;
+    @ViewChild("contextMenu") contextMenu!: PhContextMenuComponent;
+    @ViewChild("createPopup") createPopup!: PhWindowComponent;
+    @ViewChild("editPopup") editPopup!: PhWindowComponent;
 
-  constructor() { }
+    private position = {x: 0, y: 0};  
 
-  ngOnInit(): void {
-  }
+    constructor(private readonly backend: BackendService) { }
 
-  public openContextMenu(ev: {x: number, y: number}) {
-    this.contextMenu.open(ev);
-  }
+    ngOnInit(): void {
+    }
 
-  public openUnitEditMenu() {
-    
-  }
+    ngAfterViewInit(): void {
+        this.createPopup.hide();
+        this.editPopup.hide();
+        this.contextMenu.close();
+    }
 
-  blub(e: any) {
-    console.log("?")
-    e.preventDefault();
-    return false
-  }
+    public openContextMenu(ev: {x: number, y: number}) {
+        this.position = ev;
+        this.contextMenu.open(ev);
+    }
 
-  blub2(e: any) {
-    console.log("??")
-  }
+    public openUnitCreateMenu() {
+        this.createPopup.ref.nativeElement.style.top = `${this.position.y}px`;
+        this.createPopup.ref.nativeElement.style.left = `${this.position.x}px`;
+        this.contextMenu.close();
+        this.createPopup.show();
+    }
+
+    public openUnitEditMenu() {
+        
+    }
 
 }
