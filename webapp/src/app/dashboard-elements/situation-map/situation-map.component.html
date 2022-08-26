@@ -1,1 +1,9 @@
-<rld-map></rld-map>
+<rld-map (onTerrainContextMenu)="openContextMenu($event)" (onEntityContextMenu)="openUnitEditMenu()" (click)="blub2($event)"></rld-map>
+
+<div class="overlay" (click)="blub($event)" (contextmenu)="blub($event)">
+    <ph-context-menu #contextMenu>
+        <ph-context-menu-item>
+            New...
+        </ph-context-menu-item>
+    </ph-context-menu>
+</div>
