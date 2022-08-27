@@ -2,17 +2,17 @@ syntax = "proto3";
 
 message Request {
     // oneof request {
-       
+
     // }
 }
 
 message Response {
     // oneof response {
-        
+
     // }
 }
 
-message RldMessage {
+message MaptoolMessage {
     string id = 1;
 
     oneof message{
