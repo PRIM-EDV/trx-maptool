@@ -1,19 +1,75 @@
-import { Schema } from 'mongoose';
+// import { Schema } from 'mongoose';
+import { MapEntity, MapEntityType } from 'proto/maptool.map-entity';
 
-export const MapObjectSchema: Schema = new Schema({
-    position: { x: Number, y: Number },
-    uid: {type: String, required: true, unique: true},
-    name: {type: String},
-    type: {type: String, required: true},
-    meta: {
-        size: {type: Number},
-        description: {type: String},
-        wounded: {type: Number},
-        callsign: {type: String},
-        subtype: {type: Number},
-        tracked: {type: Boolean},
-        medics: {type: Number},
-        technitians: {type: Number},
-        scientists: {type: Number}
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
+
+export type DbMapEntityDocument = DbMapEntity & Document;
+
+@Schema()
+export class DbMapEntity {
+    @Prop({required: true, unique: true})
+    uuid: string;
+
+    @Prop({required: true, enum: MapEntityType})
+    type: number;
+
+    @Prop({type: {x: {type: Number}, y: {type: Number}}})
+    position: { x: number, y: number };
+
+    @Prop({type: {name: { type: String }, callsign: { type: String }, trackerId: { type: Number }, combattants: { type: Number }}})
+    squad?: {
+        name: string,
+        callsign: string,
+        trackerId: number,
+        combattants: number
     }
-});
+
+    @Prop({type: {combattants: {type: Number}}})
+    enemy?: {
+        combattants: number
+    }
+    
+    @Prop({type: {name: { type: String }, description: { type: String }}})
+    objective?: {
+        name: string,
+        description: string,
+    }
+
+
+
+    // public updateFromProto(entity: MapEntity) {
+    //     this.position = entity.position;
+    //     this.type = entity.type;
+    // }
+
+    public static fromProto(entity: MapEntity) {
+        const dbo = new DbMapEntity();
+        
+        dbo.uuid = entity.id;
+        dbo.position = entity.position;
+        dbo.type = entity.type;
+
+        if(entity.squad) {
+            dbo.squad = entity.squad;
+        }
+
+        return dbo;
+    }
+
+    public static toProto(dbo: DbMapEntity): MapEntity {
+        const entity: MapEntity = {
+            id: dbo.uuid,
+            position: dbo.position,
+            type: dbo.type
+        }
+
+        if(dbo.squad) {
+            entity.squad = dbo.squad;
+        }
+
+        return entity;
+    }
+}
+
+export const MapEntitySchema = SchemaFactory.createForClass(DbMapEntity);

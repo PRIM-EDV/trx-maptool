@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BackendService } from '../backend/backend.service';
+
 
 @Component({
   selector: 'dashboard',
@@ -7,9 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private readonly backend: BackendService) { }
 
   ngOnInit(): void {
+    this.backend.connect();
   }
 
 }

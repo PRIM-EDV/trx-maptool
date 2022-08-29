@@ -6,7 +6,7 @@ import {
 } from '@nestjs/websockets';
 import { v4 as uuidv4 } from 'uuid';
 
-import { RldMessage, Request, Response } from 'proto/rld';
+import { MaptoolMessage, Request, Response } from 'proto/maptool';
 import { LoggingService } from 'src/logging/logging.service';
 import { Subject } from 'rxjs';
 
@@ -19,7 +19,7 @@ export class AppGateway {
   protected activeClients: Map<string, Ws> = new Map<string, Ws>();
   protected requests: Map<string, (value: Response) => void> = new Map<string, (value: Response) => void>();
 
-  public onMessage: Subject<RldMessage> = new Subject<RldMessage>();
+  public onMessage: Subject<MaptoolMessage> = new Subject<MaptoolMessage>();
   public onRequest: Subject<{clientId: string, msgId: string, request: Request}> = new Subject<{clientId: string, msgId: string, request: Request}>();
 
   constructor(private readonly log: LoggingService) {
@@ -29,7 +29,7 @@ export class AppGateway {
 
   @SubscribeMessage('msg')
   handleMessage(client: Ws, payload: string): void {
-    const msg = RldMessage.fromJSON(JSON.parse(payload));
+    const msg = MaptoolMessage.fromJSON(JSON.parse(payload));
 
     if(msg.request) {
         this.onRequest.next({clientId: client.id, msgId: msg.id, request: msg.request});
@@ -61,7 +61,7 @@ export class AppGateway {
 
   public async request(clientId: string, req: Request): Promise<Response> {
     return new Promise((resolve, reject) => {
-        const msg: RldMessage = {
+        const msg: MaptoolMessage = {
             id: uuidv4(),
             request: req
       }
@@ -93,7 +93,7 @@ export class AppGateway {
   }
 
   public respond(clientId: string, msgId: string, res: Response) {
-    const msg: RldMessage = {
+    const msg: MaptoolMessage = {
         id: msgId,
         response: res
     }
@@ -106,14 +106,14 @@ export class AppGateway {
     }
   }
 
-  protected sendToAllClients(msg: RldMessage) {
+  protected sendToAllClients(msg: MaptoolMessage) {
     for (const [id, client] of this.activeClients) {
       this.sendToClient(client, msg);
     }
   }
 
-  protected sendToClient(client: Ws, msg: RldMessage) {
-    const buffer = {event: 'msg', data: JSON.stringify(RldMessage.toJSON(msg))};
+  protected sendToClient(client: Ws, msg: MaptoolMessage) {
+    const buffer = {event: 'msg', data: JSON.stringify(MaptoolMessage.toJSON(msg))};
     client.send(JSON.stringify(buffer))
   }
 }

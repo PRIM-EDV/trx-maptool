@@ -3,12 +3,12 @@ import { HttpClient, HttpHeaders, HttpErrorResponse} from '@angular/common/http'
 import { v4 as uuidv4 } from 'uuid';
 import { Subject } from "rxjs";
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
-import { MaptoolMessage } from "proto/maptool";
+import { MaptoolMessage, Request, Response } from "proto/maptool";
 
 // import { LsxMessage, Request, Response } from "proto/lsx";
 
-const MAPTOOL_SERVER_HOSTNAME = window?.__env?.rldServerHostname != null ? `${window.__env.rldServerHostname}` : 'localhost';
-const MAPTOOL_SERVER_PORT = window?.__env?.rldServerPort != null ? window.__env.rldServerPort : 3000;
+const MAPTOOL_SERVER_HOSTNAME = window?.__env?.maptoolServerHostname != null ? `${window.__env.maptoolServerHostname}` : 'localhost';
+const MAPTOOL_SERVER_PORT = window?.__env?.maptoolServerPort != null ? window.__env.maptoolServerPort : 3000;
 
 const REST_API_URL = `http://${window.location.host}`;
 const WS_URL = `ws://${MAPTOOL_SERVER_HOSTNAME}:${MAPTOOL_SERVER_PORT}`;
@@ -41,7 +41,7 @@ export class BackendService {
                 id: uuidv4(),
                 request: req
             }
-
+            console.log(MaptoolMessage.toJSON(msg))
             this.requests.set(msg.id, resolve.bind(this));
             setTimeout(this.rejectOnTimeout.bind(this, msg.id, reject), 5000);
             this.ws.next({event: 'msg', data: JSON.stringify(MaptoolMessage.toJSON(msg))});
@@ -58,21 +58,21 @@ export class BackendService {
     }
 
     private handleMessage(buffer: {event: 'msg', data: string}) {
-        // const msg = LsxMessage.fromJSON(JSON.parse(buffer.data));
+        const msg = MaptoolMessage.fromJSON(JSON.parse(buffer.data));
 
-        // if(msg.request) {
-        //     this.onRequest.next({id: msg.id, request: msg.request});
-        // }
+        if(msg.request) {
+            this.onRequest.next({id: msg.id, request: msg.request});
+        }
 
-        // if(msg.response) {
-        //     if(this.requests.has(msg.id)) {
-        //         this.requests.get(msg.id)!(msg.response);
-        //         this.requests.delete(msg.id);
-        //     }
-        // }
-        // console.log(msg)
+        if(msg.response) {
+            if(this.requests.has(msg.id)) {
+                this.requests.get(msg.id)!(msg.response);
+                this.requests.delete(msg.id);
+            }
+        }
+        console.log(msg)
 
-        // this.onMessage.next(msg);
+        this.onMessage.next(msg);
     }
 
     private handleClose() {

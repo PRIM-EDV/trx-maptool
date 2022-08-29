@@ -1,13 +1,23 @@
 /* eslint-disable */
+import {
+  GetAllMapEntities_Request,
+  SetMapEntity_Request,
+  GetAllMapEntities_Response,
+  SetMapEntity_Response,
+} from './maptool.map-entity';
 import * as _m0 from 'protobufjs/minimal';
 
 export const protobufPackage = '';
 
-/** oneof request { */
-export interface Request {}
+export interface Request {
+  getAllMapEntities?: GetAllMapEntities_Request | undefined;
+  setMapEntity?: SetMapEntity_Request | undefined;
+}
 
-/** oneof response { */
-export interface Response {}
+export interface Response {
+  getAllMapEntities?: GetAllMapEntities_Response | undefined;
+  setMapEntity?: SetMapEntity_Response | undefined;
+}
 
 export interface MaptoolMessage {
   id: string;
@@ -16,11 +26,26 @@ export interface MaptoolMessage {
 }
 
 function createBaseRequest(): Request {
-  return {};
+  return { getAllMapEntities: undefined, setMapEntity: undefined };
 }
 
 export const Request = {
-  encode(_: Request, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: Request,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
+    if (message.getAllMapEntities !== undefined) {
+      GetAllMapEntities_Request.encode(
+        message.getAllMapEntities,
+        writer.uint32(10).fork(),
+      ).ldelim();
+    }
+    if (message.setMapEntity !== undefined) {
+      SetMapEntity_Request.encode(
+        message.setMapEntity,
+        writer.uint32(18).fork(),
+      ).ldelim();
+    }
     return writer;
   },
 
@@ -31,6 +56,18 @@ export const Request = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
+        case 1:
+          message.getAllMapEntities = GetAllMapEntities_Request.decode(
+            reader,
+            reader.uint32(),
+          );
+          break;
+        case 2:
+          message.setMapEntity = SetMapEntity_Request.decode(
+            reader,
+            reader.uint32(),
+          );
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -39,27 +76,66 @@ export const Request = {
     return message;
   },
 
-  fromJSON(_: any): Request {
-    return {};
+  fromJSON(object: any): Request {
+    return {
+      getAllMapEntities: isSet(object.getAllMapEntities)
+        ? GetAllMapEntities_Request.fromJSON(object.getAllMapEntities)
+        : undefined,
+      setMapEntity: isSet(object.setMapEntity)
+        ? SetMapEntity_Request.fromJSON(object.setMapEntity)
+        : undefined,
+    };
   },
 
-  toJSON(_: Request): unknown {
+  toJSON(message: Request): unknown {
     const obj: any = {};
+    message.getAllMapEntities !== undefined &&
+      (obj.getAllMapEntities = message.getAllMapEntities
+        ? GetAllMapEntities_Request.toJSON(message.getAllMapEntities)
+        : undefined);
+    message.setMapEntity !== undefined &&
+      (obj.setMapEntity = message.setMapEntity
+        ? SetMapEntity_Request.toJSON(message.setMapEntity)
+        : undefined);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<Request>, I>>(_: I): Request {
+  fromPartial<I extends Exact<DeepPartial<Request>, I>>(object: I): Request {
     const message = createBaseRequest();
+    message.getAllMapEntities =
+      object.getAllMapEntities !== undefined &&
+      object.getAllMapEntities !== null
+        ? GetAllMapEntities_Request.fromPartial(object.getAllMapEntities)
+        : undefined;
+    message.setMapEntity =
+      object.setMapEntity !== undefined && object.setMapEntity !== null
+        ? SetMapEntity_Request.fromPartial(object.setMapEntity)
+        : undefined;
     return message;
   },
 };
 
 function createBaseResponse(): Response {
-  return {};
+  return { getAllMapEntities: undefined, setMapEntity: undefined };
 }
 
 export const Response = {
-  encode(_: Response, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: Response,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
+    if (message.getAllMapEntities !== undefined) {
+      GetAllMapEntities_Response.encode(
+        message.getAllMapEntities,
+        writer.uint32(10).fork(),
+      ).ldelim();
+    }
+    if (message.setMapEntity !== undefined) {
+      SetMapEntity_Response.encode(
+        message.setMapEntity,
+        writer.uint32(18).fork(),
+      ).ldelim();
+    }
     return writer;
   },
 
@@ -70,6 +146,18 @@ export const Response = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
+        case 1:
+          message.getAllMapEntities = GetAllMapEntities_Response.decode(
+            reader,
+            reader.uint32(),
+          );
+          break;
+        case 2:
+          message.setMapEntity = SetMapEntity_Response.decode(
+            reader,
+            reader.uint32(),
+          );
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -78,17 +166,41 @@ export const Response = {
     return message;
   },
 
-  fromJSON(_: any): Response {
-    return {};
+  fromJSON(object: any): Response {
+    return {
+      getAllMapEntities: isSet(object.getAllMapEntities)
+        ? GetAllMapEntities_Response.fromJSON(object.getAllMapEntities)
+        : undefined,
+      setMapEntity: isSet(object.setMapEntity)
+        ? SetMapEntity_Response.fromJSON(object.setMapEntity)
+        : undefined,
+    };
   },
 
-  toJSON(_: Response): unknown {
+  toJSON(message: Response): unknown {
     const obj: any = {};
+    message.getAllMapEntities !== undefined &&
+      (obj.getAllMapEntities = message.getAllMapEntities
+        ? GetAllMapEntities_Response.toJSON(message.getAllMapEntities)
+        : undefined);
+    message.setMapEntity !== undefined &&
+      (obj.setMapEntity = message.setMapEntity
+        ? SetMapEntity_Response.toJSON(message.setMapEntity)
+        : undefined);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<Response>, I>>(_: I): Response {
+  fromPartial<I extends Exact<DeepPartial<Response>, I>>(object: I): Response {
     const message = createBaseResponse();
+    message.getAllMapEntities =
+      object.getAllMapEntities !== undefined &&
+      object.getAllMapEntities !== null
+        ? GetAllMapEntities_Response.fromPartial(object.getAllMapEntities)
+        : undefined;
+    message.setMapEntity =
+      object.setMapEntity !== undefined && object.setMapEntity !== null
+        ? SetMapEntity_Response.fromPartial(object.setMapEntity)
+        : undefined;
     return message;
   },
 };

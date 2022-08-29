@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
-const RLD_SERVER_HOSTNAME = window?.__env?.rldServerHostname != null ? `${window.__env.rldServerHostname}` : 'localhost';
-const RLD_SERVER_PORT = window?.__env?.rldServerPort != null ? window.__env.rldServerPort : 3000;
+const MAPTOOL_SERVER_HOSTNAME = window?.__env?.maptoolServerHostname != null ? `${window.__env.maptoolServerHostname}` : 'localhost';
+const MAPTOOL_SERVER_PORT = window?.__env?.maptoolServerPort != null ? window.__env.maptoolServerPort : 3000;
 
 @Injectable()
 export class AuthService {
@@ -17,7 +17,7 @@ export class AuthService {
   public async requestJwt(username: string, password: string): Promise<string>
   {
     const data = {username: username, password: password};
-    const route = `${window.location.protocol}//${RLD_SERVER_HOSTNAME}:${RLD_SERVER_PORT}/api/auth/login`;
+    const route = `${window.location.protocol}//${MAPTOOL_SERVER_HOSTNAME}:${MAPTOOL_SERVER_PORT}/api/auth/login`;
 
     return new Promise<string>((resolve, reject) => {
       this.http.post<{access_token: string}>(route, data).subscribe({

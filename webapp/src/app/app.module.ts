@@ -11,8 +11,8 @@ import { PhElementsModule } from './ph-elements/ph-elements.module';
 declare global {
   interface Window {
     __env: {
-      rldServerHostname: string,
-      rldServerPort: string
+      maptoolServerHostname: string,
+      maptoolServerPort: string
     }
   }
 }

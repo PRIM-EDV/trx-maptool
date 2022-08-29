@@ -8,16 +8,20 @@ import { AuthModule } from './auth/auth.module';
 import { LoggingModule } from './logging/logging.module';
 import { GatewayModule } from './gateway/gateway.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { MapModule } from './map/map.module';
+
+const MONGO_DB_HOST = process.env.MONGO_DB_HOST ? process.env.MONGO_DB_HOST : 'localhost'
 
 @Module({
   imports: [
     AuthModule,
     GatewayModule,
     LoggingModule,
-    MongooseModule.forRoot(`mongodb://database/prim`),
+    MongooseModule.forRoot(`mongodb://${MONGO_DB_HOST}/prim`),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
     }),
+    MapModule,
   ],
   controllers: [AppController],
   providers: [AppService],

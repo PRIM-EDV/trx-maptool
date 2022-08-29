@@ -7,9 +7,8 @@
         </ph-context-menu-item>
     </ph-context-menu>
 
-    <ph-window #createPopup [title]="'NEW'" style="position: absolute; min-width: 512px;">
-        <create-popup></create-popup>
-    </ph-window>
+
+    <create-popup (create)="onMapEntityCreate($event)"></create-popup>
 
     <ph-window #editPopup [title]="'EDIT'" style="position: absolute; min-width: 512px;">
     </ph-window>
