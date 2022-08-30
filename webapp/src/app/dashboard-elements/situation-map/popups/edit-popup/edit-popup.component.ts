@@ -6,19 +6,18 @@ import { SituationMapEntity } from '../../common/situation-map-entity';
 
 
 @Component({
-  selector: 'create-popup',
-  templateUrl: './create-popup.component.html',
+  selector: 'edit-popup',
+  templateUrl: './edit-popup.component.html',
   styleUrls: ['../popup.component.scss']
 })
-export class CreatePopupComponent implements AfterViewInit {
+export class EditPopupComponent implements AfterViewInit {
   
     MapEntityType = MapEntityType;
 
     @ViewChild(PhWindowComponent) window!: PhWindowComponent;
 
-    @Output() create = new EventEmitter<SituationMapEntity>();
+    @Output() edit = new EventEmitter<SituationMapEntity>();
 
-    public type?: MapEntityType;
     public entity: SituationMapEntity = new SituationMapEntity();
   
     constructor() { }
@@ -29,19 +28,15 @@ export class CreatePopupComponent implements AfterViewInit {
 
 
     public apply() {
-        this.entity.type = this.type!;
-        console.log(this.entity)
-        this.create.next(this.entity);
+        this.edit.next(this.entity);
         this.window.hide();
     } 
 
-    public open(cursorPosition: {x: number, y: number}, mapPosition: {x: number, y: number}) {
+    public open(cursorPosition: {x: number, y: number}, mapPosition: {x: number, y: number}, entity: SituationMapEntity) {
         this.window.ref.nativeElement.style.top = `${cursorPosition.y}px`;
         this.window.ref.nativeElement.style.left = `${cursorPosition.x}px`;
 
-        this.entity = new SituationMapEntity();
-        this.entity.position = mapPosition;
-
+        this.entity = SituationMapEntity.copy(entity);
         this.window.show();
     }
 
@@ -50,6 +45,7 @@ export class CreatePopupComponent implements AfterViewInit {
     }
 
     public cancel() {
+        this.entity = new SituationMapEntity();
         this.close();
     }
 }

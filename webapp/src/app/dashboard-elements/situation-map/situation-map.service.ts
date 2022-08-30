@@ -56,6 +56,12 @@ export class SituationMapService {
             }
         }
 
+        if (data.type == MapEntityType.TYPE_FOE) {
+            entity.enemy = {
+                combattants: data.enemy.combattants
+            }
+        }
+
         return entity
     }
 

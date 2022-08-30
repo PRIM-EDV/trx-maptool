@@ -47,6 +47,10 @@ export class DbMapEntity {
             dbo.squad = entity.squad;
         }
 
+        if(entity.enemy) {
+            dbo.enemy = entity.enemy;
+        }
+
         return dbo;
     }
 
@@ -59,6 +63,10 @@ export class DbMapEntity {
 
         if(dbo.squad) {
             entity.squad = dbo.squad;
+        }
+
+        if(dbo.enemy) {
+            entity.enemy = dbo.enemy;
         }
 
         return entity;

@@ -5,6 +5,7 @@ import { MapService } from './map.service';
 
 @Module({
     imports: [MongooseModule.forFeature([{ name: DbMapEntity.name, schema: MapEntitySchema }])],
+    exports: [MapService],
     providers: [MapService]
 })
 export class MapModule {

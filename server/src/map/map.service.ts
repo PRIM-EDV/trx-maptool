@@ -5,7 +5,7 @@ import { MapEntity } from 'proto/maptool.map-entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { DbMapEntity, DbMapEntityDocument} from 'src/schemas/map-entity.schema';
 import { Model } from 'mongoose';
-import { request } from 'http';
+import { Tracker } from 'proto/rld-node';
 
 @Injectable()
 export class MapService {
@@ -50,11 +50,29 @@ export class MapService {
             if(entity.squad) {
                 dbMapEntity.squad = entity.squad;
             }
+
+            if(entity.enemy) {
+                dbMapEntity.enemy = entity.enemy;
+            }
             
             dbMapEntity.save();
         } else {
             dbMapEntity = new this.mapEntityModel(DbMapEntity.fromProto(entity));
             await dbMapEntity.save();
+        }
+    }
+
+    public async setTracker(tracker: Tracker) {
+        const entities = await this.mapEntityModel.find({"squad.trackerId": tracker.id}).exec();
+
+        for(const entity of entities) {
+            entity.position = tracker.postion;
+            entity.save();
+
+            const req: Request = {
+                setMapEntity: { entity: DbMapEntity.toProto(entity)}
+            };
+            this.gateway.requestAll(req);
         }
     }
 

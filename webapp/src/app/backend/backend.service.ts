@@ -1,11 +1,10 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders, HttpErrorResponse} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { v4 as uuidv4 } from 'uuid';
 import { Subject } from "rxjs";
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { MaptoolMessage, Request, Response } from "proto/maptool";
 
-// import { LsxMessage, Request, Response } from "proto/lsx";
 
 const MAPTOOL_SERVER_HOSTNAME = window?.__env?.maptoolServerHostname != null ? `${window.__env.maptoolServerHostname}` : 'localhost';
 const MAPTOOL_SERVER_PORT = window?.__env?.maptoolServerPort != null ? window.__env.maptoolServerPort : 3000;
@@ -20,17 +19,19 @@ export class BackendService {
     public onOpen: Subject<void> = new Subject<void>();
     public onClose: Subject<void> = new Subject<void>();
 
+    public isConnected: boolean = false;
+
     private requests: Map<string, (value: Response) => void> = new Map<string, (value: Response) => void>();
     private ws!: WebSocketSubject<any>;
 
     constructor(private http: HttpClient) {}
 
     public async connect() {
-        this.ws = webSocket({url: WS_URL, openObserver: { next: () => {this.onOpen.next()} }});
+        this.ws = webSocket({url: WS_URL, openObserver: { next: () => { this.isConnected = true; this.onOpen.next()} }});
 
         this.ws.subscribe({
             next: this.handleMessage.bind(this),
-            error: (err) => {console.log(err)},
+            error: this.handleClose.bind(this),
             complete: this.handleClose.bind(this)
         });
     }
@@ -41,7 +42,6 @@ export class BackendService {
                 id: uuidv4(),
                 request: req
             }
-            console.log(MaptoolMessage.toJSON(msg))
             this.requests.set(msg.id, resolve.bind(this));
             setTimeout(this.rejectOnTimeout.bind(this, msg.id, reject), 5000);
             this.ws.next({event: 'msg', data: JSON.stringify(MaptoolMessage.toJSON(msg))});
@@ -70,12 +70,13 @@ export class BackendService {
                 this.requests.delete(msg.id);
             }
         }
-        console.log(msg)
 
         this.onMessage.next(msg);
     }
 
     private handleClose() {
+        this.isConnected = false;
+        setTimeout(this.connect.bind(this), 5000);
         this.onClose.next();
     }
 

@@ -48,4 +48,17 @@ export class SituationMapEntity {
         this.position = data.position;
         this.type = data.type;
     }
+
+    public static copy(entity: SituationMapEntity) {
+        const copy = new SituationMapEntity();
+
+        copy.id = entity.id;
+        copy.type = entity.type;
+
+        Object.assign(copy.position, entity.position);
+        Object.assign(copy.squad, entity.squad);
+        Object.assign(copy.enemy, entity.enemy);
+
+        return copy;
+    }
 }

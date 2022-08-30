@@ -5,6 +5,7 @@ import { PhContextMenuComponent } from 'src/app/ph-elements/ph-context-menu/ph-c
 import { PhWindowComponent } from 'src/app/ph-elements/ph-window/ph-window.component';
 import { SituationMapEntity } from './common/situation-map-entity';
 import { CreatePopupComponent } from './popups/create-popup/create-popup.component';
+import { EditPopupComponent } from './popups/edit-popup/edit-popup.component';
 import { MapEntityType } from './rld-map/common/map-entity';
 import { MapEntityData } from './rld-map/common/map-entity-data';
 import { MapComponent } from './rld-map/map.component';
@@ -21,8 +22,7 @@ export class SituationMapComponent implements OnInit, AfterViewInit {
     @ViewChild("terrainContextMenu") terrainContextMenu!: PhContextMenuComponent;
     @ViewChild("entityContextMenu") entityContextMenu!: PhContextMenuComponent;
     @ViewChild(CreatePopupComponent) createPopup!: CreatePopupComponent;
-
-    @ViewChild("editPopup") editPopup!: PhWindowComponent;
+    @ViewChild(EditPopupComponent) editPopup!: EditPopupComponent;
 
     private entity = new MapEntityData();
     private position = {x: 0, y: 0};  
@@ -30,7 +30,7 @@ export class SituationMapComponent implements OnInit, AfterViewInit {
 
     private situationMapEntities: Map<string, SituationMapEntity> = new Map<string, SituationMapEntity>();
 
-    constructor(private readonly backend: BackendService, private readonly sitationMapService: SituationMapService) {
+    constructor(public readonly backend: BackendService, private readonly sitationMapService: SituationMapService) {
         this.backend.onOpen.subscribe(() => {
             this.sitationMapService.getAllMapEntities().then(this.setLocalMapEntities.bind(this));
         })
@@ -44,7 +44,7 @@ export class SituationMapComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit(): void {
         this.createPopup.close();
-        this.editPopup.hide();
+        this.editPopup.close();
         this.terrainContextMenu.close();
         this.entityContextMenu.close();
     }
@@ -54,6 +54,14 @@ export class SituationMapComponent implements OnInit, AfterViewInit {
         this.sitationMapService.setMapEntity(entity);
         this.map.createMapEntity(entity.getData());
     }
+
+    public editEntity(entity: SituationMapEntity) {
+        this.situationMapEntities.delete(entity.id);
+        this.situationMapEntities.set(entity.id, entity);
+        this.sitationMapService.setMapEntity(entity);
+        this.map.createOrUpdateMapEntity(entity.getData());
+    }
+
 
     public deleteEntity() {
         const entity = this.situationMapEntities.get(this.entity.id);
@@ -84,6 +92,11 @@ export class SituationMapComponent implements OnInit, AfterViewInit {
         this.createPopup.open(this.position, this.mapPosition);
     }
 
+    public openEntityEditMenu() {
+        this.entityContextMenu.close();
+        this.editPopup.open(this.position, this.mapPosition, this.situationMapEntities.get(this.entity.id)!);
+    }
+
     public openEntityContextMenu(ev: {cursorPosition: {x: number, y: number}, mapPosition: {x: number, y: number}, entity: MapEntityData}) {
         this.position = ev.cursorPosition;
         this.mapPosition = ev.mapPosition;
@@ -92,7 +105,6 @@ export class SituationMapComponent implements OnInit, AfterViewInit {
     }
 
     private deleteLocalMapEntity(entity: MapEntity) {
-        console.log("?")
         this.situationMapEntities.delete(entity.id);
         this.map.deleteMapEntity(entity.id);
     }
@@ -108,17 +120,20 @@ export class SituationMapComponent implements OnInit, AfterViewInit {
 
         if (this.situationMapEntities.has(entity.id)) {
             situationMapEntity = this.situationMapEntities.get(entity.id)!;
-            situationMapEntity.position = entity.position!;
         } else {
             situationMapEntity.id = entity.id;
-            situationMapEntity.position = entity.position!;
-            situationMapEntity.type = entity.type as MapEntityType;
-
-            if(entity.type == MapEntityType.TYPE_FRIEND) {
-                situationMapEntity.squad = entity.squad!;
-            }
-
             this.situationMapEntities.set(entity.id, situationMapEntity);
+        }
+
+        situationMapEntity.position = entity.position!;
+        situationMapEntity.type = entity.type as MapEntityType;
+
+        if(entity.type == MapEntityType.TYPE_FRIEND) {
+            situationMapEntity.squad = entity.squad!;
+        }
+
+        if(entity.type == MapEntityType.TYPE_FOE) {
+            situationMapEntity.enemy = entity.enemy!;
         }
 
         this.map.createOrUpdateMapEntity(situationMapEntity.getData());
