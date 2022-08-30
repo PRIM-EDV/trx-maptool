@@ -5,6 +5,7 @@ import { MapEntity } from 'proto/maptool.map-entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { DbMapEntity, DbMapEntityDocument} from 'src/schemas/map-entity.schema';
 import { Model } from 'mongoose';
+import { request } from 'http';
 
 @Injectable()
 export class MapService {
@@ -20,20 +21,37 @@ export class MapService {
         if(event.request.setMapEntity){
             this.setMapEntity(event.request.setMapEntity.entity);
             this.gateway.respond(event.clientId, event.msgId, {setMapEntity: {}});
+            this.gateway.requestAllButOne(event.clientId, event.request);
         }
         if(event.request.getAllMapEntities){
             this.getAllMapEntities().then((entities) => {
                 this.gateway.respond(event.clientId, event.msgId, {getAllMapEntities: {entities: entities}});
             });
         }
+        if(event.request.deleteMapEntity){
+            this.deleteMapEntity(event.request.deleteMapEntity.entity);
+            this.gateway.respond(event.clientId, event.msgId, {deleteMapEntity: {}});
+            this.gateway.requestAllButOne(event.clientId, event.request);
+        }
+    }
+
+    public async deleteMapEntity(entity: MapEntity) {
+        await this.mapEntityModel.deleteOne({uuid: entity.id}).exec();
     }
 
     public async setMapEntity(entity: MapEntity) {
         let dbMapEntity = await this.mapEntityModel.findOne({uuid: entity.id}).exec();
 
         if(dbMapEntity) {
-            // dbMapEntity.updateFromProto(entity);
-            // dbMapEntity.save();
+            dbMapEntity.uuid = entity.id;
+            dbMapEntity.position = entity.position;
+            dbMapEntity.type = entity.type;
+    
+            if(entity.squad) {
+                dbMapEntity.squad = entity.squad;
+            }
+            
+            dbMapEntity.save();
         } else {
             dbMapEntity = new this.mapEntityModel(DbMapEntity.fromProto(entity));
             await dbMapEntity.save();

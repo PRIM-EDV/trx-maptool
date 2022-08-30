@@ -78,6 +78,18 @@ export interface MapEntity_Position {
   y: number;
 }
 
+export interface DeleteMapEntity {
+  request?: DeleteMapEntity_Request | undefined;
+  response?: DeleteMapEntity_Response | undefined;
+  error: string | undefined;
+}
+
+export interface DeleteMapEntity_Request {
+  entity?: MapEntity;
+}
+
+export interface DeleteMapEntity_Response {}
+
 export interface SetMapEntity {
   request?: SetMapEntity_Request | undefined;
   response?: SetMapEntity_Response | undefined;
@@ -511,6 +523,218 @@ export const MapEntity_Position = {
     const message = createBaseMapEntity_Position();
     message.x = object.x ?? 0;
     message.y = object.y ?? 0;
+    return message;
+  },
+};
+
+function createBaseDeleteMapEntity(): DeleteMapEntity {
+  return { request: undefined, response: undefined, error: undefined };
+}
+
+export const DeleteMapEntity = {
+  encode(
+    message: DeleteMapEntity,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.request !== undefined) {
+      DeleteMapEntity_Request.encode(
+        message.request,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    if (message.response !== undefined) {
+      DeleteMapEntity_Response.encode(
+        message.response,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    if (message.error !== undefined) {
+      writer.uint32(26).string(message.error);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): DeleteMapEntity {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseDeleteMapEntity();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.request = DeleteMapEntity_Request.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 2:
+          message.response = DeleteMapEntity_Response.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 3:
+          message.error = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): DeleteMapEntity {
+    return {
+      request: isSet(object.request)
+        ? DeleteMapEntity_Request.fromJSON(object.request)
+        : undefined,
+      response: isSet(object.response)
+        ? DeleteMapEntity_Response.fromJSON(object.response)
+        : undefined,
+      error: isSet(object.error) ? String(object.error) : undefined,
+    };
+  },
+
+  toJSON(message: DeleteMapEntity): unknown {
+    const obj: any = {};
+    message.request !== undefined &&
+      (obj.request = message.request
+        ? DeleteMapEntity_Request.toJSON(message.request)
+        : undefined);
+    message.response !== undefined &&
+      (obj.response = message.response
+        ? DeleteMapEntity_Response.toJSON(message.response)
+        : undefined);
+    message.error !== undefined && (obj.error = message.error);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<DeleteMapEntity>, I>>(
+    object: I
+  ): DeleteMapEntity {
+    const message = createBaseDeleteMapEntity();
+    message.request =
+      object.request !== undefined && object.request !== null
+        ? DeleteMapEntity_Request.fromPartial(object.request)
+        : undefined;
+    message.response =
+      object.response !== undefined && object.response !== null
+        ? DeleteMapEntity_Response.fromPartial(object.response)
+        : undefined;
+    message.error = object.error ?? undefined;
+    return message;
+  },
+};
+
+function createBaseDeleteMapEntity_Request(): DeleteMapEntity_Request {
+  return { entity: undefined };
+}
+
+export const DeleteMapEntity_Request = {
+  encode(
+    message: DeleteMapEntity_Request,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.entity !== undefined) {
+      MapEntity.encode(message.entity, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): DeleteMapEntity_Request {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseDeleteMapEntity_Request();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.entity = MapEntity.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): DeleteMapEntity_Request {
+    return {
+      entity: isSet(object.entity)
+        ? MapEntity.fromJSON(object.entity)
+        : undefined,
+    };
+  },
+
+  toJSON(message: DeleteMapEntity_Request): unknown {
+    const obj: any = {};
+    message.entity !== undefined &&
+      (obj.entity = message.entity
+        ? MapEntity.toJSON(message.entity)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<DeleteMapEntity_Request>, I>>(
+    object: I
+  ): DeleteMapEntity_Request {
+    const message = createBaseDeleteMapEntity_Request();
+    message.entity =
+      object.entity !== undefined && object.entity !== null
+        ? MapEntity.fromPartial(object.entity)
+        : undefined;
+    return message;
+  },
+};
+
+function createBaseDeleteMapEntity_Response(): DeleteMapEntity_Response {
+  return {};
+}
+
+export const DeleteMapEntity_Response = {
+  encode(
+    _: DeleteMapEntity_Response,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): DeleteMapEntity_Response {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseDeleteMapEntity_Response();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): DeleteMapEntity_Response {
+    return {};
+  },
+
+  toJSON(_: DeleteMapEntity_Response): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<DeleteMapEntity_Response>, I>>(
+    _: I
+  ): DeleteMapEntity_Response {
+    const message = createBaseDeleteMapEntity_Response();
     return message;
   },
 };

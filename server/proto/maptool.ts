@@ -2,8 +2,10 @@
 import {
   GetAllMapEntities_Request,
   SetMapEntity_Request,
+  DeleteMapEntity_Request,
   GetAllMapEntities_Response,
   SetMapEntity_Response,
+  DeleteMapEntity_Response,
 } from './maptool.map-entity';
 import * as _m0 from 'protobufjs/minimal';
 
@@ -12,11 +14,13 @@ export const protobufPackage = '';
 export interface Request {
   getAllMapEntities?: GetAllMapEntities_Request | undefined;
   setMapEntity?: SetMapEntity_Request | undefined;
+  deleteMapEntity?: DeleteMapEntity_Request | undefined;
 }
 
 export interface Response {
   getAllMapEntities?: GetAllMapEntities_Response | undefined;
   setMapEntity?: SetMapEntity_Response | undefined;
+  deleteMapEntity?: DeleteMapEntity_Response | undefined;
 }
 
 export interface MaptoolMessage {
@@ -26,7 +30,11 @@ export interface MaptoolMessage {
 }
 
 function createBaseRequest(): Request {
-  return { getAllMapEntities: undefined, setMapEntity: undefined };
+  return {
+    getAllMapEntities: undefined,
+    setMapEntity: undefined,
+    deleteMapEntity: undefined,
+  };
 }
 
 export const Request = {
@@ -44,6 +52,12 @@ export const Request = {
       SetMapEntity_Request.encode(
         message.setMapEntity,
         writer.uint32(18).fork(),
+      ).ldelim();
+    }
+    if (message.deleteMapEntity !== undefined) {
+      DeleteMapEntity_Request.encode(
+        message.deleteMapEntity,
+        writer.uint32(26).fork(),
       ).ldelim();
     }
     return writer;
@@ -68,6 +82,12 @@ export const Request = {
             reader.uint32(),
           );
           break;
+        case 3:
+          message.deleteMapEntity = DeleteMapEntity_Request.decode(
+            reader,
+            reader.uint32(),
+          );
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -84,6 +104,9 @@ export const Request = {
       setMapEntity: isSet(object.setMapEntity)
         ? SetMapEntity_Request.fromJSON(object.setMapEntity)
         : undefined,
+      deleteMapEntity: isSet(object.deleteMapEntity)
+        ? DeleteMapEntity_Request.fromJSON(object.deleteMapEntity)
+        : undefined,
     };
   },
 
@@ -96,6 +119,10 @@ export const Request = {
     message.setMapEntity !== undefined &&
       (obj.setMapEntity = message.setMapEntity
         ? SetMapEntity_Request.toJSON(message.setMapEntity)
+        : undefined);
+    message.deleteMapEntity !== undefined &&
+      (obj.deleteMapEntity = message.deleteMapEntity
+        ? DeleteMapEntity_Request.toJSON(message.deleteMapEntity)
         : undefined);
     return obj;
   },
@@ -111,12 +138,20 @@ export const Request = {
       object.setMapEntity !== undefined && object.setMapEntity !== null
         ? SetMapEntity_Request.fromPartial(object.setMapEntity)
         : undefined;
+    message.deleteMapEntity =
+      object.deleteMapEntity !== undefined && object.deleteMapEntity !== null
+        ? DeleteMapEntity_Request.fromPartial(object.deleteMapEntity)
+        : undefined;
     return message;
   },
 };
 
 function createBaseResponse(): Response {
-  return { getAllMapEntities: undefined, setMapEntity: undefined };
+  return {
+    getAllMapEntities: undefined,
+    setMapEntity: undefined,
+    deleteMapEntity: undefined,
+  };
 }
 
 export const Response = {
@@ -134,6 +169,12 @@ export const Response = {
       SetMapEntity_Response.encode(
         message.setMapEntity,
         writer.uint32(18).fork(),
+      ).ldelim();
+    }
+    if (message.deleteMapEntity !== undefined) {
+      DeleteMapEntity_Response.encode(
+        message.deleteMapEntity,
+        writer.uint32(26).fork(),
       ).ldelim();
     }
     return writer;
@@ -158,6 +199,12 @@ export const Response = {
             reader.uint32(),
           );
           break;
+        case 3:
+          message.deleteMapEntity = DeleteMapEntity_Response.decode(
+            reader,
+            reader.uint32(),
+          );
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -174,6 +221,9 @@ export const Response = {
       setMapEntity: isSet(object.setMapEntity)
         ? SetMapEntity_Response.fromJSON(object.setMapEntity)
         : undefined,
+      deleteMapEntity: isSet(object.deleteMapEntity)
+        ? DeleteMapEntity_Response.fromJSON(object.deleteMapEntity)
+        : undefined,
     };
   },
 
@@ -186,6 +236,10 @@ export const Response = {
     message.setMapEntity !== undefined &&
       (obj.setMapEntity = message.setMapEntity
         ? SetMapEntity_Response.toJSON(message.setMapEntity)
+        : undefined);
+    message.deleteMapEntity !== undefined &&
+      (obj.deleteMapEntity = message.deleteMapEntity
+        ? DeleteMapEntity_Response.toJSON(message.deleteMapEntity)
         : undefined);
     return obj;
   },
@@ -200,6 +254,10 @@ export const Response = {
     message.setMapEntity =
       object.setMapEntity !== undefined && object.setMapEntity !== null
         ? SetMapEntity_Response.fromPartial(object.setMapEntity)
+        : undefined;
+    message.deleteMapEntity =
+      object.deleteMapEntity !== undefined && object.deleteMapEntity !== null
+        ? DeleteMapEntity_Response.fromPartial(object.deleteMapEntity)
         : undefined;
     return message;
   },

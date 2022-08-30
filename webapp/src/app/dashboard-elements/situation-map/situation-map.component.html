@@ -1,14 +1,18 @@
-<rld-map (onTerrainContextMenu)="openContextMenu($event)" (onEntityContextMenu)="openUnitEditMenu()"></rld-map>
+<rld-map (onTerrainContextMenu)="openContextMenu($event)" (onEntityContextMenu)="openEntityContextMenu($event)" (onEntityMoved)="handleEntityMoved($event)"></rld-map>
 
 <div class="overlay">
-    <ph-context-menu #contextMenu>
+    <ph-context-menu #terrainContextMenu>
         <ph-context-menu-item (click)="openUnitCreateMenu()">
             New...
         </ph-context-menu-item>
     </ph-context-menu>
 
+    <ph-context-menu #entityContextMenu>
+        <ph-context-menu-item>Edit</ph-context-menu-item>
+        <ph-context-menu-item (click)="deleteEntity()">Delete</ph-context-menu-item>
+    </ph-context-menu>
 
-    <create-popup (create)="onMapEntityCreate($event)"></create-popup>
+    <create-popup (create)="createEntity($event)"></create-popup>
 
     <ph-window #editPopup [title]="'EDIT'" style="position: absolute; min-width: 512px;">
     </ph-window>

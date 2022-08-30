@@ -11,11 +11,11 @@
         <ph-input [label]="'Squad'" [(value)]="this.entity.squad.name"></ph-input>
         <ph-input [label]="'Callsign'" [(value)]="this.entity.squad.callsign"></ph-input>
         <ph-input [label]="'Tracker ID'" [(value)]="this.entity.squad.trackerId"></ph-input>
-        <ph-slider [label]="'Combattants'" [ticks]="['1', '5', '10', '15', '20', '25', '30']" [tickValues]="[1, 5, 10, 15, 20, 25, 30]"></ph-slider>
+        <ph-slider [label]="'Combattants'" [(value)]="this.entity.squad.combattants" [ticks]="['1', '5', '10', '15', '20', '25', '30']" [tickValues]="[1, 5, 10, 15, 20, 25, 30]"></ph-slider>
         <!-- <ph-slider [label]="'Casualties'" [ticks]="['1', '5', '10', '15', '20', '25', '30']" [tickValues]="[0, 5, 10, 15, 20, 25, 30]"></ph-slider> -->
     </ph-form>
     <ph-form *ngIf="type==MapEntityType.TYPE_FOE">
-        <ph-slider [label]="'Combattants'" [ticks]="['5', '10', '15', '20', '25', '30']" [tickValues]="[1, 5, 10, 15, 20, 25, 30]"></ph-slider>
+        <ph-slider [label]="'Combattants'" [(value)]="this.entity.enemy.combattants" [ticks]="['5', '10', '15', '20', '25', '30']" [tickValues]="[1, 5, 10, 15, 20, 25, 30]"></ph-slider>
     </ph-form>
     <ph-form *ngIf="type==MapEntityType.TYPE_OBJECT">
         <ph-input [label]="'Name'"></ph-input>

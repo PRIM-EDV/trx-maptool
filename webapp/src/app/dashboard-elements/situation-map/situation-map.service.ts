@@ -1,27 +1,37 @@
 import { Injectable } from '@angular/core';
 import { BackendService } from 'src/app/backend/backend.service';
 import { Response, Request } from 'proto/maptool';
-import { MapEntity } from 'proto/maptool.map-entity';
-import { MapEntityData, MapEntityType } from './rld-map/common/map-entity-data';
+import { MapEntity, MapEntityType } from 'proto/maptool.map-entity';
+import { SituationMapEntity } from './common/situation-map-entity';
+import { Subject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SituationMapService {
 
-    constructor(private backend: BackendService) {
+    public onSetMapEntity: Subject<MapEntity> = new Subject<MapEntity>();
+    public onDeleteMapEntity: Subject<MapEntity> = new Subject<MapEntity>();
 
+    constructor(private backend: BackendService) {
+        backend.onRequest.subscribe(this.handleRequest.bind(this));
     }
 
-    public async SetMapEntity(data: MapEntityData) {
+    public async deleteMapEntity(entity: SituationMapEntity) {
         const req: Request = {
-            setMapEntity: { entity: this.getMapEntityFromData(data) }
+            deleteMapEntity: { entity: this.getProtoMapEntityFromData(entity) }
         }
-        console.log(req)
         const res: Response = await this.backend.request(req);
     }
 
-    public async GetAllMapEntities(): Promise<MapEntity[]>{
+    public async setMapEntity(data: SituationMapEntity) {
+        const req: Request = {
+            setMapEntity: { entity: this.getProtoMapEntityFromData(data) }
+        }
+        const res: Response = await this.backend.request(req);
+    }
+
+    public async getAllMapEntities(): Promise<MapEntity[]>{
         const req: Request = {
             getAllMapEntities: {}
         }
@@ -30,7 +40,7 @@ export class SituationMapService {
         return res.getAllMapEntities!.entities!;
     }
     
-    private getMapEntityFromData(data: MapEntityData) {
+    private getProtoMapEntityFromData(data: SituationMapEntity) {
         const entity: MapEntity = {
             id: data.id,
             position: data.position,
@@ -47,5 +57,14 @@ export class SituationMapService {
         }
 
         return entity
+    }
+
+    private handleRequest(e: {id: string, request: Request}) {
+        if(e.request.setMapEntity) {
+            this.onSetMapEntity.next(e.request.setMapEntity.entity!);
+        }
+        if(e.request.deleteMapEntity) {
+            this.onDeleteMapEntity.next(e.request.deleteMapEntity.entity!);
+        }
     }
 }

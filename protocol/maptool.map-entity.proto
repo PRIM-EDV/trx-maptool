@@ -40,6 +40,21 @@ message MapEntity {
     }
 }
 
+message DeleteMapEntity {
+    message Request {
+        MapEntity entity = 1;
+    }
+
+    message Response {}
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}
+
+
 message SetMapEntity {
     message Request {
         MapEntity entity = 1;

@@ -1,7 +1,8 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { PhWindowComponent } from 'src/app/ph-elements/ph-window/ph-window.component';
-import { v4 } from 'uuid';
-import { MapEntityData, MapEntityType } from '../../rld-map/common/map-entity-data';
+import { MapEntityType } from '../../rld-map/common/map-entity';
+import { MapEntityData } from '../../rld-map/common/map-entity-data';
+import { SituationMapEntity } from '../../common/situation-map-entity';
 
 
 @Component({
@@ -9,24 +10,27 @@ import { MapEntityData, MapEntityType } from '../../rld-map/common/map-entity-da
   templateUrl: './create-popup.component.html',
   styleUrls: ['../popup.component.scss']
 })
-export class CreatePopupComponent implements OnInit {
+export class CreatePopupComponent implements AfterViewInit {
   
     MapEntityType = MapEntityType;
 
     @ViewChild(PhWindowComponent) window!: PhWindowComponent;
 
-    @Output() create = new EventEmitter<MapEntityData>();
+    @Output() create = new EventEmitter<SituationMapEntity>();
 
     public type?: MapEntityType;
-    public entity: MapEntityData = new MapEntityData;
+    public entity: SituationMapEntity = new SituationMapEntity();
   
     constructor() { }
 
-    ngOnInit(): void {
+    ngAfterViewInit(): void {
+        this.window.hide();
     }
+
 
     public apply() {
         this.entity.type = this.type!;
+        console.log(this.entity)
         this.create.next(this.entity);
         this.window.hide();
     } 
@@ -35,8 +39,7 @@ export class CreatePopupComponent implements OnInit {
         this.window.ref.nativeElement.style.top = `${cursorPosition.y}px`;
         this.window.ref.nativeElement.style.left = `${cursorPosition.x}px`;
 
-        this.entity = new MapEntityData();
-        this.entity.id = v4();
+        this.entity = new SituationMapEntity();
         this.entity.position = mapPosition;
 
         this.window.show();

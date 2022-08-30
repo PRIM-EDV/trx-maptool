@@ -36,13 +36,6 @@ export class DbMapEntity {
         description: string,
     }
 
-
-
-    // public updateFromProto(entity: MapEntity) {
-    //     this.position = entity.position;
-    //     this.type = entity.type;
-    // }
-
     public static fromProto(entity: MapEntity) {
         const dbo = new DbMapEntity();
         

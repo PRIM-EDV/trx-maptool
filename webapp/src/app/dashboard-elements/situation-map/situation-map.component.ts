@@ -3,8 +3,10 @@ import { MapEntity } from 'proto/maptool.map-entity';
 import { BackendService } from 'src/app/backend/backend.service';
 import { PhContextMenuComponent } from 'src/app/ph-elements/ph-context-menu/ph-context-menu.component';
 import { PhWindowComponent } from 'src/app/ph-elements/ph-window/ph-window.component';
+import { SituationMapEntity } from './common/situation-map-entity';
 import { CreatePopupComponent } from './popups/create-popup/create-popup.component';
-import { MapEntityData, MapEntityType } from './rld-map/common/map-entity-data';
+import { MapEntityType } from './rld-map/common/map-entity';
+import { MapEntityData } from './rld-map/common/map-entity-data';
 import { MapComponent } from './rld-map/map.component';
 import { SituationMapService } from './situation-map.service';
 
@@ -16,18 +18,25 @@ import { SituationMapService } from './situation-map.service';
 export class SituationMapComponent implements OnInit, AfterViewInit {
 
     @ViewChild(MapComponent) map!: MapComponent;
-    @ViewChild("contextMenu") contextMenu!: PhContextMenuComponent;
+    @ViewChild("terrainContextMenu") terrainContextMenu!: PhContextMenuComponent;
+    @ViewChild("entityContextMenu") entityContextMenu!: PhContextMenuComponent;
     @ViewChild(CreatePopupComponent) createPopup!: CreatePopupComponent;
 
     @ViewChild("editPopup") editPopup!: PhWindowComponent;
 
+    private entity = new MapEntityData();
     private position = {x: 0, y: 0};  
-    private mapPosition = {x:0, y:0};
+    private mapPosition = {x: 0, y: 0};
+
+    private situationMapEntities: Map<string, SituationMapEntity> = new Map<string, SituationMapEntity>();
 
     constructor(private readonly backend: BackendService, private readonly sitationMapService: SituationMapService) {
         this.backend.onOpen.subscribe(() => {
-            this.sitationMapService.GetAllMapEntities().then(this.setLocalMapEntities.bind(this));
+            this.sitationMapService.getAllMapEntities().then(this.setLocalMapEntities.bind(this));
         })
+
+        this.sitationMapService.onSetMapEntity.subscribe(this.setLocalMapEntity.bind(this));
+        this.sitationMapService.onDeleteMapEntity.subscribe(this.deleteLocalMapEntity.bind(this));
      }
 
     ngOnInit(): void {
@@ -36,28 +45,56 @@ export class SituationMapComponent implements OnInit, AfterViewInit {
     ngAfterViewInit(): void {
         this.createPopup.close();
         this.editPopup.hide();
-        this.contextMenu.close();
+        this.terrainContextMenu.close();
+        this.entityContextMenu.close();
     }
 
-    public onMapEntityCreate(data: MapEntityData) {
+    public createEntity(entity: SituationMapEntity) {
+        this.situationMapEntities.set(entity.id, entity);
+        this.sitationMapService.setMapEntity(entity);
+        this.map.createMapEntity(entity.getData());
+    }
 
-        this.sitationMapService.SetMapEntity(data);
-        this.map.createMapEntity(data);
+    public deleteEntity() {
+        const entity = this.situationMapEntities.get(this.entity.id);
+
+        if (entity) {
+            this.deleteLocalMapEntity(this.entity);
+            this.sitationMapService.deleteMapEntity(entity);
+        }
+        this.entityContextMenu.close();
+    }
+
+    public handleEntityMoved(data: MapEntityData) {
+        const entity = this.situationMapEntities.get(data.id);
+        if (entity) {
+            entity.setData(data);
+            this.sitationMapService.setMapEntity(entity);
+        }
     }
 
     public openContextMenu(ev: {cursorPosition: {x: number, y: number}, mapPosition: {x: number, y: number}}) {
         this.position = ev.cursorPosition;
         this.mapPosition = ev.mapPosition;
-        this.contextMenu.open(this.position);
+        this.terrainContextMenu.open(this.position);
     }
 
     public openUnitCreateMenu() {
-        this.contextMenu.close();
+        this.terrainContextMenu.close();
         this.createPopup.open(this.position, this.mapPosition);
     }
 
-    public openUnitEditMenu() {
-        
+    public openEntityContextMenu(ev: {cursorPosition: {x: number, y: number}, mapPosition: {x: number, y: number}, entity: MapEntityData}) {
+        this.position = ev.cursorPosition;
+        this.mapPosition = ev.mapPosition;
+        this.entity = ev.entity;
+        this.entityContextMenu.open(this.position);
+    }
+
+    private deleteLocalMapEntity(entity: MapEntity) {
+        console.log("?")
+        this.situationMapEntities.delete(entity.id);
+        this.map.deleteMapEntity(entity.id);
     }
 
     private setLocalMapEntities(entities: MapEntity[]) {
@@ -67,13 +104,25 @@ export class SituationMapComponent implements OnInit, AfterViewInit {
     }
 
     private setLocalMapEntity(entity: MapEntity) {
-        const data: MapEntityData = new MapEntityData();
+        let situationMapEntity = new SituationMapEntity();
 
-        data.id = entity.id;
-        data.position = entity.position!;
-        data.type = entity.type as MapEntityType;
+        if (this.situationMapEntities.has(entity.id)) {
+            situationMapEntity = this.situationMapEntities.get(entity.id)!;
+            situationMapEntity.position = entity.position!;
+        } else {
+            situationMapEntity.id = entity.id;
+            situationMapEntity.position = entity.position!;
+            situationMapEntity.type = entity.type as MapEntityType;
 
-        this.map.createOrUpdateMapEntity(data);
+            if(entity.type == MapEntityType.TYPE_FRIEND) {
+                situationMapEntity.squad = entity.squad!;
+            }
+
+            this.situationMapEntities.set(entity.id, situationMapEntity);
+        }
+
+        this.map.createOrUpdateMapEntity(situationMapEntity.getData());
     }
+
 
 }
