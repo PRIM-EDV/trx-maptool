@@ -41,7 +41,6 @@ export class MapService {
 
     public async setMapEntity(entity: MapEntity) {
         let dbMapEntity = await this.mapEntityModel.findOne({uuid: entity.id}).exec();
-
         if(dbMapEntity) {
             dbMapEntity.uuid = entity.id;
             dbMapEntity.position = entity.position;
@@ -53,6 +52,10 @@ export class MapService {
 
             if(entity.enemy) {
                 dbMapEntity.enemy = entity.enemy;
+            }
+
+            if(entity.objective) {
+                dbMapEntity.objective = entity.objective;
             }
             
             dbMapEntity.save();

@@ -62,6 +62,13 @@ export class SituationMapService {
             }
         }
 
+        if (data.type == MapEntityType.TYPE_OBJECT) {
+            entity.objective = {
+                name: data.objective.name,
+                description: data.objective.description
+            }
+        }
+
         return entity
     }
 

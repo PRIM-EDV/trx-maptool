@@ -116,8 +116,8 @@ export class SituationMapComponent implements OnInit, AfterViewInit {
     }
 
     private setLocalMapEntity(entity: MapEntity) {
+        console.log(entity);
         let situationMapEntity = new SituationMapEntity();
-
         if (this.situationMapEntities.has(entity.id)) {
             situationMapEntity = this.situationMapEntities.get(entity.id)!;
         } else {
@@ -134,6 +134,10 @@ export class SituationMapComponent implements OnInit, AfterViewInit {
 
         if(entity.type == MapEntityType.TYPE_FOE) {
             situationMapEntity.enemy = entity.enemy!;
+        }
+
+        if(entity.type == MapEntityType.TYPE_OBJECT) {
+            situationMapEntity.objective = entity.objective!;
         }
 
         this.map.createOrUpdateMapEntity(situationMapEntity.getData());

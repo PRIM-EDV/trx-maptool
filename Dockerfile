@@ -17,7 +17,6 @@ RUN npm run build
 FROM node:18.1.0 AS server
 RUN apt update && apt install protobuf-compiler -y 
 
-EXPOSE 3100
 WORKDIR /opt/rld/server
 
 # Install server source dependancies
@@ -33,6 +32,10 @@ RUN npm run build
 
 # Get webapp artifact
 COPY --from=webapp /opt/rld/webapp/dist/rld-maptool/ ./dist/public
+
+#
+EXPOSE 3100
+EXPOSE 3200
 
 # Run startscript
 COPY ./run.sh ./

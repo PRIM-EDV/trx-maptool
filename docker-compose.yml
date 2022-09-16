@@ -2,10 +2,10 @@ version: '3.1'
 
 services:
   database:
-    image: mongo:latest
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: "root"
-      MONGO_INITDB_ROOT_PASSWORD: "12345"
+    image: mongo:4.2
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: "root"
+#      MONGO_INITDB_ROOT_PASSWORD: "12345"
     ports:
       - "27017:27017"
     volumes:
@@ -20,5 +20,6 @@ services:
     links:
       - database
     ports:
-      - "3000:3200"
+      - "3000:3100"
+      - "3100:3200"
 

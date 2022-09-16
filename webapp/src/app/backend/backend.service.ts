@@ -6,8 +6,8 @@ import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { MaptoolMessage, Request, Response } from "proto/maptool";
 
 
-const MAPTOOL_SERVER_HOSTNAME = window?.__env?.maptoolServerHostname != null ? `${window.__env.maptoolServerHostname}` : 'localhost';
-const MAPTOOL_SERVER_PORT = window?.__env?.maptoolServerPort != null ? window.__env.maptoolServerPort : 3000;
+const MAPTOOL_SERVER_HOSTNAME = window?.__env?.maptoolServerHostname != null ? `${window.__env.maptoolServerHostname}` : window.location.hostname;
+const MAPTOOL_SERVER_PORT = window?.__env?.maptoolServerPort != null ? window.__env.maptoolServerPort : window.location.port;
 
 const REST_API_URL = `http://${window.location.host}`;
 const WS_URL = `ws://${MAPTOOL_SERVER_HOSTNAME}:${MAPTOOL_SERVER_PORT}`;

@@ -14,7 +14,7 @@ interface Ws extends WebSocket {
     id: string;
   }
 
-@WebSocketGateway(3800)
+@WebSocketGateway(3200)
 export class TrackerGateway {
     protected activeClients: Map<string, Ws> = new Map<string, Ws>();
     protected requests: Map<string, (value: Response) => void> = new Map<string, (value: Response) => void>();
@@ -31,6 +31,7 @@ export class TrackerGateway {
     handleMessage(client: Ws, payload: string): void {
       const msg = RldNodeMessage.fromJSON(JSON.parse(payload));
   
+      console.log(msg);
       if(msg.request) {
           this.onRequest.next({clientId: client.id, msgId: msg.id, request: msg.request});
       }

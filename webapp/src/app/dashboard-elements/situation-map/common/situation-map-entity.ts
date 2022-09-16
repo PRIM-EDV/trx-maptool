@@ -7,8 +7,9 @@ export class SituationMapEntity {
     public position: {x: number, y: number} = {x: 0, y: 0};
     public type: MapEntityType = MapEntityType.TYPE_UNDEFINED;
 
-    public squad: { name: string, callsign: string, trackerId: number | string, combattants: number } = { name: '', callsign: '', trackerId: -1, combattants: 1}
-    public enemy: { combattants: number } = { combattants: 1}
+    public squad: { name: string, callsign: string, trackerId: number | string, combattants: number } = { name: '', callsign: '', trackerId: -1, combattants: 1};
+    public enemy: { combattants: number } = { combattants: 1};
+    public objective: { name: string, description: string } = { name: "", description: ""};
 
 
     public getData(): MapEntityData {
@@ -40,6 +41,10 @@ export class SituationMapEntity {
             if (this.enemy.combattants >= 30) data.size = 6;
         }
 
+        if(this.type == MapEntityType.TYPE_OBJECT) {
+            data.text =this.objective.name;
+        }
+
 
         return data;
     }
@@ -58,6 +63,7 @@ export class SituationMapEntity {
         Object.assign(copy.position, entity.position);
         Object.assign(copy.squad, entity.squad);
         Object.assign(copy.enemy, entity.enemy);
+        Object.assign(copy.objective, entity.objective);
 
         return copy;
     }
