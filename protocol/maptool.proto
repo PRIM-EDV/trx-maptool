@@ -1,12 +1,15 @@
 syntax = "proto3";
 
 import "maptool.map-entity.proto";
+import "maptool.squad.proto";
 
 message Request {
     oneof request {
         GetAllMapEntities.Request get_all_map_entities = 1;
         SetMapEntity.Request set_map_entity = 2;
         DeleteMapEntity.Request delete_map_entity = 3;
+        GetAllSquads.Request get_all_squads = 4;
+        SetSquad.Request set_squad = 5;
     }
 }
 
@@ -15,6 +18,8 @@ message Response {
         GetAllMapEntities.Response get_all_map_entities = 1;
         SetMapEntity.Response set_map_entity = 2;
         DeleteMapEntity.Response delete_map_entity = 3;
+        GetAllSquads.Response get_all_squads = 4;
+        SetSquad.Response set_squad = 5;
     }
 }
 
