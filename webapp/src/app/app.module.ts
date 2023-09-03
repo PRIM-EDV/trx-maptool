@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PhElementsModule } from './ph-elements/ph-elements.module';
+import { SquadComponent } from './dashboard-elements/squad/squad.component';
 
 declare global {
   interface Window {
@@ -19,7 +20,7 @@ declare global {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     AuthModule,
