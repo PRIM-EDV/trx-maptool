@@ -40,6 +40,9 @@ export class SituationMapComponent implements OnInit, AfterViewInit {
      }
 
     ngOnInit(): void {
+        if (this.backend.isConnected) {
+            this.sitationMapService.getAllMapEntities().then(this.setLocalMapEntities.bind(this));
+        }
     }
 
     ngAfterViewInit(): void {

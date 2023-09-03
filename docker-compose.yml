@@ -16,7 +16,7 @@ services:
     build:
       context: "."
     restart: always
-    container_name: "rld_server"
+    container_name: "trx_server"
     links:
       - database
     ports:

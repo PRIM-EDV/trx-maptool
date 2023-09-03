@@ -9,6 +9,9 @@ import { BackendService } from '../backend/backend.service';
 })
 export class DashboardComponent implements OnInit {
 
+  public view: string = "TACOP";
+  public tab: string = "MAP"
+
   constructor(private readonly backend: BackendService) { }
 
   ngOnInit(): void {
