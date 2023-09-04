@@ -16,26 +16,7 @@ export class WebsocketBackendService extends BackendService {
         super();
 
         this.type = 'http';
-        // this._localDb = this._readLocalDb();
-        
-        // this._socket.fromEvent<any>('map-object').subscribe((data)=> {
-        //     console.log(data)
-        // })
     }
-
-    // public async synchronise(): Promise<void> {
-    //     try {
-    //         const remoteMapObjects = await this._http.get(url + 'map-object', httpOptions).toPromise();
-
-    //         this._updateExistingMapObjects(remoteMapObjects as any[]);
-    //         this._getCreatedMapObjects(remoteMapObjects as any[]).forEach(this._createInternalMapObject.bind(this));
-    //         this._getDeletedMapObjects(remoteMapObjects as any[]).forEach(this._deleteInternalMapObject.bind(this));
-    //     } catch {
-
-    //     }
-
-    //     this._synchEvent.next();
-    // }
 
     public async deleteMapObject(id: string): Promise<any> {
         this._mapObjects.splice(this._mapObjects.findIndex((x) => x.id == id), 1);
@@ -54,26 +35,6 @@ export class WebsocketBackendService extends BackendService {
         for (const key in object.meta) {
             mapObject.meta[key] = object.meta[key];
         }
-        // const dst = url + 'map-object';
-
-        // const dbMapObject = {
-        //     position: mapObject.coord.inMeter,
-        //     uid: mapObject.id,
-        //     name: mapObject.name,
-        //     type: mapObject.type,
-        //     meta: {}
-        // };
-
-        // for (const key in mapObject.meta) {
-        //     dbMapObject.meta[key] = mapObject.meta[key];
-        // }
-
-        // try {
-        //     await this._http.put(dst, dbMapObject, httpOptions).toPromise();
-        //     await this.synchronise();
-        // } catch (e) {
-
-        // }
     }
 
     public async createMapObject(mapObject: MapObject): Promise<any> {
@@ -92,17 +53,6 @@ export class WebsocketBackendService extends BackendService {
         };
 
         this._socket.emit('map-object', {action: "set", object: dbMapObject});
-
-        // for (const key in obj.meta) {
-        //     dbMapObject.meta[key] = obj.meta[key];
-        // }
-
-        // try {
-        //     await this._http.post(dst, dbMapObject, httpOptions).toPromise();
-        //     await this.synchronise();
-        // } catch (e) {
-
-        // }
 
         return;
     }

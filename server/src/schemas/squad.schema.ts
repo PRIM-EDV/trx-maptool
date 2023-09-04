@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { SquadState } from 'proto/maptool.squad';
+import { Squad, SquadState } from 'proto/maptool.squad';
 
 export type DbSquadDocument = DbSquad & Document;
 
@@ -17,6 +17,28 @@ export class DbSquad {
 
     @Prop({required: false, unique: false})
     combattants: number;
+
+    public static fromProto(squad: Squad): DbSquad {
+        const dbo = new DbSquad();
+        
+        dbo.name = squad.name;
+        dbo.callsign = squad.callsign ? squad.callsign : "NN";
+        dbo.state = squad.state ? squad.state : SquadState.STATE_UNSTAGED;
+        dbo.combattants = squad.combattants ? squad.combattants : 0; 
+        
+        return dbo;
+    }
+
+    public static toProto(dbo: DbSquad): Squad {
+        const squad: Squad = {
+            name: dbo.name,
+            callsign: dbo.callsign,
+            state: dbo.state,
+            combattants: dbo.combattants
+        }
+
+        return squad;
+    }
 }
 
 export const DbSquadSchema = SchemaFactory.createForClass(DbSquad);

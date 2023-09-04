@@ -1,6 +1,9 @@
 import { AfterContentInit, AfterViewInit, Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { BackendService } from 'src/app/backend/backend.service';
 import { Squad, SquadState } from 'proto/maptool.squad';
+import { Response, Request } from 'proto/maptool';
 import { PhDropListComponent } from 'src/app/ph-elements/ph-drop-list/ph-drop-list.component';
+import { SquadService } from './squad.service';
 
 
 @Component({
@@ -20,9 +23,17 @@ export class SquadComponent implements OnInit, AfterViewInit {
   //
   public SquadState = SquadState;
 
-  constructor() { }
+  constructor(private readonly backend: BackendService, private readonly squadService: SquadService) {
+    this.backend.onOpen.subscribe(() => {
+      this.squadService.getAllSquads().then((squads) => {this.squads = squads});
+    })
+    backend.onRequest.subscribe(this.handleRequest.bind(this));
+  }
 
   ngOnInit(): void {
+    if (this.backend.isConnected) {
+      this.squadService.getAllSquads().then((squads) => {this.squads = squads});
+    }
   }
 
   ngAfterViewInit() {
@@ -37,6 +48,16 @@ export class SquadComponent implements OnInit, AfterViewInit {
 
   handleDrop(item: Squad, state: SquadState) {
     item.state = state;
+    this.squadService.setSquad(item);
   }
 
+  private handleRequest(e: {id: string, request: Request}) {
+    if (e.request.setMapEntity) {
+
+    }
+  }
+
+  private setSquadLocal() {
+
+  }
 }
