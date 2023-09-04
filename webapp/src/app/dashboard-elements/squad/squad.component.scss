@@ -5,9 +5,15 @@
 
 div.content {
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+div.lists {
+    flex-grow: 1;
     align-items: stretch;
     display: flex;
-    flex-direction: row;
+    flex-direction: row;   
 }
 
 div.tag {
@@ -37,4 +43,25 @@ div.desc {
 
     padding-left: 6px;
     padding-top: 2px;
+}
+
+div.actions {
+    display: flex;
+    justify-content: flex-end;
+    border-top: 2px solid #28343e;
+    padding: 3px 4px 4px 0;
+}
+
+div.overlay {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 96px;
+    top: 32px;
+
+    pointer-events: none;
+
+    * {
+        pointer-events: auto;
+    }
 }

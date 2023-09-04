@@ -10,6 +10,7 @@ import { GatewayModule } from './gateway/gateway.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MapModule } from './map/map.module';
 import { TrackerModule } from './tracker/tracker.module';
+import { SquadModule } from './squad/squad.module';
 
 const MONGO_DB_HOST = process.env.MONGO_DB_HOST ? process.env.MONGO_DB_HOST : 'localhost'
 
@@ -24,6 +25,7 @@ const MONGO_DB_HOST = process.env.MONGO_DB_HOST ? process.env.MONGO_DB_HOST : 'l
     }),
     MapModule,
     TrackerModule,
+    SquadModule,
   ],
   controllers: [AppController],
   providers: [AppService],
