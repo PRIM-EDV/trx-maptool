@@ -1,9 +1,10 @@
-import { AfterContentInit, AfterViewInit, Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { BackendService } from 'src/app/backend/backend.service';
 import { Squad, SquadState } from 'proto/maptool.squad';
 import { Response, Request } from 'proto/maptool';
 import { PhDropListComponent } from 'src/app/ph-elements/ph-drop-list/ph-drop-list.component';
 import { SquadService } from './squad.service';
+import { CreatePopupComponent } from './popups/create-popup/create-popup.component';
 
 
 @Component({
@@ -13,6 +14,7 @@ import { SquadService } from './squad.service';
 })
 export class SquadComponent implements OnInit, AfterViewInit {
 
+  @ViewChild(CreatePopupComponent) createPopup!: CreatePopupComponent;
   @ViewChildren(PhDropListComponent) dropListComponents!: QueryList<PhDropListComponent>;
 
   public connectedLists: Array<PhDropListComponent> = [];
@@ -42,6 +44,11 @@ export class SquadComponent implements OnInit, AfterViewInit {
       }
   }
 
+  public openSquadCreatePopup(ev: MouseEvent) {
+    const position ={x: window.innerWidth / 2 - 330, y: window.innerHeight / 2 - 70};
+    this.createPopup.open(position);
+  }
+
   public getSquadsByState(state: SquadState): Array<Squad> {
     return this.squads.filter((squad) => squad.state === state);
   }
@@ -55,9 +62,5 @@ export class SquadComponent implements OnInit, AfterViewInit {
     if (e.request.setMapEntity) {
 
     }
-  }
-
-  private setSquadLocal() {
-
   }
 }
