@@ -59,6 +59,7 @@ export interface Squad {
   callsign: string;
   state: SquadState;
   combattants: number;
+  position: number;
 }
 
 export interface GetAllSquads {
@@ -86,7 +87,7 @@ export interface SetSquad_Request {
 export interface SetSquad_Response {}
 
 function createBaseSquad(): Squad {
-  return { name: "", callsign: "", state: 0, combattants: 0 };
+  return { name: "", callsign: "", state: 0, combattants: 0, position: 0 };
 }
 
 export const Squad = {
@@ -102,6 +103,9 @@ export const Squad = {
     }
     if (message.combattants !== 0) {
       writer.uint32(32).int32(message.combattants);
+    }
+    if (message.position !== 0) {
+      writer.uint32(40).int32(message.position);
     }
     return writer;
   },
@@ -125,6 +129,9 @@ export const Squad = {
         case 4:
           message.combattants = reader.int32();
           break;
+        case 5:
+          message.position = reader.int32();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -139,6 +146,7 @@ export const Squad = {
       callsign: isSet(object.callsign) ? String(object.callsign) : "",
       state: isSet(object.state) ? squadStateFromJSON(object.state) : 0,
       combattants: isSet(object.combattants) ? Number(object.combattants) : 0,
+      position: isSet(object.position) ? Number(object.position) : 0,
     };
   },
 
@@ -150,6 +158,8 @@ export const Squad = {
       (obj.state = squadStateToJSON(message.state));
     message.combattants !== undefined &&
       (obj.combattants = Math.round(message.combattants));
+    message.position !== undefined &&
+      (obj.position = Math.round(message.position));
     return obj;
   },
 
@@ -159,6 +169,7 @@ export const Squad = {
     message.callsign = object.callsign ?? "";
     message.state = object.state ?? 0;
     message.combattants = object.combattants ?? 0;
+    message.position = object.position ?? 0;
     return message;
   },
 };

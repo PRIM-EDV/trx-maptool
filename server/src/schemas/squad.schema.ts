@@ -18,6 +18,9 @@ export class DbSquad {
     @Prop({required: false, unique: false})
     combattants: number;
 
+    @Prop({required: false, unique: false})
+    position: number;
+
     public static fromProto(squad: Squad): DbSquad {
         const dbo = new DbSquad();
         
@@ -25,6 +28,7 @@ export class DbSquad {
         dbo.callsign = squad.callsign ? squad.callsign : "NN";
         dbo.state = squad.state ? squad.state : SquadState.STATE_UNSTAGED;
         dbo.combattants = squad.combattants ? squad.combattants : 0; 
+        dbo.position = squad.position ? squad.position : 0;
         
         return dbo;
     }
@@ -34,7 +38,8 @@ export class DbSquad {
             name: dbo.name,
             callsign: dbo.callsign,
             state: dbo.state,
-            combattants: dbo.combattants
+            combattants: dbo.combattants,
+            position: dbo.position
         }
 
         return squad;

@@ -6,7 +6,6 @@ import { PhDropListComponent } from 'src/app/ph-elements/ph-drop-list/ph-drop-li
 import { SquadService } from './squad.service';
 import { CreatePopupComponent } from './popups/create-popup/create-popup.component';
 
-
 @Component({
   selector: 'squad',
   templateUrl: './squad.component.html',
@@ -18,9 +17,7 @@ export class SquadComponent implements OnInit, AfterViewInit {
   @ViewChildren(PhDropListComponent) dropListComponents!: QueryList<PhDropListComponent>;
 
   public connectedLists: Array<PhDropListComponent> = [];
-  public squads: Array<Squad> = [
-    {name: "Angry Beards", callsign: "AB", combattants: 5, state: SquadState.STATE_UNSTAGED}
-  ];
+  public squads: Array<Squad> = [];
 
   //
   public SquadState = SquadState;
@@ -50,7 +47,8 @@ export class SquadComponent implements OnInit, AfterViewInit {
   }
 
   public getSquadsByState(state: SquadState): Array<Squad> {
-    return this.squads.filter((squad) => squad.state === state);
+    let squads = this.squads.filter((squad) => squad.state === state);
+    return squads.sort((a, b) => a.position - b.position);
   }
 
   handleDrop(item: Squad, state: SquadState) {
@@ -65,16 +63,31 @@ export class SquadComponent implements OnInit, AfterViewInit {
   }
 
   private handleSetSquad(squad: Squad) {
+    this.fixPosition (squad.position, squad.state, squad.name);
     const existing = this.squads.find((item) => item.name == squad.name);
-
+    console.log(squad);
     if (existing) {
       existing.callsign = squad.callsign;
       existing.combattants = squad.combattants;
       existing.state = squad.state;
+      existing.position = squad.position;
     }else {
       this.squads.push(squad);
     }
+  }
 
-    console.log(this.squads);
+  // SUPER HACKY, PLEASE REMOVE ME
+  private fixPosition (position: number, state: SquadState, name: string) {
+    for (let squad of this.squads) {
+      if (squad.position >= position && squad.name != name && squad.state == state) {
+        squad.position += 1;
+      }
+    }
+
+    const squads = this.squads.filter((a) => a.state == state).sort((a,b) => a.position - b.position);
+    for (let i = 0; i < squads.length; i++) {
+      const ref = this.squads.find((s) => s.name == squads[i].name);
+      ref!.position = i;
+    }
   }
 }

@@ -41,7 +41,6 @@ export class SquadService {
 
     public async setSquad(squad: Squad) {
         let dbSquad = await this.squadModel.findOne({name: squad.name}).exec();
-        console.log(dbSquad);
         if(dbSquad) {
             dbSquad.state = squad.state ? squad.state : dbSquad.state;
             dbSquad.combattants = squad.combattants ? squad.combattants : dbSquad.combattants;

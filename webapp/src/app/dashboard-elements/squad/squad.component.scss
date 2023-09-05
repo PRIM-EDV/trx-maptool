@@ -1,12 +1,16 @@
 :host {
     display: flex;
     flex-grow: 1;
+    overflow: hidden;
 }
 
 div.content {
     flex-grow: 1;
-    display: flex;
-    flex-direction: column;
+    overflow: hidden;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 1fr 32px;
 }
 
 div.lists {
@@ -14,6 +18,8 @@ div.lists {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr;
+
+    overflow: hidden;
 }
 
 div.tag {

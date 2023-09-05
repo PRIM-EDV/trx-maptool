@@ -13,6 +13,7 @@ message Squad {
     string callsign = 2;
     SquadState state = 3;
     int32 combattants = 4;
+    int32 position = 5; 
 }
 
 message GetAllSquads {
