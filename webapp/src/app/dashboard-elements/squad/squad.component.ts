@@ -1,19 +1,23 @@
-import { AfterContentInit, AfterViewInit, Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterContentInit, AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { BackendService } from 'src/app/backend/backend.service';
 import { Squad, SquadState } from 'proto/maptool.squad';
 import { Response, Request } from 'proto/maptool';
 import { PhDropListComponent } from 'src/app/ph-elements/ph-drop-list/ph-drop-list.component';
 import { SquadService } from './squad.service';
 import { CreatePopupComponent } from './popups/create-popup/create-popup.component';
+import { PhContextMenuComponent } from 'src/app/ph-elements/ph-context-menu/ph-context-menu.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'squad',
   templateUrl: './squad.component.html',
   styleUrls: ['./squad.component.scss']
 })
-export class SquadComponent implements OnInit, AfterViewInit {
+export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild(CreatePopupComponent) createPopup!: CreatePopupComponent;
+  @ViewChild("existingContextMenu") existingContextMenu!: PhContextMenuComponent;
+  @ViewChild("newContextMenu") newContextMenu!: PhContextMenuComponent;
   @ViewChildren(PhDropListComponent) dropListComponents!: QueryList<PhDropListComponent>;
 
   public connectedLists: Array<PhDropListComponent> = [];
@@ -22,28 +26,68 @@ export class SquadComponent implements OnInit, AfterViewInit {
   //
   public SquadState = SquadState;
 
-  constructor(private readonly backend: BackendService, public readonly squadService: SquadService) {
-    this.backend.onOpen.subscribe(() => {
+  private contextSquad!: Squad ;
+
+  private onOpenSubscription?: Subscription;
+  private onRequestSubscription?: Subscription;
+
+  constructor(private readonly backend: BackendService, public readonly squadService: SquadService, private cdr: ChangeDetectorRef) {
+    this.onOpenSubscription = this.backend.onOpen.subscribe(() => {
       this.squadService.getAllSquads().then((squads) => {this.squads = squads});
     })
-    backend.onRequest.subscribe(this.handleRequest.bind(this));
+    this.onRequestSubscription = backend.onRequest.subscribe(this.handleRequest.bind(this));
   }
 
   ngOnInit(): void {
     if (this.backend.isConnected) {
-      this.squadService.getAllSquads().then((squads) => {this.squads = squads});
+      this.squadService.getAllSquads().then((squads) => {
+        this.squads = squads;
+    });
     }
   }
 
   ngAfterViewInit() {
     for(const item of this.dropListComponents) {
         this.connectedLists.push(item);
-      }
+    }
+    this.existingContextMenu.close();
+  }
+
+  ngOnDestroy(): void {
+      this.onOpenSubscription?.unsubscribe();
+      this.onRequestSubscription?.unsubscribe();
+  }
+
+  public deleteSquad() {
+    this.squadService.deleteSquad(this.contextSquad);
+    this.existingContextMenu.close();
+  }
+
+  public editSquad() {
+    // this.squadService.setSquad(this.contextSquad);
+  }
+
+  public newSquad() {
+    
+  }
+
+  public openEditContextMenu(ev: MouseEvent, squad: Squad) {
+    ev.preventDefault();
+    ev.stopPropagation();
+    this.contextSquad = squad;
+    this.existingContextMenu.open({x: ev.clientX, y: ev.clientY});
+  }
+
+  public openNewContextMenu(ev: MouseEvent, state: SquadState) {
+    ev.preventDefault();
+    this.contextSquad = {name: "", callsign: "", combattants: 0, state: state, position: 0};;
+    this.newContextMenu.open({x: ev.clientX, y: ev.clientY});
   }
 
   public openSquadCreatePopup(ev: MouseEvent) {
     const position ={x: window.innerWidth / 2 - 330, y: window.innerHeight / 2 - 70};
     this.createPopup.open(position);
+    this.createPopup.squad = {name: this.contextSquad.name, callsign: this.contextSquad.callsign, combattants: this.contextSquad.combattants, state: this.contextSquad.state, position: 0};
   }
 
   public getSquadsByState(state: SquadState): Array<Squad> {
@@ -60,12 +104,16 @@ export class SquadComponent implements OnInit, AfterViewInit {
     if (e.request.setSquad) {
       this.handleSetSquad(e.request.setSquad.squad!);
     }
+
+    if (e.request.deleteSquad) {
+        this.handleDeleteSquad(e.request.deleteSquad.squad!);
+    }
   }
 
   private handleSetSquad(squad: Squad) {
     this.fixPosition (squad.position, squad.state, squad.name);
     const existing = this.squads.find((item) => item.name == squad.name);
-    console.log(squad);
+    console.log(squad)
     if (existing) {
       existing.callsign = squad.callsign;
       existing.combattants = squad.combattants;
@@ -73,6 +121,14 @@ export class SquadComponent implements OnInit, AfterViewInit {
       existing.position = squad.position;
     }else {
       this.squads.push(squad);
+    }
+  }
+
+  private handleDeleteSquad(squad: Squad) {
+    const idx = this.squads.findIndex((item) => item.name == squad.name);
+
+    if (idx > -1) {
+        this.squads.splice(idx, 1);
     }
   }
 

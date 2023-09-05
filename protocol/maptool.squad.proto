@@ -45,4 +45,18 @@ message SetSquad {
     }
 }
 
+message DeleteSquad {
+    message Request {
+        Squad squad = 1;
+    }
+
+    message Response {}
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}
+
 

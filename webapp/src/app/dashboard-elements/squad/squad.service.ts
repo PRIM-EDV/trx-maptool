@@ -11,12 +11,12 @@ export class SquadService {
 
     }
 
-    // public async deleteMapEntity(entity: SituationMapEntity) {
-    //     const req: Request = {
-    //         deleteMapEntity: { entity: this.getProtoMapEntityFromData(entity) }
-    //     }
-    //     const res: Response = await this.backend.request(req);
-    // }
+    public async deleteSquad(squad: Squad) {
+        const req: Request = {
+            deleteSquad: { squad: squad }
+        }
+        const res: Response = await this.backend.request(req);
+    }
 
     public async setSquad(squad: Squad) {
         const req: Request = {

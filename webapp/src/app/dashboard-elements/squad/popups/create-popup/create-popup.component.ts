@@ -13,7 +13,7 @@ export class CreatePopupComponent implements AfterViewInit {
 
     @Output() create = new EventEmitter<Squad>();
 
-    public squad: Squad = {name: "", callsign: "", combattants: 0, state: SquadState.STATE_UNDEFINED, position: 0};
+    public squad: Squad = {name: "", callsign: "", combattants: 0, state: SquadState.STATE_UNSTAGED, position: 0};
   
     constructor() { }
 
@@ -28,7 +28,7 @@ export class CreatePopupComponent implements AfterViewInit {
     } 
 
     public open(cursorPosition: {x: number, y: number}) {
-        this.squad = {name: "", callsign: "", combattants: 0, state: SquadState.STATE_UNDEFINED, position: 0};
+        this.squad =  {name: "", callsign: "", combattants: 0, state: SquadState.STATE_UNSTAGED, position: 0};
 
         this.window.ref.nativeElement.style.top = `${cursorPosition.y}px`;
         this.window.ref.nativeElement.style.left = `${cursorPosition.x}px`;

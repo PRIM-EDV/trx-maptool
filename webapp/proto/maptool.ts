@@ -10,8 +10,10 @@ import {
 import {
   GetAllSquads_Request,
   SetSquad_Request,
+  DeleteSquad_Request,
   GetAllSquads_Response,
   SetSquad_Response,
+  DeleteSquad_Response,
 } from "./maptool.squad";
 import * as _m0 from "protobufjs/minimal";
 
@@ -23,6 +25,7 @@ export interface Request {
   deleteMapEntity?: DeleteMapEntity_Request | undefined;
   getAllSquads?: GetAllSquads_Request | undefined;
   setSquad?: SetSquad_Request | undefined;
+  deleteSquad?: DeleteSquad_Request | undefined;
 }
 
 export interface Response {
@@ -31,6 +34,7 @@ export interface Response {
   deleteMapEntity?: DeleteMapEntity_Response | undefined;
   getAllSquads?: GetAllSquads_Response | undefined;
   setSquad?: SetSquad_Response | undefined;
+  deleteSquad?: DeleteSquad_Response | undefined;
 }
 
 export interface MaptoolMessage {
@@ -46,6 +50,7 @@ function createBaseRequest(): Request {
     deleteMapEntity: undefined,
     getAllSquads: undefined,
     setSquad: undefined,
+    deleteSquad: undefined,
   };
 }
 
@@ -82,6 +87,12 @@ export const Request = {
       SetSquad_Request.encode(
         message.setSquad,
         writer.uint32(42).fork()
+      ).ldelim();
+    }
+    if (message.deleteSquad !== undefined) {
+      DeleteSquad_Request.encode(
+        message.deleteSquad,
+        writer.uint32(50).fork()
       ).ldelim();
     }
     return writer;
@@ -121,6 +132,12 @@ export const Request = {
         case 5:
           message.setSquad = SetSquad_Request.decode(reader, reader.uint32());
           break;
+        case 6:
+          message.deleteSquad = DeleteSquad_Request.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -146,6 +163,9 @@ export const Request = {
       setSquad: isSet(object.setSquad)
         ? SetSquad_Request.fromJSON(object.setSquad)
         : undefined,
+      deleteSquad: isSet(object.deleteSquad)
+        ? DeleteSquad_Request.fromJSON(object.deleteSquad)
+        : undefined,
     };
   },
 
@@ -170,6 +190,10 @@ export const Request = {
     message.setSquad !== undefined &&
       (obj.setSquad = message.setSquad
         ? SetSquad_Request.toJSON(message.setSquad)
+        : undefined);
+    message.deleteSquad !== undefined &&
+      (obj.deleteSquad = message.deleteSquad
+        ? DeleteSquad_Request.toJSON(message.deleteSquad)
         : undefined);
     return obj;
   },
@@ -197,6 +221,10 @@ export const Request = {
       object.setSquad !== undefined && object.setSquad !== null
         ? SetSquad_Request.fromPartial(object.setSquad)
         : undefined;
+    message.deleteSquad =
+      object.deleteSquad !== undefined && object.deleteSquad !== null
+        ? DeleteSquad_Request.fromPartial(object.deleteSquad)
+        : undefined;
     return message;
   },
 };
@@ -208,6 +236,7 @@ function createBaseResponse(): Response {
     deleteMapEntity: undefined,
     getAllSquads: undefined,
     setSquad: undefined,
+    deleteSquad: undefined,
   };
 }
 
@@ -244,6 +273,12 @@ export const Response = {
       SetSquad_Response.encode(
         message.setSquad,
         writer.uint32(42).fork()
+      ).ldelim();
+    }
+    if (message.deleteSquad !== undefined) {
+      DeleteSquad_Response.encode(
+        message.deleteSquad,
+        writer.uint32(50).fork()
       ).ldelim();
     }
     return writer;
@@ -283,6 +318,12 @@ export const Response = {
         case 5:
           message.setSquad = SetSquad_Response.decode(reader, reader.uint32());
           break;
+        case 6:
+          message.deleteSquad = DeleteSquad_Response.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -307,6 +348,9 @@ export const Response = {
         : undefined,
       setSquad: isSet(object.setSquad)
         ? SetSquad_Response.fromJSON(object.setSquad)
+        : undefined,
+      deleteSquad: isSet(object.deleteSquad)
+        ? DeleteSquad_Response.fromJSON(object.deleteSquad)
         : undefined,
     };
   },
@@ -333,6 +377,10 @@ export const Response = {
       (obj.setSquad = message.setSquad
         ? SetSquad_Response.toJSON(message.setSquad)
         : undefined);
+    message.deleteSquad !== undefined &&
+      (obj.deleteSquad = message.deleteSquad
+        ? DeleteSquad_Response.toJSON(message.deleteSquad)
+        : undefined);
     return obj;
   },
 
@@ -358,6 +406,10 @@ export const Response = {
     message.setSquad =
       object.setSquad !== undefined && object.setSquad !== null
         ? SetSquad_Response.fromPartial(object.setSquad)
+        : undefined;
+    message.deleteSquad =
+      object.deleteSquad !== undefined && object.deleteSquad !== null
+        ? DeleteSquad_Response.fromPartial(object.deleteSquad)
         : undefined;
     return message;
   },

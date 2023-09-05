@@ -86,6 +86,18 @@ export interface SetSquad_Request {
 
 export interface SetSquad_Response {}
 
+export interface DeleteSquad {
+  request?: DeleteSquad_Request | undefined;
+  response?: DeleteSquad_Response | undefined;
+  error: string | undefined;
+}
+
+export interface DeleteSquad_Request {
+  squad?: Squad;
+}
+
+export interface DeleteSquad_Response {}
+
 function createBaseSquad(): Squad {
   return { name: "", callsign: "", state: 0, combattants: 0, position: 0 };
 }
@@ -574,6 +586,208 @@ export const SetSquad_Response = {
     _: I
   ): SetSquad_Response {
     const message = createBaseSetSquad_Response();
+    return message;
+  },
+};
+
+function createBaseDeleteSquad(): DeleteSquad {
+  return { request: undefined, response: undefined, error: undefined };
+}
+
+export const DeleteSquad = {
+  encode(
+    message: DeleteSquad,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.request !== undefined) {
+      DeleteSquad_Request.encode(
+        message.request,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    if (message.response !== undefined) {
+      DeleteSquad_Response.encode(
+        message.response,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    if (message.error !== undefined) {
+      writer.uint32(26).string(message.error);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): DeleteSquad {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseDeleteSquad();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.request = DeleteSquad_Request.decode(reader, reader.uint32());
+          break;
+        case 2:
+          message.response = DeleteSquad_Response.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 3:
+          message.error = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): DeleteSquad {
+    return {
+      request: isSet(object.request)
+        ? DeleteSquad_Request.fromJSON(object.request)
+        : undefined,
+      response: isSet(object.response)
+        ? DeleteSquad_Response.fromJSON(object.response)
+        : undefined,
+      error: isSet(object.error) ? String(object.error) : undefined,
+    };
+  },
+
+  toJSON(message: DeleteSquad): unknown {
+    const obj: any = {};
+    message.request !== undefined &&
+      (obj.request = message.request
+        ? DeleteSquad_Request.toJSON(message.request)
+        : undefined);
+    message.response !== undefined &&
+      (obj.response = message.response
+        ? DeleteSquad_Response.toJSON(message.response)
+        : undefined);
+    message.error !== undefined && (obj.error = message.error);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<DeleteSquad>, I>>(
+    object: I
+  ): DeleteSquad {
+    const message = createBaseDeleteSquad();
+    message.request =
+      object.request !== undefined && object.request !== null
+        ? DeleteSquad_Request.fromPartial(object.request)
+        : undefined;
+    message.response =
+      object.response !== undefined && object.response !== null
+        ? DeleteSquad_Response.fromPartial(object.response)
+        : undefined;
+    message.error = object.error ?? undefined;
+    return message;
+  },
+};
+
+function createBaseDeleteSquad_Request(): DeleteSquad_Request {
+  return { squad: undefined };
+}
+
+export const DeleteSquad_Request = {
+  encode(
+    message: DeleteSquad_Request,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    if (message.squad !== undefined) {
+      Squad.encode(message.squad, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): DeleteSquad_Request {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseDeleteSquad_Request();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.squad = Squad.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): DeleteSquad_Request {
+    return {
+      squad: isSet(object.squad) ? Squad.fromJSON(object.squad) : undefined,
+    };
+  },
+
+  toJSON(message: DeleteSquad_Request): unknown {
+    const obj: any = {};
+    message.squad !== undefined &&
+      (obj.squad = message.squad ? Squad.toJSON(message.squad) : undefined);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<DeleteSquad_Request>, I>>(
+    object: I
+  ): DeleteSquad_Request {
+    const message = createBaseDeleteSquad_Request();
+    message.squad =
+      object.squad !== undefined && object.squad !== null
+        ? Squad.fromPartial(object.squad)
+        : undefined;
+    return message;
+  },
+};
+
+function createBaseDeleteSquad_Response(): DeleteSquad_Response {
+  return {};
+}
+
+export const DeleteSquad_Response = {
+  encode(
+    _: DeleteSquad_Response,
+    writer: _m0.Writer = _m0.Writer.create()
+  ): _m0.Writer {
+    return writer;
+  },
+
+  decode(
+    input: _m0.Reader | Uint8Array,
+    length?: number
+  ): DeleteSquad_Response {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseDeleteSquad_Response();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): DeleteSquad_Response {
+    return {};
+  },
+
+  toJSON(_: DeleteSquad_Response): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<DeleteSquad_Response>, I>>(
+    _: I
+  ): DeleteSquad_Response {
+    const message = createBaseDeleteSquad_Response();
     return message;
   },
 };

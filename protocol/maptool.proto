@@ -10,6 +10,7 @@ message Request {
         DeleteMapEntity.Request delete_map_entity = 3;
         GetAllSquads.Request get_all_squads = 4;
         SetSquad.Request set_squad = 5;
+        DeleteSquad.Request delete_squad = 6;
     }
 }
 
@@ -20,6 +21,7 @@ message Response {
         DeleteMapEntity.Response delete_map_entity = 3;
         GetAllSquads.Response get_all_squads = 4;
         SetSquad.Response set_squad = 5;
+        DeleteSquad.Response delete_squad = 6;
     }
 }
 
