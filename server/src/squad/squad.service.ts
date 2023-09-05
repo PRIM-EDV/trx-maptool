@@ -20,7 +20,7 @@ export class SquadService {
         if (event.request.setSquad) {
             this.setSquad(event.request.setSquad.squad);
             this.gateway.respond(event.clientId, event.msgId, {setSquad: {}});
-            this.gateway.requestAllButOne(event.clientId, event.request);
+            this.gateway.requestAll(event.request);
         }
 
         if(event.request.getAllSquads){

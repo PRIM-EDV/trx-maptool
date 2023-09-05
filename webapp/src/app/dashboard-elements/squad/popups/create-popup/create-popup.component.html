@@ -5,4 +5,8 @@
         <ph-slider [label]="'Combattants'" [(value)]="this.squad.combattants" [ticks]="['1', '5', '10', '15', '20', '25', '30']" [tickValues]="[1, 5, 10, 15, 20, 25, 30]"></ph-slider>
         <!-- <ph-slider [label]="'Casualties'" [ticks]="['1', '5', '10', '15', '20', '25', '30']" [tickValues]="[0, 5, 10, 15, 20, 25, 30]"></ph-slider> -->
     </ph-form>
+    <ph-button-list>
+        <ph-button (click)="apply()">APPLY</ph-button>
+        <ph-button (click)="cancel()">CANCEL</ph-button>
+    </ph-button-list>
 </ph-window>

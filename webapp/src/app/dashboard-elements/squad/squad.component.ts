@@ -25,7 +25,7 @@ export class SquadComponent implements OnInit, AfterViewInit {
   //
   public SquadState = SquadState;
 
-  constructor(private readonly backend: BackendService, private readonly squadService: SquadService) {
+  constructor(private readonly backend: BackendService, public readonly squadService: SquadService) {
     this.backend.onOpen.subscribe(() => {
       this.squadService.getAllSquads().then((squads) => {this.squads = squads});
     })
@@ -59,8 +59,22 @@ export class SquadComponent implements OnInit, AfterViewInit {
   }
 
   private handleRequest(e: {id: string, request: Request}) {
-    if (e.request.setMapEntity) {
-
+    if (e.request.setSquad) {
+      this.handleSetSquad(e.request.setSquad.squad!);
     }
+  }
+
+  private handleSetSquad(squad: Squad) {
+    const existing = this.squads.find((item) => item.name == squad.name);
+
+    if (existing) {
+      existing.callsign = squad.callsign;
+      existing.combattants = squad.combattants;
+      existing.state = squad.state;
+    }else {
+      this.squads.push(squad);
+    }
+
+    console.log(this.squads);
   }
 }

@@ -11,9 +11,9 @@ div.content {
 
 div.lists {
     flex-grow: 1;
-    align-items: stretch;
-    display: flex;
-    flex-direction: row;   
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
 }
 
 div.tag {

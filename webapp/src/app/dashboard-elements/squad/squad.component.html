@@ -33,5 +33,5 @@
 </div>
 
 <div class="overlay">
-    <squad-create-popup></squad-create-popup>
+    <squad-create-popup (create)="this.squadService.setSquad($event)"></squad-create-popup>
 </div>

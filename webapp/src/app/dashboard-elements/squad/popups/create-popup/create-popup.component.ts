@@ -14,9 +14,6 @@ export class CreatePopupComponent implements AfterViewInit {
     @Output() create = new EventEmitter<Squad>();
 
     public squad: Squad = {name: "", callsign: "", combattants: 0, state: SquadState.STATE_UNDEFINED};
-
-    // public type?: MapEntityType;
-    // public entity: SituationMapEntity = new SituationMapEntity();
   
     constructor() { }
 
@@ -26,19 +23,16 @@ export class CreatePopupComponent implements AfterViewInit {
 
 
     public apply() {
-        // this.entity.type = this.type!;
-        // console.log(this.entity)
-        // this.create.next(this.entity);
+        this.create.next(this.squad);
         this.window.hide();
     } 
 
     public open(cursorPosition: {x: number, y: number}) {
+        this.squad = {name: "", callsign: "", combattants: 0, state: SquadState.STATE_UNDEFINED};
+
         this.window.ref.nativeElement.style.top = `${cursorPosition.y}px`;
         this.window.ref.nativeElement.style.left = `${cursorPosition.x}px`;
 
-        // this.entity = new SituationMapEntity();
-        // this.entity.position = mapPosition;
-        console.log("show")
         this.window.show();
     }
 
