@@ -4,8 +4,11 @@ import { Request } from 'proto/maptool';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { DbSquad, DbSquadDocument } from 'src/schemas/squad.schema';
-import { Squad } from 'proto/maptool.squad';
+import { Squad, SquadState } from 'proto/maptool.squad';
 import { DbMapEntity, DbMapEntityDocument } from 'src/schemas/map-entity.schema';
+import { MapEntity, MapEntityType } from 'proto/maptool.map-entity';
+
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class SquadService {
@@ -20,7 +23,7 @@ export class SquadService {
 
     handleRequest(event: {clientId: string, msgId: string, request: Request}): void {
         if (event.request.setSquad) {
-            this.setSquad(event.request.setSquad.squad);
+            this.setSquad(event.request.setSquad.squad).then().catch((err) => {console.log(err)});
             this.gateway.respond(event.clientId, event.msgId, {setSquad: {}});
             this.gateway.requestAll(event.request);
         }
@@ -28,14 +31,14 @@ export class SquadService {
         if(event.request.getAllSquads){
             this.getAllSquads().then((squads) => {
                 this.gateway.respond(event.clientId, event.msgId, {getAllSquads: {squads: squads}});
-            });
+            }).catch((err) => {console.log(err)});
         }
 
         if(event.request.deleteSquad){
             this.deleteSquad(event.request.deleteSquad.squad).then(() => {
                 this.gateway.respond(event.clientId, event.msgId, {deleteSquad: {}});
                 this.gateway.requestAll(event.request);        
-            });
+            }).catch((err) => {console.log(err)});
         }
     }
 
@@ -55,12 +58,21 @@ export class SquadService {
     public async setSquad(squad: Squad) {
         let dbSquad = await this.squadModel.findOne({name: squad.name}).exec();
         if(dbSquad) {
+            if ((dbSquad.state != SquadState.STATE_IN_FIELD && squad.state ==  SquadState.STATE_IN_FIELD) ||
+                (dbSquad.state == SquadState.STATE_IN_FIELD && squad.state !=  SquadState.STATE_IN_FIELD)
+            ) {
+                await this.updateMapEntity(squad);
+            }
+        
             dbSquad.state = squad.state ? squad.state : dbSquad.state;
             dbSquad.combattants = squad.combattants ? squad.combattants : dbSquad.combattants;
             dbSquad.callsign = squad.callsign ? squad.callsign : dbSquad.callsign
             
             await dbSquad.save();
         } else {
+            if (squad.state ==  SquadState.STATE_IN_FIELD) {
+                await this.updateMapEntity(squad);
+            }
             dbSquad = new this.squadModel(DbSquad.fromProto(squad));
             await dbSquad.save();
         }
@@ -76,6 +88,39 @@ export class SquadService {
                 deleteMapEntity: {entity: DbMapEntity.toProto(mapEntity)}
             }
             await this.deleteMapEntity(mapEntity);
+            await this.gateway.requestAll(req);
+        }
+    }
+
+    private async updateMapEntity(squad: Squad) {
+        const dbMapEntity =  await this.mapEntityModel.findOne({"squad.name": squad.name});
+        if (squad.state == SquadState.STATE_IN_FIELD && !dbMapEntity) {
+            const mapEntity: MapEntity = {
+                id: uuidv4(),
+                type: MapEntityType.TYPE_FRIEND,
+                position: {x: 300, y: 1090},
+                squad: {
+                    name: squad.name,
+                    callsign: squad.callsign,
+                    trackerId: -1,
+                    combattants: squad.combattants
+                }
+            }
+
+            const req: Request = {
+                setMapEntity: {
+                    entity: mapEntity
+                }
+            }
+            await (new this.mapEntityModel(DbMapEntity.fromProto(mapEntity))).save();
+            await this.gateway.requestAll(req);
+        }
+
+        if (squad.state == SquadState.STATE_IN_FIELD && dbMapEntity) {
+            const req: Request = {
+                deleteMapEntity: {entity: DbMapEntity.toProto(dbMapEntity)}
+            }
+            await this.deleteMapEntity(dbMapEntity);
             await this.gateway.requestAll(req);
         }
     }

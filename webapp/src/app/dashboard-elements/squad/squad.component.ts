@@ -22,16 +22,16 @@ export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public connectedLists: Array<PhDropListComponent> = [];
   public squads: Array<Squad> = [];
-
-  //
   public SquadState = SquadState;
 
   private contextSquad!: Squad ;
-
   private onOpenSubscription?: Subscription;
   private onRequestSubscription?: Subscription;
 
-  constructor(private readonly backend: BackendService, public readonly squadService: SquadService, private cdr: ChangeDetectorRef) {
+  constructor(
+    private readonly backend: BackendService, 
+    public readonly squadService: SquadService
+  ) {
     this.onOpenSubscription = this.backend.onOpen.subscribe(() => {
       this.squadService.getAllSquads().then((squads) => {this.squads = squads});
     })
@@ -61,14 +61,6 @@ export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
   public deleteSquad() {
     this.squadService.deleteSquad(this.contextSquad);
     this.existingContextMenu.close();
-  }
-
-  public editSquad() {
-    // this.squadService.setSquad(this.contextSquad);
-  }
-
-  public newSquad() {
-    
   }
 
   public openEditContextMenu(ev: MouseEvent, squad: Squad) {

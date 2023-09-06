@@ -119,7 +119,6 @@ export class SituationMapComponent implements OnInit, AfterViewInit {
     }
 
     private setLocalMapEntity(entity: MapEntity) {
-        console.log(entity);
         let situationMapEntity = new SituationMapEntity();
         if (this.situationMapEntities.has(entity.id)) {
             situationMapEntity = this.situationMapEntities.get(entity.id)!;
