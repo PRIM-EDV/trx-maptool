@@ -51,6 +51,8 @@ export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
         this.connectedLists.push(item);
     }
     this.existingContextMenu.close();
+    this.newContextMenu.close();
+
   }
 
   ngOnDestroy(): void {

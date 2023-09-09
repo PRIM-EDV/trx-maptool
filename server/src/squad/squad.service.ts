@@ -23,8 +23,10 @@ export class SquadService {
 
     handleRequest(event: {clientId: string, msgId: string, request: Request}): void {
         if (event.request.setSquad) {
-            this.setSquad(event.request.setSquad.squad).then().catch((err) => {console.log(err)});
-            this.gateway.respond(event.clientId, event.msgId, {setSquad: {}});
+            this.setSquad(event.request.setSquad.squad).then(() => {
+                this.gateway.respond(event.clientId, event.msgId, {setSquad: {}});
+                this.gateway.requestAll(event.request);
+            }).catch((err) => {console.log(err)});
             this.gateway.requestAll(event.request);
         }
 
@@ -67,6 +69,7 @@ export class SquadService {
             dbSquad.state = squad.state ? squad.state : dbSquad.state;
             dbSquad.combattants = squad.combattants ? squad.combattants : dbSquad.combattants;
             dbSquad.callsign = squad.callsign ? squad.callsign : dbSquad.callsign
+            dbSquad.position = squad.position ? squad.position : dbSquad.position
             
             await dbSquad.save();
         } else {
@@ -116,10 +119,11 @@ export class SquadService {
             await this.gateway.requestAll(req);
         }
 
-        if (squad.state == SquadState.STATE_IN_FIELD && dbMapEntity) {
+        if (squad.state != SquadState.STATE_IN_FIELD && dbMapEntity) {
             const req: Request = {
                 deleteMapEntity: {entity: DbMapEntity.toProto(dbMapEntity)}
             }
+
             await this.deleteMapEntity(dbMapEntity);
             await this.gateway.requestAll(req);
         }
