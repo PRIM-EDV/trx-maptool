@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MapEntity } from 'proto/maptool.map-entity';
 import { BackendService } from 'src/app/backend/backend.service';
 import { PhContextMenuComponent } from 'src/app/ph-elements/ph-context-menu/ph-context-menu.component';
@@ -30,7 +30,7 @@ export class SituationMapComponent implements OnInit, AfterViewInit {
 
     private situationMapEntities: Map<string, SituationMapEntity> = new Map<string, SituationMapEntity>();
 
-    constructor(public readonly backend: BackendService, private readonly sitationMapService: SituationMapService) {
+    constructor(public readonly backend: BackendService, private readonly sitationMapService: SituationMapService, private ref: ElementRef) {
         this.backend.onOpen.subscribe(() => {
             this.sitationMapService.getAllMapEntities().then(this.setLocalMapEntities.bind(this));
         })
@@ -92,8 +92,10 @@ export class SituationMapComponent implements OnInit, AfterViewInit {
     }
 
     public openUnitCreateMenu() {
+        const rect = this.ref.nativeElement.getBoundingClientRect() as DOMRect;
+        const position = {x: rect.width / 2 - 256, y: rect.height / 2 - 24};
         this.terrainContextMenu.close();
-        this.createPopup.open(this.position, this.mapPosition);
+        this.createPopup.open(position, this.mapPosition);
     }
 
     public openEntityEditMenu() {
