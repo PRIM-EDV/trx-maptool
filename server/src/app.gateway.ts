@@ -7,8 +7,8 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 
 import { MaptoolMessage, Request, Response } from 'proto/maptool';
-import { LoggingService } from 'src/logging/logging.service';
 import { Subject } from 'rxjs';
+import { LoggingService } from './core/logging/logging.service';
 
 interface Ws extends WebSocket {
   id: string;

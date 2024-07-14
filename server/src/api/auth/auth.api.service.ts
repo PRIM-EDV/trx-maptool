@@ -6,7 +6,7 @@ const USERS : {name: string, password: string}[] = [
 ]
 
 @Injectable()
-export class AuthService {
+export class AuthApiService {
 
     constructor(
         private jwtService: JwtService

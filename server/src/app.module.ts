@@ -4,20 +4,19 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthModule } from './auth/auth.module';
-import { LoggingModule } from './logging/logging.module';
-import { GatewayModule } from './gateway/gateway.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MapModule } from './map/map.module';
 import { TrackerModule } from './tracker/tracker.module';
 import { SquadModule } from './squad/squad.module';
+import { ApiModule } from './api/api.module';
+import { AppGateway } from './app.gateway';
+import { LoggingModule } from './core/logging/logging.module';
 
 const MONGO_DB_HOST = process.env.MONGO_DB_HOST ? process.env.MONGO_DB_HOST : 'localhost'
 
 @Module({
   imports: [
-    AuthModule,
-    GatewayModule,
+    ApiModule,
     LoggingModule,
     MongooseModule.forRoot(`mongodb://database/prim`),
     ServeStaticModule.forRoot({
@@ -28,7 +27,7 @@ const MONGO_DB_HOST = process.env.MONGO_DB_HOST ? process.env.MONGO_DB_HOST : 'l
     SquadModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppGateway, AppService],
 })
 export class AppModule {
 

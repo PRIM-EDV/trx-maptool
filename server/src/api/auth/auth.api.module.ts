@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
+import { AuthApiService } from './auth.api.service';
 import { PassportModule } from '@nestjs/passport';
-import { LocalStrategy } from './local.strategy';
+import { LocalStrategy } from './strategys/local.strategy';
 import { JwtModule } from '@nestjs/jwt';
-import { AuthController } from './auth.controller';
+import { AuthApiController } from './auth.api.controller';
 
 export const jwtConstants = {
   secret: '37GqbZWodvVxnJ4L4NFU',
@@ -11,7 +11,7 @@ export const jwtConstants = {
 
 @Module({
   controllers: [
-    AuthController,
+    AuthApiController,
   ],
   imports: [
     PassportModule,
@@ -20,6 +20,6 @@ export const jwtConstants = {
       signOptions: { expiresIn: '60s' },
     }),
   ],
-  providers: [AuthService, LocalStrategy],
+  providers: [AuthApiService, LocalStrategy],
 })
-export class AuthModule {}
+export class AuthApiModule {}
