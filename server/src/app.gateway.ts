@@ -6,20 +6,16 @@ import {
 } from '@nestjs/websockets';
 import { v4 as uuidv4 } from 'uuid';
 
-import { MaptoolMessage, Request, Response } from 'proto/maptool';
 import { Subject } from 'rxjs';
 import { LoggingService } from './core/logging/logging.service';
-
-interface Ws extends WebSocket {
-  id: string;
-}
-
+import { TrxMessage, Request, Response } from 'proto/trx';
+import { Ws } from './common/interfaces/ws';
 @WebSocketGateway()
 export class AppGateway {
   protected activeClients: Map<string, Ws> = new Map<string, Ws>();
   protected requests: Map<string, (value: Response) => void> = new Map<string, (value: Response) => void>();
 
-  public onMessage: Subject<MaptoolMessage> = new Subject<MaptoolMessage>();
+  public onMessage: Subject<TrxMessage> = new Subject<TrxMessage>();
   public onRequest: Subject<{clientId: string, msgId: string, request: Request}> = new Subject<{clientId: string, msgId: string, request: Request}>();
 
   constructor(private readonly log: LoggingService) {
@@ -29,7 +25,7 @@ export class AppGateway {
 
   @SubscribeMessage('msg')
   handleMessage(client: Ws, payload: string): void {
-    const msg = MaptoolMessage.fromJSON(JSON.parse(payload));
+    const msg = TrxMessage.fromJSON(JSON.parse(payload));
 
     if(msg.request) {
         this.onRequest.next({clientId: client.id, msgId: msg.id, request: msg.request});
@@ -51,17 +47,18 @@ export class AppGateway {
   }
 
   handleConnection(client: Ws, ...args: any[]) {
+    const urlParams = new URLSearchParams(args[0].url.split('?')[1]);
+
+    client.token = urlParams.get('token');
     client.id = uuidv4();
+    
     this.activeClients.set(client.id, client);
     this.log.info(`Client connected: ${client.id}`);
-
-    console.log(this.activeClients.get(client.id).id)
-
   }
 
   public async request(clientId: string, req: Request): Promise<Response> {
     return new Promise((resolve, reject) => {
-        const msg: MaptoolMessage = {
+        const msg: TrxMessage = {
             id: uuidv4(),
             request: req
       }
@@ -93,7 +90,7 @@ export class AppGateway {
   }
 
   public respond(clientId: string, msgId: string, res: Response) {
-    const msg: MaptoolMessage = {
+    const msg: TrxMessage = {
         id: msgId,
         response: res
     }
@@ -106,14 +103,14 @@ export class AppGateway {
     }
   }
 
-  protected sendToAllClients(msg: MaptoolMessage) {
+  protected sendToAllClients(msg: TrxMessage) {
     for (const [id, client] of this.activeClients) {
       this.sendToClient(client, msg);
     }
   }
 
-  protected sendToClient(client: Ws, msg: MaptoolMessage) {
-    const buffer = {event: 'msg', data: JSON.stringify(MaptoolMessage.toJSON(msg))};
+  protected sendToClient(client: Ws, msg: TrxMessage) {
+    const buffer = {event: 'msg', data: JSON.stringify(TrxMessage.toJSON(msg))};
     client.send(JSON.stringify(buffer))
   }
 }

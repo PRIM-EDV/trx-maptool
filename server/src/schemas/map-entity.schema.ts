@@ -1,8 +1,6 @@
-// import { Schema } from 'mongoose';
-import { MapEntity, MapEntityType } from 'proto/maptool.map-entity';
-
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { MapEntity, MapEntityType } from 'proto/trx.entity';
 
 export type DbMapEntityDocument = DbMapEntity & Document;
 

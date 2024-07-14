@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { Request } from 'proto/maptool';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { DbSquad, DbSquadDocument } from 'src/schemas/squad.schema';
-import { Squad, SquadState } from 'proto/maptool.squad';
 import { DbMapEntity, DbMapEntityDocument } from 'src/schemas/map-entity.schema';
-import { MapEntity, MapEntityType } from 'proto/maptool.map-entity';
+import { Request, Response } from 'proto/trx';
 
 import { v4 as uuidv4 } from 'uuid';
 import { AppGateway } from 'src/app.gateway';
+import { MapEntity, MapEntityType } from 'proto/trx.entity';
+import { Squad, SquadState } from 'proto/trx.squad';
 
 @Injectable()
 export class SquadService {
@@ -60,8 +60,8 @@ export class SquadService {
     public async setSquad(squad: Squad) {
         let dbSquad = await this.squadModel.findOne({name: squad.name}).exec();
         if(dbSquad) {
-            if ((dbSquad.state != SquadState.STATE_IN_FIELD && squad.state ==  SquadState.STATE_IN_FIELD) ||
-                (dbSquad.state == SquadState.STATE_IN_FIELD && squad.state !=  SquadState.STATE_IN_FIELD)
+            if ((dbSquad.state != SquadState.SQUAD_STATE_IN_FIELD && squad.state ==  SquadState.SQUAD_STATE_IN_FIELD) ||
+                (dbSquad.state == SquadState.SQUAD_STATE_IN_FIELD && squad.state !=  SquadState.SQUAD_STATE_IN_FIELD)
             ) {
                 await this.updateMapEntity(squad);
             }
@@ -73,7 +73,7 @@ export class SquadService {
             
             await dbSquad.save();
         } else {
-            if (squad.state ==  SquadState.STATE_IN_FIELD) {
+            if (squad.state ==  SquadState.SQUAD_STATE_IN_FIELD) {
                 await this.updateMapEntity(squad);
             }
             dbSquad = new this.squadModel(DbSquad.fromProto(squad));
@@ -97,7 +97,7 @@ export class SquadService {
 
     private async updateMapEntity(squad: Squad) {
         const dbMapEntity =  await this.mapEntityModel.findOne({"squad.name": squad.name});
-        if (squad.state == SquadState.STATE_IN_FIELD && !dbMapEntity) {
+        if (squad.state == SquadState.SQUAD_STATE_IN_FIELD && !dbMapEntity) {
             const mapEntity: MapEntity = {
                 id: uuidv4(),
                 type: MapEntityType.TYPE_FRIEND,
@@ -119,7 +119,7 @@ export class SquadService {
             await this.gateway.requestAll(req);
         }
 
-        if (squad.state != SquadState.STATE_IN_FIELD && dbMapEntity) {
+        if (squad.state != SquadState.SQUAD_STATE_IN_FIELD && dbMapEntity) {
             const req: Request = {
                 deleteMapEntity: {entity: DbMapEntity.toProto(dbMapEntity)}
             }
