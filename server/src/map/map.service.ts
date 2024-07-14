@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { AppGateway } from 'src/gateway/app.gateway';
 import { Request } from 'proto/maptool';
 import { MapEntity } from 'proto/maptool.map-entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { DbMapEntity, DbMapEntityDocument} from 'src/schemas/map-entity.schema';
 import { Model } from 'mongoose';
 import { Tracker } from 'proto/rld-node';
+import { AppGateway } from 'src/app.gateway';
 
 @Injectable()
 export class MapService {

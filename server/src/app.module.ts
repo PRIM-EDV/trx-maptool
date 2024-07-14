@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
 
 import { AppController } from './app.controller';
@@ -14,6 +14,7 @@ import { LoggingModule } from './core/logging/logging.module';
 
 const MONGO_DB_HOST = process.env.MONGO_DB_HOST ? process.env.MONGO_DB_HOST : 'localhost'
 
+@Global()
 @Module({
   imports: [
     ApiModule,
@@ -28,6 +29,7 @@ const MONGO_DB_HOST = process.env.MONGO_DB_HOST ? process.env.MONGO_DB_HOST : 'l
   ],
   controllers: [AppController],
   providers: [AppGateway, AppService],
+  exports: [AppGateway]
 })
 export class AppModule {
 

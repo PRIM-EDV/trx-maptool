@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { AppGateway } from 'src/gateway/app.gateway';
 import { Request } from 'proto/maptool';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -9,6 +8,7 @@ import { DbMapEntity, DbMapEntityDocument } from 'src/schemas/map-entity.schema'
 import { MapEntity, MapEntityType } from 'proto/maptool.map-entity';
 
 import { v4 as uuidv4 } from 'uuid';
+import { AppGateway } from 'src/app.gateway';
 
 @Injectable()
 export class SquadService {

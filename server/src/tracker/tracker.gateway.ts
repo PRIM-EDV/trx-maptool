@@ -6,9 +6,9 @@ import {
 } from '@nestjs/websockets';
 import { v4 as uuidv4 } from 'uuid';
 
-import { LoggingService } from 'src/logging/logging.service';
 import { Subject } from 'rxjs';
 import { RldNodeMessage, Request, Response } from 'proto/rld-node';
+import { LoggingService } from 'src/core/logging/logging.service';
 
 interface Ws extends WebSocket {
     id: string;
