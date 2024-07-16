@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
+import { MapApiModule } from './map/map.api.module';
 
 @Module({
-    imports: [],
-    controllers: [],
-    providers: [],
+    imports: [
+        MapApiModule
+    ],
 })
 export class ApiModule {}

@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { DbSquad, DbSquadSchema } from 'src/schemas/squad.schema';
-import { SquadService } from './squad.service';
-import { DbMapEntity, MapEntitySchema } from 'src/schemas/map-entity.schema';
+import { DbSquad, DbSquadSchema } from 'src/infrastructure/schemas/squad.schema';
+import { SquadApiService } from './squad.api.service';
+import { DbMapEntity, MapEntitySchema } from 'src/infrastructure/repositories/map-entity/schemas/map-entity.schema';
 
 @Module({
     imports: [
@@ -10,7 +10,7 @@ import { DbMapEntity, MapEntitySchema } from 'src/schemas/map-entity.schema';
         MongooseModule.forFeature([{ name: DbMapEntity.name, schema: MapEntitySchema }])
     ],
     exports: [],
-    providers: [SquadService]
+    providers: [SquadApiService]
 })
-export class SquadModule {
+export class SquadApiModule {
 }

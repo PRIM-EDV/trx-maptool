@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { DbSquad, DbSquadDocument } from 'src/schemas/squad.schema';
-import { DbMapEntity, DbMapEntityDocument } from 'src/schemas/map-entity.schema';
+import { DbSquad, DbSquadDocument } from 'src/infrastructure/schemas/squad.schema';
+import { DbMapEntity, DbMapEntityDocument } from 'src/infrastructure/repositories/map-entity/schemas/map-entity.schema';
 import { Request, Response } from 'proto/trx';
 
 import { v4 as uuidv4 } from 'uuid';
@@ -11,7 +11,7 @@ import { MapEntity, MapEntityType } from 'proto/trx.entity';
 import { Squad, SquadState } from 'proto/trx.squad';
 
 @Injectable()
-export class SquadService {
+export class SquadApiService {
     constructor(
         @InjectModel("DbSquad") private squadModel: Model<DbSquadDocument>,
         @InjectModel("DbMapEntity") private mapEntityModel: Model<DbMapEntityDocument>, 
@@ -42,10 +42,6 @@ export class SquadService {
                 this.gateway.requestAll(event.request);        
             }).catch((err) => {console.log(err)});
         }
-    }
-
-    public async deleteMapEntity(entity: DbMapEntity) {
-        await this.mapEntityModel.deleteOne({uuid: entity.uuid}).exec();
     }
 
     public async getAllSquads() {
@@ -93,6 +89,10 @@ export class SquadService {
             await this.deleteMapEntity(mapEntity);
             await this.gateway.requestAll(req);
         }
+    }
+
+    private async deleteMapEntity(entity: DbMapEntity) {
+        await this.mapEntityModel.deleteOne({uuid: entity.uuid}).exec();
     }
 
     private async updateMapEntity(squad: Squad) {

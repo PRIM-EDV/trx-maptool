@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { DbMapEntity, DbMapEntityDocument} from 'src/schemas/map-entity.schema';
+import { DbMapEntity, DbMapEntityDocument} from 'src/infrastructure/repositories/map-entity/schemas/map-entity.schema';
 import { Model } from 'mongoose';
 import { MapEntity } from 'proto/trx.entity';
 
