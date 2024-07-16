@@ -1,33 +1,33 @@
 import { AppGateway } from 'src/app.gateway';
-import { MapApiService } from './map.api.service';
 import { Ws } from 'src/common/interfaces/ws';
-import { DeleteMapEntity_Request, GetAllMapEntities, GetAllMapEntities_Response, SetMapEntity_Request } from 'proto/trx.entity';
+import { DeleteMapEntity_Request, GetAllMapEntities_Response, SetMapEntity_Request } from 'proto/trx.entity';
 import { RpcHandler, Rpc } from 'lib/rpc/decorators';
 import { LoggingService } from 'src/infrastructure/logging/logging.service';
+import { MapEntityService } from 'src/core/map-entity/map-entity.service';
 
 @RpcHandler(AppGateway)
 export class MapApiController {
     constructor(
         private readonly log: LoggingService,
-        private readonly service: MapApiService,
-        private readonly gateway: AppGateway
+        private readonly gateway: AppGateway,
+        private readonly mapEntity: MapEntityService
     ) {}
 
     @Rpc()
     public async deleteMapEntity(client: Ws, req: DeleteMapEntity_Request) {
-        await this.service.deleteMapEntity(req.entity);
+        await this.mapEntity.remove(req.entity);
         this.gateway.requestAllButOne(client.id, { deleteMapEntity: req }).then().catch(this.log.error);
     }
 
     @Rpc()
     public async getAllMapEntities(): Promise<GetAllMapEntities_Response> {
-        const entities = await this.service.getAllMapEntities();
+        const entities = await this.mapEntity.getAll();
         return { entities: entities } ;
     }
 
     @Rpc()
     public async setMapEntity(client: Ws, req: SetMapEntity_Request) {
-        await this.service.setMapEntity(req.entity);
+        await this.mapEntity.place(req.entity);
         this.gateway.requestAllButOne(client.id, { setMapEntity: req }).then().catch(this.log.error);
     }
 }

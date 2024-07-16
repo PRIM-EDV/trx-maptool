@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { DbSquad, DbSquadDocument } from 'src/infrastructure/schemas/squad.schema';
+import { DbSquad, DbSquadDocument } from 'src/infrastructure/repositories/squad/schemas/squad.schema';
 import { DbMapEntity, DbMapEntityDocument } from 'src/infrastructure/repositories/map-entity/schemas/map-entity.schema';
 import { Request, Response } from 'proto/trx';
 
@@ -17,31 +17,7 @@ export class SquadApiService {
         @InjectModel("DbMapEntity") private mapEntityModel: Model<DbMapEntityDocument>, 
         private readonly gateway: AppGateway) 
     {
-        this.gateway.onRequest.subscribe(this.handleRequest.bind(this));
 
-    }
-
-    handleRequest(event: {clientId: string, msgId: string, request: Request}): void {
-        if (event.request.setSquad) {
-            this.setSquad(event.request.setSquad.squad).then(() => {
-                this.gateway.respond(event.clientId, event.msgId, {setSquad: {}});
-                this.gateway.requestAll(event.request);
-            }).catch((err) => {console.log(err)});
-            this.gateway.requestAll(event.request);
-        }
-
-        if(event.request.getAllSquads){
-            this.getAllSquads().then((squads) => {
-                this.gateway.respond(event.clientId, event.msgId, {getAllSquads: {squads: squads}});
-            }).catch((err) => {console.log(err)});
-        }
-
-        if(event.request.deleteSquad){
-            this.deleteSquad(event.request.deleteSquad.squad).then(() => {
-                this.gateway.respond(event.clientId, event.msgId, {deleteSquad: {}});
-                this.gateway.requestAll(event.request);        
-            }).catch((err) => {console.log(err)});
-        }
     }
 
     public async getAllSquads() {

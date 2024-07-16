@@ -1,16 +1,14 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import { DbSquad, DbSquadSchema } from 'src/infrastructure/schemas/squad.schema';
 import { SquadApiService } from './squad.api.service';
-import { DbMapEntity, MapEntitySchema } from 'src/infrastructure/repositories/map-entity/schemas/map-entity.schema';
+import { SquadModule } from 'src/core/squad/squad.module';
+import { SquadApiController } from './squad.api.controller';
 
 @Module({
     imports: [
-        MongooseModule.forFeature([{ name: DbSquad.name, schema: DbSquadSchema }]),
-        MongooseModule.forFeature([{ name: DbMapEntity.name, schema: MapEntitySchema }])
+       SquadModule
     ],
     exports: [],
-    providers: [SquadApiService]
+    providers: [SquadApiService, SquadApiController]
 })
 export class SquadApiModule {
 }

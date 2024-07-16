@@ -22,8 +22,12 @@ export class MapEntityRepository implements IMapEntityRepository {
 
     public async get(): Promise<MapEntity[]> {
         const entities = await this.mapEntityModel.find().exec();
-        
+
         return entities.map(entity => DbMapEntity.toProto(entity));
+    }
+
+    public async getBySquadName(name: string): Promise<MapEntity> {
+        return await this.mapEntityModel.findOne({"squad.name": name});
     }
 
     private async upsert(entity: MapEntity): Promise<void> {

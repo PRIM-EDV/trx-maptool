@@ -5,4 +5,4 @@ import { Module } from '@nestjs/common';
     
     ],
 })
-export class MapEntityService {}
+export class MapEntityModule {}
