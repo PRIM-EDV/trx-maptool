@@ -33,7 +33,7 @@ export class MapEntityService {
     @OnEvent('squad.placed')
     async handleSquadPlacedEvent(event: SquadPlacedEvent) {
         const squad = event.squad;
-        const repoMapEntity = this.mapEntityRepository.getBySquadName(event.squad.name);
+        const repoMapEntity = await this.mapEntityRepository.getBySquadName(event.squad.name);
 
         if (squad.state == SquadState.SQUAD_STATE_IN_FIELD && !repoMapEntity) {
             const mapEntity: MapEntity = {
@@ -53,8 +53,8 @@ export class MapEntityService {
         }
 
         if (squad.state != SquadState.SQUAD_STATE_IN_FIELD && repoMapEntity) {
-            // await this.deleteMapEntity(dbMapEntity);
-            // await this.gateway.requestAll(req);
+            await this.remove(repoMapEntity);
+            await this.mapEntityRpcAdapter.delete(repoMapEntity);
         }     
     }
 }
