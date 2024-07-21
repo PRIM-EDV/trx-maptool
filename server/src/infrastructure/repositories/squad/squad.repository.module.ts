@@ -7,13 +7,13 @@ import { SquadRepository } from './squad.repository';
     imports: [
         MongooseModule.forFeature([{ name: DbSquad.name, schema: DbSquadSchema }])
     ],
-    providers: [
-        SquadRepository,
-    ],
-    exports: [
-        SquadRepository
-    ]
+    providers: [{
+        provide: "SquadRepository",
+        useClass: SquadRepository
+    }],
+    exports: [{
+        provide: "SquadRepository",
+        useClass: SquadRepository
+    }]
 })
-export class SquadRepositoryModule {
-    
-}
+export class SquadRepositoryModule { }

@@ -5,13 +5,17 @@ import { OnEvent } from "@nestjs/event-emitter";
 import { SquadPlacedEvent } from "../events/squad-placed.event";
 import { SquadState } from "proto/trx.squad";
 import { v4 as uuidv4 } from 'uuid';
+import { IMapEntityRpcAdapter } from "./interfaces/map-entity.rpc.adapter.interface";
 
 const MapEntityRepository = () => Inject('MapEntityRepository');
+const MapRpcAdapter = () => Inject('MapEntityRpcAdapter');
+
 
 @Injectable()
 export class MapEntityService {
     constructor(
-        @MapEntityRepository() private readonly mapEntityRepository: IMapEntityRepository
+        @MapEntityRepository() private readonly mapEntityRepository: IMapEntityRepository,
+        @MapRpcAdapter() private readonly mapEntityRpcAdapter: IMapEntityRpcAdapter
     ) {}
 
     public async place(entity: MapEntity): Promise<void> {
@@ -45,21 +49,10 @@ export class MapEntityService {
             }
 
             await this.place(mapEntity);
-
-            // const req: Request = {
-            //     setMapEntity: {
-            //         entity: mapEntity
-            //     }
-            // }
-            // await (new this.mapEntityModel(DbMapEntity.fromProto(mapEntity))).save();
-            // await this.gateway.requestAll(req);
+            await this.mapEntityRpcAdapter.set(mapEntity);
         }
 
-        if (squad.state != SquadState.SQUAD_STATE_IN_FIELD && mapEntity) {
-            // const req: Request = {
-            //     deleteMapEntity: {entity: DbMapEntity.toProto(dbMapEntity)}
-            // }
-
+        if (squad.state != SquadState.SQUAD_STATE_IN_FIELD && repoMapEntity) {
             // await this.deleteMapEntity(dbMapEntity);
             // await this.gateway.requestAll(req);
         }     

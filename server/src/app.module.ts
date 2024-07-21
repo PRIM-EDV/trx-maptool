@@ -7,9 +7,9 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ApiModule } from './api/api.module';
 import { AppGateway } from './app.gateway';
-import { LoggingModule } from './infrastructure/logging/logging.module';
 import { CoreModule } from './core/core.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { LoggingModule } from './infrastructure/logging/logging.module';
 
 const MONGO_DB_HOST = process.env.MONGO_DB_HOST ? process.env.MONGO_DB_HOST : 'localhost'
 

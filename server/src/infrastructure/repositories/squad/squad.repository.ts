@@ -5,7 +5,6 @@ import { Squad } from "proto/trx.squad";
 import { ISquadRepository } from "src/core/squad/interfaces/squad.repository.interface";
 import { DbSquadDocument, DbSquad } from "./schemas/squad.schema";
 
-
 @Injectable()
 export class SquadRepository implements ISquadRepository {
 

@@ -7,5 +7,9 @@ import { SquadModule } from './squad/squad.module';
         MapEntityModule,
         SquadModule
     ],
+    exports: [
+        MapEntityModule,
+        SquadModule
+    ]
 })
 export class CoreModule {}

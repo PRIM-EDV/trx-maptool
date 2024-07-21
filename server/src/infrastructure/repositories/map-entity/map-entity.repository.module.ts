@@ -5,12 +5,14 @@ import { DbMapEntity, MapEntitySchema } from './schemas/map-entity.schema';
 
 @Module({
     imports: [MongooseModule.forFeature([{ name: DbMapEntity.name, schema: MapEntitySchema }])],
-    providers: [
-        MapEntityRepository,
-    ],
-    exports: [
-        MapEntityRepository
-    ]
+    providers: [{
+        provide: 'MapEntityRepository',
+        useClass: MapEntityRepository
+    }],
+    exports: [{
+        provide: 'MapEntityRepository',
+        useClass: MapEntityRepository
+    }]
 })
 export class MapEntityRepositoryModule {
     
