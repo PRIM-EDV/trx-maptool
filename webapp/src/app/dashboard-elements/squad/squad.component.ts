@@ -1,12 +1,13 @@
-import { AfterContentInit, AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { BackendService } from 'src/app/backend/backend.service';
 import { Squad, SquadState } from 'proto/maptool.squad';
 import { Response, Request } from 'proto/maptool';
-import { PhDropListComponent } from 'src/app/ph-elements/ph-drop-list/ph-drop-list.component';
 import { SquadService } from './squad.service';
 import { CreatePopupComponent } from './popups/create-popup/create-popup.component';
-import { PhContextMenuComponent } from 'src/app/ph-elements/ph-context-menu/ph-context-menu.component';
 import { Subscription } from 'rxjs';
+
+import { PhContextMenuComponent } from 'lib/ph-elements/ph-context-menu/ph-context-menu.component';
+import { PhDropListComponent } from 'lib/ph-elements/ph-drop-list/ph-drop-list.component';
 
 @Component({
   selector: 'squad',

@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { PhWindowComponent } from 'lib/ph-elements/ph-window/ph-window.component';
 import { Squad, SquadState } from 'proto/maptool.squad';
-import { PhWindowComponent } from 'src/app/ph-elements/ph-window/ph-window.component';
 
 
 @Component({
