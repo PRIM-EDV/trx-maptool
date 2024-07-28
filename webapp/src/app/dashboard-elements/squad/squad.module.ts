@@ -16,6 +16,9 @@ import { CreatePopupComponent } from './popups/create-popup/create-popup.compone
     CommonModule,
     PhElementsModule
   ],
+  providers: [
+    SquadService
+  ],
   exports: [
     SquadComponent
   ]

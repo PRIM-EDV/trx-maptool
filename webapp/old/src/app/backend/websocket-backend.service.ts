@@ -6,7 +6,7 @@ import { BackendService } from './backend.service';
 import { MapObject } from 'src/app/core/map-object';
 import { Coordinate } from 'src/app/core';
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 export class WebsocketBackendService extends BackendService {
 
     private _synchEvent = new Subject<void>();

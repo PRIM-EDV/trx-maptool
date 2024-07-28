@@ -5,9 +5,7 @@ import { MapEntity, MapEntityType } from 'proto/maptool.map-entity';
 import { SituationMapEntity } from './common/situation-map-entity';
 import { Subject } from 'rxjs';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class SituationMapService {
 
     public onSetMapEntity: Subject<MapEntity> = new Subject<MapEntity>();

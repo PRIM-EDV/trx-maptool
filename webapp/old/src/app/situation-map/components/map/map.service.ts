@@ -14,7 +14,7 @@ import { Injectable } from "@angular/core";
 //     uid: number;
 // }
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 
 export class MapService {
 

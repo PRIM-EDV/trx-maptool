@@ -8,7 +8,7 @@ import { CoreModule } from 'src/core/core.module';
     ],
     providers: [
         SquadApiController
-    ]
+    ],
 })
 export class SquadApiModule {
 }

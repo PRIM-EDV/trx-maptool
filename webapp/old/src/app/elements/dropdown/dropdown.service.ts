@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { DropdownComponent } from './dropdown.component';
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 export class DropdownService {
     constructor(){};
 

@@ -5,6 +5,7 @@ import { MapModule } from './rld-map/map.module';
 import { PhElementsModule } from 'src/app/ph-elements/ph-elements.module';
 import { CreatePopupComponent } from './popups/create-popup/create-popup.component';
 import { EditPopupComponent } from './popups/edit-popup/edit-popup.component';
+import { SituationMapService } from './situation-map.service';
 
 
 
@@ -18,6 +19,9 @@ import { EditPopupComponent } from './popups/edit-popup/edit-popup.component';
     CommonModule,
     MapModule,
     PhElementsModule
+  ],
+  providers: [
+    SituationMapService
   ],
   exports: [
     SituationMapComponent
