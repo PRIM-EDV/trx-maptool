@@ -16,7 +16,7 @@ export class AppGateway {
   protected requests: Map<string, (value: Response) => void> = new Map<string, (value: Response) => void>();
 
   public onMessage: Subject<TrxMessage> = new Subject<TrxMessage>();
-  public onRequest: Subject<{clientId: string, msgId: string, request: Request}> = new Subject<{clientId: string, msgId: string, request: Request}>();
+  public onRequest: Subject<{client: Ws, msgId: string, request: Request}> = new Subject<{client: Ws, msgId: string, request: Request}>();
 
   constructor(private readonly log: LoggingService) {
   }
@@ -28,7 +28,7 @@ export class AppGateway {
     const msg = TrxMessage.fromJSON(JSON.parse(payload));
 
     if(msg.request) {
-        this.onRequest.next({clientId: client.id, msgId: msg.id, request: msg.request});
+        this.onRequest.next({client: client, msgId: msg.id, request: msg.request});
     }
 
     if(msg.response) {
