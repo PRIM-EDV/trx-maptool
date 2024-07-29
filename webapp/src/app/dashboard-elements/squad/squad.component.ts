@@ -37,12 +37,21 @@ export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
       this.squadService.getAllSquads().then((squads) => {this.squads = squads});
     })
     this.onRequestSubscription = backend.onRequest.subscribe(this.handleRequest.bind(this));
+
+    // DEBUG
+    this.squads = [
+        {name: "Alpha", callsign: "A", combattants: 10, state: SquadState.STATE_READY, position: 0},
+        {name: "Bravo", callsign: "B", combattants: 10, state: SquadState.STATE_READY, position: 1},
+        {name: "Charlie", callsign: "C", combattants: 10, state: SquadState.STATE_READY, position: 2},
+        {name: "Delta", callsign: "D", combattants: 10, state: SquadState.STATE_QRF_READY, position: 1},
+        {name: "Echo", callsign: "E", combattants: 10, state: SquadState.STATE_QRF_READY, position: 2},
+    ];
   }
 
   ngOnInit(): void {
     if (this.backend.isConnected) {
       this.squadService.getAllSquads().then((squads) => {
-        this.squads = squads;
+        // this.squads = squads;
     });
     }
   }
@@ -90,9 +99,27 @@ export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
     return squads.sort((a, b) => a.position - b.position);
   }
 
-  handleDrop(item: Squad, state: SquadState) {
-    item.state = state;
-    this.squadService.setSquad(item);
+  handleDrop(event: {index: number, data: Squad}, state: SquadState) {
+    const squad = event.data;
+    const squads = this.getSquadsByState(state);
+    const index = event.index;
+
+    if (squads.includes(squad)) {
+        const previousIndex = squads.indexOf(squad);
+        squads.splice(previousIndex, 1);
+
+        if (previousIndex < index) {
+            squads.splice(index - 1, 0, squad);
+        } else {
+            squads.splice(index, 0, squad);
+        }
+    } else {
+        squads.splice(index, 0, squad);
+    }
+    squad.state = state;
+
+    squads.map((squad, index) => {squad.position = index});
+    // this.squadService.setSquad(item); 
   }
 
   private handleRequest(e: {id: string, request: Request}) {
@@ -106,7 +133,7 @@ export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private handleSetSquad(squad: Squad) {
-    this.fixPosition (squad.position, squad.state, squad.name);
+    // this.fixPosition (squad.position, squad.state, squad.name);
     const existing = this.squads.find((item) => item.name == squad.name);
     console.log(squad)
     if (existing) {
@@ -128,17 +155,17 @@ export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   // SUPER HACKY, PLEASE REMOVE ME
-  private fixPosition (position: number, state: SquadState, name: string) {
-    for (let squad of this.squads) {
-      if (squad.position >= position && squad.name != name && squad.state == state) {
-        squad.position += 1;
-      }
-    }
+//   private fixPosition (position: number, state: SquadState, name: string) {
+//     for (let squad of this.squads) {
+//       if (squad.position >= position && squad.name != name && squad.state == state) {
+//         squad.position += 1;
+//       }
+//     }
 
-    const squads = this.squads.filter((a) => a.state == state).sort((a,b) => a.position - b.position);
-    for (let i = 0; i < squads.length; i++) {
-      const ref = this.squads.find((s) => s.name == squads[i].name);
-      ref!.position = i;
-    }
-  }
+//     const squads = this.squads.filter((a) => a.state == state).sort((a,b) => a.position - b.position);
+//     for (let i = 0; i < squads.length; i++) {
+//       const ref = this.squads.find((s) => s.name == squads[i].name);
+//       ref!.position = i;
+//     }
+//   }
 }
