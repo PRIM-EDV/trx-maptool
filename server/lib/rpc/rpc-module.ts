@@ -41,7 +41,7 @@ export class RpcModule {
             return;
         }
 
-        const rpcMethods = this.metadataScanner.getAllMethodNames(instance as Object)
+        const rpcMethods = this.metadataScanner.getAllMethodNames(instance as object)
             .filter((methodName) => {
                 return Reflect.getMetadata(RPC_METADATA, instance[methodName]) !== undefined;
             })

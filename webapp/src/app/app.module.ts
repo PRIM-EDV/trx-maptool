@@ -6,8 +6,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { DashboardModule } from './dashboard/dashboard.module';
-import { PhElementsModule } from './ph-elements/ph-elements.module';
-import { SquadComponent } from './dashboard-elements/squad/squad.component';
+import { BackendService } from './backend/backend.service';
+import { PhElementsModule } from 'lib/ph-elements/ph-elements.module';
+
 
 declare global {
   interface Window {
@@ -30,7 +31,9 @@ declare global {
     DashboardModule,
     PhElementsModule
   ],
-  providers: [],
+  providers: [
+    BackendService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

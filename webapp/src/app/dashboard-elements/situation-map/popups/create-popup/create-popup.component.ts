@@ -1,8 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { PhWindowComponent } from 'src/app/ph-elements/ph-window/ph-window.component';
 import { MapEntityType } from '../../rld-map/common/map-entity';
-import { MapEntityData } from '../../rld-map/common/map-entity-data';
 import { SituationMapEntity } from '../../common/situation-map-entity';
+import { PhWindowComponent } from 'lib/ph-elements/ph-window/ph-window.component';
 
 
 @Component({

@@ -20,7 +20,7 @@ const MONGO_DB_HOST = process.env.MONGO_DB_HOST ? process.env.MONGO_DB_HOST : 'l
     CoreModule,
     LoggingModule,
     EventEmitterModule.forRoot(),
-    MongooseModule.forRoot(`mongodb://database/prim`),
+    MongooseModule.forRoot(`mongodb://${MONGO_DB_HOST}/prim`),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
     }),

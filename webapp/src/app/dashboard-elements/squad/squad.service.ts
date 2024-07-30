@@ -3,9 +3,7 @@ import { Response, Request } from 'proto/maptool';
 import { Squad } from 'proto/maptool.squad';
 import { BackendService } from 'src/app/backend/backend.service';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class SquadService {
     constructor(private backend: BackendService) {
 

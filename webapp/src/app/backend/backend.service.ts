@@ -12,7 +12,7 @@ const MAPTOOL_SERVER_PORT = window?.__env?.maptoolServerPort != null ? window.__
 const REST_API_URL = `http://${window.location.host}`;
 const WS_URL = `ws://${MAPTOOL_SERVER_HOSTNAME}:${MAPTOOL_SERVER_PORT}`;
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 export class BackendService {
     public onRequest: Subject<{id: string, request: Request}> = new Subject<{id: string, request: Request}>();
     public onMessage: Subject<MaptoolMessage> = new Subject<MaptoolMessage>();
@@ -43,7 +43,7 @@ export class BackendService {
                 request: req
             }
             this.requests.set(msg.id, resolve.bind(this));
-            setTimeout(this.rejectOnTimeout.bind(this, msg.id, reject), 5000);
+            setTimeout(this.rejectOnTimeout.bind(this, msg.id, reject.bind(this, `${req} timed out`)), 5000);
             this.ws.next({event: 'msg', data: JSON.stringify(MaptoolMessage.toJSON(msg))});
         });
 

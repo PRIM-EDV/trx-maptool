@@ -1,8 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MapEntity } from 'proto/maptool.map-entity';
 import { BackendService } from 'src/app/backend/backend.service';
-import { PhContextMenuComponent } from 'src/app/ph-elements/ph-context-menu/ph-context-menu.component';
-import { PhWindowComponent } from 'src/app/ph-elements/ph-window/ph-window.component';
 import { SituationMapEntity } from './common/situation-map-entity';
 import { CreatePopupComponent } from './popups/create-popup/create-popup.component';
 import { EditPopupComponent } from './popups/edit-popup/edit-popup.component';
@@ -10,6 +8,7 @@ import { MapEntityType } from './rld-map/common/map-entity';
 import { MapEntityData } from './rld-map/common/map-entity-data';
 import { MapComponent } from './rld-map/map.component';
 import { SituationMapService } from './situation-map.service';
+import { PhContextMenuComponent } from 'lib/ph-elements/ph-context-menu/ph-context-menu.component';
 
 @Component({
   selector: 'situation-map',

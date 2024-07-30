@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { SquadApiService } from './squad.api.service';
 import { SquadApiController } from './squad.api.controller';
 import { CoreModule } from 'src/core/core.module';
 
@@ -7,8 +6,9 @@ import { CoreModule } from 'src/core/core.module';
     imports: [
         CoreModule
     ],
-    exports: [],
-    providers: [SquadApiService, SquadApiController]
+    providers: [
+        SquadApiController
+    ],
 })
 export class SquadApiModule {
 }
