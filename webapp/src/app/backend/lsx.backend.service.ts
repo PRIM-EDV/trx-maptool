@@ -5,14 +5,14 @@ import { Subject } from "rxjs";
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { LsxMessage, Request, Response } from "proto/lsx/lsx";
 
-const MAPTOOL_SERVER_HOSTNAME = window?.__env?.maptoolServerHostname != null ? `${window.__env.maptoolServerHostname}` : window.location.hostname;
-const MAPTOOL_SERVER_PORT = window?.__env?.maptoolServerPort != null ? window.__env.maptoolServerPort : window.location.port;
+const LSX_SERVER_HOSTNAME = window?.__env?.lsxServerHostname != null ? `${window.__env.lsxServerHostname}` : window.location.hostname;
+const LSX_SERVER_PORT = window?.__env?.lsxServerPort!= null ? window.__env.lsxServerPort : window.location.port;
 
 const REST_API_URL = `http://${window.location.host}`;
-const WS_URL = `ws://${MAPTOOL_SERVER_HOSTNAME}:${MAPTOOL_SERVER_PORT}`;
+const WS_URL = `ws://${LSX_SERVER_HOSTNAME}:${LSX_SERVER_PORT}`;
 
 @Injectable()
-export class TrxBackendService {
+export class LsxBackendService {
     public onRequest: Subject<{id: string, request: Request}> = new Subject<{id: string, request: Request}>();
     public onMessage: Subject<LsxMessage> = new Subject<LsxMessage>();
     public onOpen: Subject<void> = new Subject<void>();
@@ -27,7 +27,7 @@ export class TrxBackendService {
 
     public async connect() {
         this.ws = webSocket({url: WS_URL, openObserver: { next: () => { this.isConnected = true; this.onOpen.next()} }});
-
+        console.log('Connecting to', WS_URL);
         this.ws.subscribe({
             next: this.handleMessage.bind(this),
             error: this.handleClose.bind(this),
@@ -58,7 +58,7 @@ export class TrxBackendService {
 
     private handleMessage(buffer: {event: 'msg', data: string}) {
         const msg = LsxMessage.fromJSON(JSON.parse(buffer.data));
-
+        console.log(msg);
         if(msg.request) {
             this.onRequest.next({id: msg.id, request: msg.request});
         }

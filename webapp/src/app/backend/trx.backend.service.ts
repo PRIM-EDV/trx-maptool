@@ -6,8 +6,8 @@ import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { TrxMessage, Request, Response } from "proto/trx/trx";
 
 
-const MAPTOOL_SERVER_HOSTNAME = window?.__env?.maptoolServerHostname != null ? `${window.__env.maptoolServerHostname}` : window.location.hostname;
-const MAPTOOL_SERVER_PORT = window?.__env?.maptoolServerPort != null ? window.__env.maptoolServerPort : window.location.port;
+const MAPTOOL_SERVER_HOSTNAME = window?.__env?.trxServerHostname != null ? `${window.__env.trxServerHostname}` : window.location.hostname;
+const MAPTOOL_SERVER_PORT = window?.__env?.trxServerPort != null ? window.__env.trxServerPort : window.location.port;
 
 const REST_API_URL = `http://${window.location.host}`;
 const WS_URL = `ws://${MAPTOOL_SERVER_HOSTNAME}:${MAPTOOL_SERVER_PORT}`;

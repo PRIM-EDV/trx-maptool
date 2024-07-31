@@ -9,13 +9,16 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { TrxBackendService } from './backend/trx.backend.service';
 import { PhElementsModule } from 'lib/ph-elements/ph-elements.module';
 import { OverlayComponent } from "./overlay/overlay.component";
+import { LsxBackendService } from './backend/lsx.backend.service';
 
 
 declare global {
   interface Window {
     __env: {
-      maptoolServerHostname: string,
-      maptoolServerPort: string
+      lsxServerHostname: string,
+      lsxServerPort: string,
+      trxServerHostname: string,
+      trxServerPort: string
     }
   }
 }
@@ -34,6 +37,7 @@ declare global {
     OverlayComponent
 ],
   providers: [
+    LsxBackendService,
     TrxBackendService
   ],
   bootstrap: [AppComponent]

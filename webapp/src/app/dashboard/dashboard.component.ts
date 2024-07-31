@@ -12,10 +12,12 @@ export class DashboardComponent implements OnInit {
   public view: string = "TACOP";
   public tab: string = "MAP"
 
-  constructor(private readonly backend: TrxBackendService) { }
+  constructor(
+    private readonly trxBackend: TrxBackendService
+  ) { }
 
   ngOnInit(): void {
-    this.backend.connect();
+    this.trxBackend.connect();
   }
 
 }
