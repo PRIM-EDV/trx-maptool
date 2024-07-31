@@ -1,18 +1,15 @@
 <div class="backdrop">
-    <!-- <div class="dangerbar" style="top:0">
-        <div style="flex-grow:1; background: repeating-linear-gradient(45deg, rgba(0,0,0,1), rgba(0,0,0,1) 20px,rgba(0,0,0,0.0) 20px, rgba(0,0,0,0.0) 40px);"></div>
-    </div> -->
+    <div class="phoenix" style="z-index: -2;"></div>
     <div class="content">
+        <div class="dangerbar" style="padding-bottom: 24px; border-bottom: 2px solid rgba(222, 4, 0 ,1);">
+            <div class="stripes"></div>
+        </div>
         <div class="header">{{header}}</div>
     
-        <div class="message">{{message}}</div>
-    
-        <div class="error">
-            ERROR CODE: 0x0000D1F4<br>
-    ERROR TYPE: CRITICAL POWER FAILURE
+        <div class="message"><img src="../../assets/img/warning.svg" /><span>{{message}}</span></div>
+        <div class="dangerbar" style="padding-top: 24px; border-top: 2px solid rgba(222, 4, 0 ,1);">
+            <div class="stripes"></div>
         </div>
     </div>
-    <!-- <div class="dangerbar" style="bottom:0">
-        <div style="flex-grow:1; background: repeating-linear-gradient(45deg, rgba(0,0,0,1), rgba(0,0,0,1) 20px,rgba(0,0,0,0.0) 20px, rgba(0,0,0,0.0) 40px);"></div>
-    </div> -->
+
 </div>

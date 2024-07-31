@@ -8,15 +8,10 @@
 
     pointer-events: none;
     overflow: hidden;
-    background-image: url("../../assets/img/phoenix_bg.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 35%;
+    background: black;
 }
 
 div.dangerbar {
-    background-color: #f8a403;
-    position: fixed;
     left: 0; right: 0;
     display: flex;
     height: 48px;
@@ -29,41 +24,67 @@ div.backdrop {
     display: flex;
     justify-content: center;
     align-items: center;
+    background: radial-gradient(rgba(222, 4, 0, 0.1), rgba(222, 4, 0, 0.1) 50%, rgba(222, 4, 0, 0.001) 100%);
 
-    background: repeating-linear-gradient(45deg, rgba(0,0,0,0.75), rgba(0,0,0,0.75) 20px,rgba(0,0,0,0.5) 20px, rgba(0,0,0,0.6) 40px);
+}
+
+div.phoenix {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+
+    opacity: 0.35;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 30%;
+    // background-image: url('../../assets/img/phoenix_bg.png');
 }
 
 div.content {
     display: flex;
-    flex-grow: 1;
     flex-direction: column;
     font-family: 'Fira Code';
 
-    min-height: 50%;
+    padding: 24px;
 
     div.header {
         padding: 8px;
         font-size: 24px;
-        background-color: #e3e8d5;
         margin-bottom: 48px;
         text-align: center;
-        // margin-left: auto; margin-right: auto;
-
+        margin-left: auto; margin-right: auto;
+        color: rgba(222, 4, 0 ,1);
+        margin-top: 24px;
+        padding: 0 24px 24px 24px;
+        border-bottom: 2px solid rgba(222, 4, 0 ,1);
+        
     }
 
     div.message {
+        display: flex;
         font-size: 16px;
         color: #e3e8d5;
         max-width: 800px;
         margin-bottom: 48px;
         margin-left: auto; margin-right: auto;
 
-    }
+        align-items: center;
+        justify-content: center;
 
-    div.error {
-        font-size: 16px;
-        color: #e3e8d5;
-        margin-left: auto; margin-right: auto;
+        img {
+            height: 128px
+        }
 
+        span {
+            padding: 0 24px 0 24px;
+        }
     }
+}
+
+div.stripes {
+    flex-grow:1; 
+    background: repeating-linear-gradient(-45deg, rgba(222, 4, 0 ,1), rgba(222, 4, 0 ,1) 20px,rgba(0,0,0,0.10) 20px, rgba(0,0,0,0.10) 40px);
 }
