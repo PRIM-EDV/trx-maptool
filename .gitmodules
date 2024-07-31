@@ -4,6 +4,15 @@
 [submodule "webapp/src/app/dashboard-elements/situation-map/rld-map"]
 	path = webapp/src/app/dashboard-elements/situation-map/rld-map
 	url = https://github.com/PRIM-EDV/rld-map
-[submodule "protocol"]
-	path = protocol
+# [submodule "protocol/lsx"]
+# 	path = lsx-protocol
+# 	url = https://github.com/PRIM-EDV/lsx-protocol
+# [submodule "protocol/trx"]
+# 	path = lsx-protocol
+# 	url = https://github.com/PRIM-EDV/trx-protocol
+[submodule "protocol/lsx"]
+	path = protocol/lsx
+	url = https://github.com/PRIM-EDV/lsx-protocol
+[submodule "protocol/trx"]
+	path = protocol/trx
 	url = https://github.com/PRIM-EDV/trx-protocol
