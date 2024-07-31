@@ -1,0 +1,69 @@
+@import '../../theme.scss';
+
+:host {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+
+    background-color: #1f1f1f;
+
+    pointer-events: none;
+    overflow: hidden;
+    background-image: url("../../assets/img/phoenix_bg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 35%;
+}
+
+div.dangerbar {
+    background-color: #f8a403;
+    position: fixed;
+    left: 0; right: 0;
+    display: flex;
+    height: 48px;
+}
+
+div.backdrop {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: repeating-linear-gradient(45deg, rgba(0,0,0,0.75), rgba(0,0,0,0.75) 20px,rgba(0,0,0,0.5) 20px, rgba(0,0,0,0.6) 40px);
+}
+
+div.content {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    font-family: 'Fira Code';
+
+    min-height: 50%;
+
+    div.header {
+        padding: 8px;
+        font-size: 24px;
+        background-color: #e3e8d5;
+        margin-bottom: 48px;
+        text-align: center;
+        // margin-left: auto; margin-right: auto;
+
+    }
+
+    div.message {
+        font-size: 16px;
+        color: #e3e8d5;
+        max-width: 800px;
+        margin-bottom: 48px;
+        margin-left: auto; margin-right: auto;
+
+    }
+
+    div.error {
+        font-size: 16px;
+        color: #e3e8d5;
+        margin-left: auto; margin-right: auto;
+
+    }
+}
