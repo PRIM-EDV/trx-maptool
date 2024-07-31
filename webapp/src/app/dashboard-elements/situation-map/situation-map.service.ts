@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BackendService } from 'src/app/backend/backend.service';
-import { Response, Request } from 'proto/maptool';
-import { MapEntity, MapEntityType } from 'proto/maptool.map-entity';
+import { TrxBackendService } from 'src/app/backend/trx.backend.service';
+import { Response, Request } from 'proto/trx/trx';
+import { MapEntity, MapEntityType } from 'proto/trx/trx.entity';
 import { SituationMapEntity } from './common/situation-map-entity';
 import { Subject } from 'rxjs';
 
@@ -11,7 +11,7 @@ export class SituationMapService {
     public onSetMapEntity: Subject<MapEntity> = new Subject<MapEntity>();
     public onDeleteMapEntity: Subject<MapEntity> = new Subject<MapEntity>();
 
-    constructor(private backend: BackendService) {
+    constructor(private backend: TrxBackendService) {
         backend.onRequest.subscribe(this.handleRequest.bind(this));
     }
 

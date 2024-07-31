@@ -3,8 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { v4 as uuidv4 } from 'uuid';
 import { Subject } from "rxjs";
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
-import { MaptoolMessage, Request, Response } from "proto/maptool";
-
+import { LsxMessage, Request, Response } from "proto/lsx/lsx";
 
 const MAPTOOL_SERVER_HOSTNAME = window?.__env?.maptoolServerHostname != null ? `${window.__env.maptoolServerHostname}` : window.location.hostname;
 const MAPTOOL_SERVER_PORT = window?.__env?.maptoolServerPort != null ? window.__env.maptoolServerPort : window.location.port;
@@ -13,9 +12,9 @@ const REST_API_URL = `http://${window.location.host}`;
 const WS_URL = `ws://${MAPTOOL_SERVER_HOSTNAME}:${MAPTOOL_SERVER_PORT}`;
 
 @Injectable()
-export class BackendService {
+export class TrxBackendService {
     public onRequest: Subject<{id: string, request: Request}> = new Subject<{id: string, request: Request}>();
-    public onMessage: Subject<MaptoolMessage> = new Subject<MaptoolMessage>();
+    public onMessage: Subject<LsxMessage> = new Subject<LsxMessage>();
     public onOpen: Subject<void> = new Subject<void>();
     public onClose: Subject<void> = new Subject<void>();
 
@@ -38,27 +37,27 @@ export class BackendService {
 
     public request(req: Request): Promise<Response> {
         return new Promise((resolve, reject) => {
-            const msg: MaptoolMessage = {
+            const msg: LsxMessage = {
                 id: uuidv4(),
                 request: req
             }
             this.requests.set(msg.id, resolve.bind(this));
             setTimeout(this.rejectOnTimeout.bind(this, msg.id, reject.bind(this, `${req} timed out`)), 5000);
-            this.ws.next({event: 'msg', data: JSON.stringify(MaptoolMessage.toJSON(msg))});
+            this.ws.next({event: 'msg', data: JSON.stringify(LsxMessage.toJSON(msg))});
         });
 
     }
 
     public respond(id: string, res: Response) {
-        const msg: MaptoolMessage = {
+        const msg: LsxMessage = {
             id: id,
             response: res
         }
-        this.ws.next({event: 'msg', data: JSON.stringify(MaptoolMessage.toJSON(msg))});
+        this.ws.next({event: 'msg', data: JSON.stringify(LsxMessage.toJSON(msg))});
     }
 
     private handleMessage(buffer: {event: 'msg', data: string}) {
-        const msg = MaptoolMessage.fromJSON(JSON.parse(buffer.data));
+        const msg = LsxMessage.fromJSON(JSON.parse(buffer.data));
 
         if(msg.request) {
             this.onRequest.next({id: msg.id, request: msg.request});

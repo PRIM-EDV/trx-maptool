@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "proto:generate": "cpx \"../protocol/*\" ./proto && protoc -I=./proto --ts_proto_opt=useOptionals=true --ts_proto_out=./proto ./proto/maptool.proto"
+    "proto:generate": "cpx \"../protocol/*/*\" ./proto && protoc -I=./proto/trx --ts_proto_opt=useOptionals=true --ts_proto_out=./proto/trx ./proto/trx/trx.proto && protoc -I=./proto/lsx --ts_proto_opt=useOptionals=true --ts_proto_out=./proto/lsx ./proto/lsx/lsx.proto"
   },
   "private": true,
   "dependencies": {

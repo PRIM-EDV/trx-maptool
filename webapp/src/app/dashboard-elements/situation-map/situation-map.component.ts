@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { MapEntity } from 'proto/maptool.map-entity';
-import { BackendService } from 'src/app/backend/backend.service';
+import { MapEntity } from 'proto/trx/trx.entity';
+import { TrxBackendService } from 'src/app/backend/trx.backend.service';
 import { SituationMapEntity } from './common/situation-map-entity';
 import { CreatePopupComponent } from './popups/create-popup/create-popup.component';
 import { EditPopupComponent } from './popups/edit-popup/edit-popup.component';
@@ -29,7 +29,7 @@ export class SituationMapComponent implements OnInit, AfterViewInit {
 
     private situationMapEntities: Map<string, SituationMapEntity> = new Map<string, SituationMapEntity>();
 
-    constructor(public readonly backend: BackendService, private readonly sitationMapService: SituationMapService, private ref: ElementRef) {
+    constructor(public readonly backend: TrxBackendService, private readonly sitationMapService: SituationMapService, private ref: ElementRef) {
         this.backend.onOpen.subscribe(() => {
             this.sitationMapService.getAllMapEntities().then(this.setLocalMapEntities.bind(this));
         })

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BackendService } from '../backend/backend.service';
+import { TrxBackendService } from '../backend/trx.backend.service';
 
 
 @Component({
@@ -12,7 +12,7 @@ export class DashboardComponent implements OnInit {
   public view: string = "TACOP";
   public tab: string = "MAP"
 
-  constructor(private readonly backend: BackendService) { }
+  constructor(private readonly backend: TrxBackendService) { }
 
   ngOnInit(): void {
     this.backend.connect();

@@ -4,31 +4,31 @@ import * as _m0 from "protobufjs/minimal";
 export const protobufPackage = "";
 
 export enum SquadState {
-  STATE_UNDEFINED = 0,
-  STATE_UNSTAGED = 1,
-  STATE_READY = 2,
-  STATE_QRF_READY = 3,
-  STATE_IN_FIELD = 4,
+  SQUAD_STATE_UNDEFINED = 0,
+  SQUAD_STATE_UNSTAGED = 1,
+  SQUAD_STATE_READY = 2,
+  SQUAD_STATE_QRF_READY = 3,
+  SQUAD_STATE_IN_FIELD = 4,
   UNRECOGNIZED = -1,
 }
 
 export function squadStateFromJSON(object: any): SquadState {
   switch (object) {
     case 0:
-    case "STATE_UNDEFINED":
-      return SquadState.STATE_UNDEFINED;
+    case "SQUAD_STATE_UNDEFINED":
+      return SquadState.SQUAD_STATE_UNDEFINED;
     case 1:
-    case "STATE_UNSTAGED":
-      return SquadState.STATE_UNSTAGED;
+    case "SQUAD_STATE_UNSTAGED":
+      return SquadState.SQUAD_STATE_UNSTAGED;
     case 2:
-    case "STATE_READY":
-      return SquadState.STATE_READY;
+    case "SQUAD_STATE_READY":
+      return SquadState.SQUAD_STATE_READY;
     case 3:
-    case "STATE_QRF_READY":
-      return SquadState.STATE_QRF_READY;
+    case "SQUAD_STATE_QRF_READY":
+      return SquadState.SQUAD_STATE_QRF_READY;
     case 4:
-    case "STATE_IN_FIELD":
-      return SquadState.STATE_IN_FIELD;
+    case "SQUAD_STATE_IN_FIELD":
+      return SquadState.SQUAD_STATE_IN_FIELD;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -38,16 +38,16 @@ export function squadStateFromJSON(object: any): SquadState {
 
 export function squadStateToJSON(object: SquadState): string {
   switch (object) {
-    case SquadState.STATE_UNDEFINED:
-      return "STATE_UNDEFINED";
-    case SquadState.STATE_UNSTAGED:
-      return "STATE_UNSTAGED";
-    case SquadState.STATE_READY:
-      return "STATE_READY";
-    case SquadState.STATE_QRF_READY:
-      return "STATE_QRF_READY";
-    case SquadState.STATE_IN_FIELD:
-      return "STATE_IN_FIELD";
+    case SquadState.SQUAD_STATE_UNDEFINED:
+      return "SQUAD_STATE_UNDEFINED";
+    case SquadState.SQUAD_STATE_UNSTAGED:
+      return "SQUAD_STATE_UNSTAGED";
+    case SquadState.SQUAD_STATE_READY:
+      return "SQUAD_STATE_READY";
+    case SquadState.SQUAD_STATE_QRF_READY:
+      return "SQUAD_STATE_QRF_READY";
+    case SquadState.SQUAD_STATE_IN_FIELD:
+      return "SQUAD_STATE_IN_FIELD";
     case SquadState.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

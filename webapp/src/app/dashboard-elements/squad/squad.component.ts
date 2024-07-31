@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { BackendService } from 'src/app/backend/backend.service';
-import { Squad, SquadState } from 'proto/maptool.squad';
-import { Response, Request } from 'proto/maptool';
+import { TrxBackendService } from 'src/app/backend/trx.backend.service';
+import { Squad, SquadState } from 'proto/trx/trx.squad';
+import { Response, Request } from 'proto/trx/trx';
 import { SquadService } from './squad.service';
 import { CreatePopupComponent } from './popups/create-popup/create-popup.component';
 import { Subscription } from 'rxjs';
@@ -30,7 +30,7 @@ export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
   private onRequestSubscription?: Subscription;
 
   constructor(
-    private readonly backend: BackendService, 
+    private readonly backend: TrxBackendService, 
     public readonly squadService: SquadService
   ) {
     this.onOpenSubscription = this.backend.onOpen.subscribe(() => {
@@ -40,11 +40,11 @@ export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // DEBUG
     this.squads = [
-        {name: "Alpha", callsign: "A", combattants: 10, state: SquadState.STATE_READY, position: 0},
-        {name: "Bravo", callsign: "B", combattants: 10, state: SquadState.STATE_READY, position: 1},
-        {name: "Charlie", callsign: "C", combattants: 10, state: SquadState.STATE_READY, position: 2},
-        {name: "Delta", callsign: "D", combattants: 10, state: SquadState.STATE_QRF_READY, position: 1},
-        {name: "Echo", callsign: "E", combattants: 10, state: SquadState.STATE_QRF_READY, position: 2},
+        {name: "Alpha", callsign: "A", combattants: 10, state: SquadState.SQUAD_STATE_READY, position: 0},
+        {name: "Bravo", callsign: "B", combattants: 10, state: SquadState.SQUAD_STATE_READY, position: 1},
+        {name: "Charlie", callsign: "C", combattants: 10, state: SquadState.SQUAD_STATE_READY, position: 2},
+        {name: "Delta", callsign: "D", combattants: 10, state: SquadState.SQUAD_STATE_QRF_READY, position: 1},
+        {name: "Echo", callsign: "E", combattants: 10, state: SquadState.SQUAD_STATE_QRF_READY, position: 2},
     ];
   }
 

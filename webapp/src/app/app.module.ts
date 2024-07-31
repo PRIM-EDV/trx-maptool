@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { DashboardModule } from './dashboard/dashboard.module';
-import { BackendService } from './backend/backend.service';
+import { TrxBackendService } from './backend/trx.backend.service';
 import { PhElementsModule } from 'lib/ph-elements/ph-elements.module';
 import { OverlayComponent } from "./overlay/overlay.component";
 
@@ -34,7 +34,7 @@ declare global {
     OverlayComponent
 ],
   providers: [
-    BackendService
+    TrxBackendService
   ],
   bootstrap: [AppComponent]
 })
