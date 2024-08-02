@@ -36,6 +36,7 @@ export class SituationMapComponent implements OnInit, AfterViewInit {
 
         this.sitationMapService.onSetMapEntity.subscribe(this.setLocalMapEntity.bind(this));
         this.sitationMapService.onDeleteMapEntity.subscribe(this.deleteLocalMapEntity.bind(this));
+
      }
 
     ngOnInit(): void {
@@ -65,7 +66,6 @@ export class SituationMapComponent implements OnInit, AfterViewInit {
         this.map.createOrUpdateMapEntity(entity.getData());
     }
 
-
     public deleteEntity() {
         const entity = this.situationMapEntities.get(this.entity.id);
 
@@ -74,6 +74,10 @@ export class SituationMapComponent implements OnInit, AfterViewInit {
             this.sitationMapService.deleteMapEntity(entity);
         }
         this.entityContextMenu.close();
+    }
+
+    public toggleEntityPing(data: MapEntityData) {
+        this.map.toggleEntityPing(data.id);
     }
 
     public handleEntityMoved(data: MapEntityData) {

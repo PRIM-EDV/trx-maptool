@@ -1,4 +1,4 @@
-<rld-map (onTerrainContextMenu)="openContextMenu($event)" (onEntityContextMenu)="openEntityContextMenu($event)" (onEntityMoved)="handleEntityMoved($event)"></rld-map>
+<rld-map (onTerrainContextMenu)="openContextMenu($event)" (onEntityContextMenu)="openEntityContextMenu($event)" (onEntityMoved)="handleEntityMoved($event)" (onEntityDblClick)="toggleEntityPing($event)"></rld-map>
 
 <div class="overlay">
     <div class="warning" [ngClass]="{'disabled': this.backend.isConnected}">
