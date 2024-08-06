@@ -1,5 +1,5 @@
 import { Rpc, RpcHandler } from "lib/rpc/decorators";
-import { GetAllSquads_Response, SetSquad_Request } from "proto/trx.squad";
+import { SetSquad_Request, GetAllSquads_Response } from "proto/trx/trx.squad";
 import { AppGateway } from "src/app.gateway";
 import { Ws } from "src/common/interfaces/ws";
 import { SquadService } from "src/core/squad/squad.service";

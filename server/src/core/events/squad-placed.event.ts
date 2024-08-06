@@ -1,4 +1,4 @@
-import { Squad } from "proto/trx.squad";
+import { Squad } from "proto/trx/trx.squad";
 
 export class SquadPlacedEvent {
     squad: Squad;

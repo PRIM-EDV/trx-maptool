@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+message Tracker {
+    message Position {
+        int32 x = 1;
+        int32 y = 2;
+    }
+
+    int32 id = 1;
+    Position position = 2;
+}
+
+message SetTracker {
+    message Request {
+        Tracker tracker = 1;
+    }
+
+    message Response {}
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}

@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { Squad, SquadState } from 'proto/trx.squad';
+import { Squad, SquadState } from 'proto/trx/trx.squad';
 
 export type DbSquadDocument = DbSquad & Document;
 

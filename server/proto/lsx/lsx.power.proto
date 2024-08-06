@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+enum PowerState {
+    POWER_STATE_EMPTY = 0;
+    POWER_STATE_POWERED = 1;
+    POWER_STATE_CRITICAL = 2;
+    POWER_STATE_UNPOWERED = 3;
+}
+
+enum PowerPlantState {
+    STATE_EMPTY = 0;
+    STATE_NORMAL = 1;
+    STATE_POWER_SAVING = 2;
+    STATE_CRITICAL = 3;
+    STATE_OFFLINE = 4;
+}
+
+enum PowerDevice{
+    DEVICE_CIC_MAPTOOL = 0;
+    DEVICE_ADM_BASETOOL = 1;
+}
+
+message GetPowerPlantState {
+    message Request {}
+
+    message Response {
+        PowerPlantState state = 1;
+    }
+}
+
+message SetPowerPlantState {
+    message Request {
+        PowerPlantState state = 1;
+    }
+    message Response {}
+}
+
+message SetDevicePowerState {
+    message Request {
+        PowerDevice device = 1;
+        PowerState state = 2;
+    }
+    message Response {}
+}
+
+message GetDevicePowerState {
+    message Request {
+        PowerDevice device = 1;
+    }
+
+    message Response {
+        PowerState state = 1;
+    }
+}

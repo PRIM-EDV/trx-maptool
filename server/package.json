@@ -14,7 +14,7 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "proto:generate": "cpx \"../protocol/*\" ./proto && protoc -I=./proto --ts_proto_opt=messages=true --ts_proto_out=./proto ./proto/trx.proto"
+    "proto:generate": "cpx \"../protocol/*/*\" ./proto && protoc -I=./proto/trx --ts_proto_opt=messages=true --ts_proto_out=./proto/trx ./proto/trx/trx.proto"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",

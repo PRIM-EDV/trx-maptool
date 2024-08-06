@@ -1,9 +1,9 @@
 import { AppGateway } from 'src/app.gateway';
 import { Ws } from 'src/common/interfaces/ws';
-import { DeleteMapEntity_Request, GetAllMapEntities_Response, SetMapEntity_Request } from 'proto/trx.entity';
 import { RpcHandler, Rpc } from 'lib/rpc/decorators';
 import { LoggingService } from 'src/infrastructure/logging/logging.service';
 import { MapEntityService } from 'src/core/map-entity/map-entity.service';
+import { DeleteMapEntity_Request, GetAllMapEntities_Response, SetMapEntity_Request } from 'proto/trx/trx.entity';
 
 @RpcHandler(AppGateway)
 export class MapApiController {

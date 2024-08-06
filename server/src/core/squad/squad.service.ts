@@ -1,8 +1,8 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ISquadRepository } from "./interfaces/squad.repository.interface";
-import { Squad } from "proto/trx.squad";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { SquadPlacedEvent } from "../events/squad-placed.event";
+import { Squad } from "proto/trx/trx.squad";
 
 const SquadRepository = () => Inject('SquadRepository');
 

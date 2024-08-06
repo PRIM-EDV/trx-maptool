@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+enum LockState {
+    LOCK_STATE_EMPTY = 0;
+    LOCK_STATE_LOCKED = 1;
+    LOCK_STATE_UNLOCKED = 2;
+}
+
+// message GetPowerLineLockedState {
+//     message Response {
+//         PowerLineLockedState state = 1;
+//     }
+
+//     message Request {
+//         PowerLineId id = 1;
+//     }
+// }
+
+// message SetPowerLineLockedState {
+//     message Request {
+//         PowerLineId id = 1;
+//         PowerLineLockedState state = 2;
+//     }
+
+//     message Response {}
+// }

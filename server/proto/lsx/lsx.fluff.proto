@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+message GetFluffFiles {
+    message Response {
+        repeated string files = 1;
+    }
+
+    message Request { }
+}
+
+message GetFluffState {
+    message Response {
+        bool state = 1;
+    }
+
+    message Request { }
+}
+
+message SetFluffState {
+    message Request {
+        bool state = 1;
+    }
+
+    message Response { }
+}

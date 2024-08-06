@@ -48,6 +48,45 @@ export function mapEntityTypeToJSON(object: MapEntityType): string {
   }
 }
 
+export enum MapEntityStatus {
+  ENTITY_STATUS_UNDEFINED = 0,
+  ENTITY_STATUS_REGULAR = 1,
+  ENTITY_STATUS_COMBAT = 2,
+  UNRECOGNIZED = -1,
+}
+
+export function mapEntityStatusFromJSON(object: any): MapEntityStatus {
+  switch (object) {
+    case 0:
+    case "ENTITY_STATUS_UNDEFINED":
+      return MapEntityStatus.ENTITY_STATUS_UNDEFINED;
+    case 1:
+    case "ENTITY_STATUS_REGULAR":
+      return MapEntityStatus.ENTITY_STATUS_REGULAR;
+    case 2:
+    case "ENTITY_STATUS_COMBAT":
+      return MapEntityStatus.ENTITY_STATUS_COMBAT;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return MapEntityStatus.UNRECOGNIZED;
+  }
+}
+
+export function mapEntityStatusToJSON(object: MapEntityStatus): string {
+  switch (object) {
+    case MapEntityStatus.ENTITY_STATUS_UNDEFINED:
+      return "ENTITY_STATUS_UNDEFINED";
+    case MapEntityStatus.ENTITY_STATUS_REGULAR:
+      return "ENTITY_STATUS_REGULAR";
+    case MapEntityStatus.ENTITY_STATUS_COMBAT:
+      return "ENTITY_STATUS_COMBAT";
+    case MapEntityStatus.UNRECOGNIZED:
+    default:
+      return "UNRECOGNIZED";
+  }
+}
+
 export interface MapEntity {
   id: string;
   type: MapEntityType;
@@ -62,6 +101,7 @@ export interface MapEntity_Squad {
   callsign: string;
   trackerId: number;
   combattants: number;
+  status: MapEntityStatus;
 }
 
 export interface MapEntity_Enemy {
@@ -260,7 +300,7 @@ export const MapEntity = {
 };
 
 function createBaseMapEntity_Squad(): MapEntity_Squad {
-  return { name: "", callsign: "", trackerId: 0, combattants: 0 };
+  return { name: "", callsign: "", trackerId: 0, combattants: 0, status: 0 };
 }
 
 export const MapEntity_Squad = {
@@ -276,6 +316,9 @@ export const MapEntity_Squad = {
     }
     if (message.combattants !== 0) {
       writer.uint32(32).int32(message.combattants);
+    }
+    if (message.status !== 0) {
+      writer.uint32(40).int32(message.status);
     }
     return writer;
   },
@@ -315,6 +358,13 @@ export const MapEntity_Squad = {
 
           message.combattants = reader.int32();
           continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.status = reader.int32() as any;
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -330,6 +380,7 @@ export const MapEntity_Squad = {
       callsign: isSet(object.callsign) ? String(object.callsign) : "",
       trackerId: isSet(object.trackerId) ? Number(object.trackerId) : 0,
       combattants: isSet(object.combattants) ? Number(object.combattants) : 0,
+      status: isSet(object.status) ? mapEntityStatusFromJSON(object.status) : 0,
     };
   },
 
@@ -347,6 +398,9 @@ export const MapEntity_Squad = {
     if (message.combattants !== 0) {
       obj.combattants = Math.round(message.combattants);
     }
+    if (message.status !== 0) {
+      obj.status = mapEntityStatusToJSON(message.status);
+    }
     return obj;
   },
 
@@ -359,6 +413,7 @@ export const MapEntity_Squad = {
     message.callsign = object.callsign ?? "";
     message.trackerId = object.trackerId ?? 0;
     message.combattants = object.combattants ?? 0;
+    message.status = object.status ?? 0;
     return message;
   },
 };

@@ -7,9 +7,9 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 
 import { Subject } from 'rxjs';
-import { TrxMessage, Request, Response } from 'proto/trx';
 import { Ws } from './common/interfaces/ws';
 import { LoggingService } from './infrastructure/logging/logging.service';
+import { Request, Response, TrxMessage } from 'proto/trx/trx';
 @WebSocketGateway()
 export class AppGateway {
   protected activeClients: Map<string, Ws> = new Map<string, Ws>();

@@ -1,4 +1,4 @@
-import { Squad } from "proto/trx.squad";
+import { Squad } from "proto/trx/trx.squad";
 
 export interface ISquadRepository {
     delete(entity: Squad): Promise<void>;

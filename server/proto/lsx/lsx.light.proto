@@ -1,0 +1,200 @@
+syntax = "proto3";
+
+import "lsx.common.proto";
+import "lsx.power.proto";
+
+enum LightSwitchState {
+    SWITCH_STATE_OFF = 0;
+    SWITCH_STATE_ON = 1;
+}
+
+enum LightDMXState {
+    DMX_STATE_EMPTY = 0;
+    DMX_STATE_OFF = 1;
+    DMX_STATE_WHITE = 2;
+    DMX_STATE_RED = 3;
+    DMX_STATE_FLICKER = 4;
+}
+
+enum LightMode {
+    LIGHT_MODE_EMPTY = 0;
+    LIGHT_MODE_WHITE = 1;
+    LIGHT_MODE_RED = 2;
+    LIGHT_MODE_BLACKOUT = 3;
+}
+
+enum LightId {
+    LIGHT_EMPTY = 0;
+    LIGHT_OG_BASE_MED = 1;
+    LIGHT_OG_BASE_ADM = 2;
+    LIGHT_OG_BASE_CIC = 3;
+    LIGHT_OG_BASE_SCI = 4;
+    LIGHT_OG_BASE_TEC = 5;
+    LIGHT_OG_BASE_HC = 7;
+    LIGHT_OG_HALL = 8;
+    LIGHT_OG_COURTYARD = 9;
+    LIGHT_OG_MESSHALL = 10;
+    LIGHT_OG_GATE = 11;
+    LIGHT_OG_PARCELS = 12;
+    LIGHT_UG_PARCELS_LEFT = 13;
+    LIGHT_UG_PARCELS_RIGHT = 14;
+    LIGHT_UG_HALL = 15;
+    LIGHT_OG_LOG = 16;
+}
+
+
+message GetLightPowerState {
+    message Response {
+        PowerState state = 1;
+    }
+
+    message Request {
+        LightId id = 1;
+    }
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}
+
+message SetLightPowerState {
+    message Request {
+        LightId id = 1;
+        PowerState state = 2;
+    }
+
+    message Response {}
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}
+
+message GetLightSwitchState {
+    message Response {
+        LightSwitchState state = 1;
+    }
+
+    message Request {
+        LightId id = 1;
+    }
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+
+}
+
+message SetLightSwitchState {
+    message Request {
+        LightId id = 1;
+        LightSwitchState state = 2;
+    }
+
+    message Response {}
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}
+
+message GetLightDmxState {
+    message Response {
+        LightDMXState state = 1;
+    }
+
+    message Request {
+        LightId id = 1;
+    }
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}
+
+message SetLightDmxState {
+    message Request {
+        LightId id = 1;
+        LightDMXState state = 2;
+    }
+
+    message Response {}
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}
+
+message GetLightLockState {
+    message Response {
+        LockState state = 1;
+    }
+
+    message Request {
+        LightId id = 1;
+    }
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}
+
+message SetLightLockState {
+    message Request {
+        LightId id = 1;
+        LockState state = 2;
+    }
+
+    message Response {}
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}
+
+message GetLightMode {
+    message Response {
+        LightMode mode = 1;
+    }
+
+    message Request {
+        LightId id = 1;
+    }
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}
+
+message SetLightMode {
+    message Request {
+        LightId id = 1;
+        LightMode mode = 2;
+    }
+
+    message Response {}
+
+    oneof message {
+        Request request = 1;
+        Response response = 2;
+        string error = 3;
+    }
+}

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { MapEntity } from 'proto/trx.entity';
+import { Request } from 'proto/trx/trx';
+import { MapEntity} from 'proto/trx/trx.entity';
 import { AppGateway } from 'src/app.gateway';
-import { Request } from 'proto/trx';
 import { IMapEntityRpcAdapter } from 'src/core/map-entity/interfaces/map-entity.rpc.adapter.interface';
 
 @Injectable()

@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+enum LockdownState {
+    LOCKDOWN_STATE_EMPTY = 0;
+    LOCKDOWN_STATE_NORMAL = 1;
+    LOCKDOWN_STATE_LOCKDOWN = 2;
+}
+
+message GetAutoLockdown {
+    message Response {
+        bool state = 1;
+    }
+
+    message Request { }
+}
+
+message SetAutoLockdown {
+    message Request {
+        bool state = 1;
+    }
+
+    message Response { }
+}
+
+message GetLockdownState {
+    message Response {
+        LockdownState state = 1;
+    }
+
+    message Request { }
+}
+
+message SetLockdownState {
+    message Request {
+        LockdownState state = 1;
+    }
+
+    message Response { }
+}
+
+message GetLockdownAnnouncements {
+    message Response {
+        bool state = 1;
+    }
+
+    message Request { }
+}
+
+message SetLockdownAnnouncements {
+    message Request {
+        bool state = 1;
+    }
+
+    message Response { }
+}
+

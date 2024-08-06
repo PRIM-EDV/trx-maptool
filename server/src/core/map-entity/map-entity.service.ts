@@ -1,11 +1,11 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { IMapEntityRepository } from "./interfaces/map-entity.repository.interface";
-import { MapEntity, MapEntityType } from "proto/trx.entity";
 import { OnEvent } from "@nestjs/event-emitter";
 import { SquadPlacedEvent } from "../events/squad-placed.event";
-import { SquadState } from "proto/trx.squad";
 import { v4 as uuidv4 } from 'uuid';
 import { IMapEntityRpcAdapter } from "./interfaces/map-entity.rpc.adapter.interface";
+import { MapEntity, MapEntityStatus, MapEntityType } from "proto/trx/trx.entity";
+import { SquadState } from "proto/trx/trx.squad";
 
 const MapEntityRepository = () => Inject('MapEntityRepository');
 const MapRpcAdapter = () => Inject('MapEntityRpcAdapter');
@@ -44,7 +44,8 @@ export class MapEntityService {
                     name: squad.name,
                     callsign: squad.callsign,
                     trackerId: -1,
-                    combattants: squad.combattants
+                    combattants: squad.combattants,
+                    status: MapEntityStatus.ENTITY_STATUS_REGULAR
                 }
             }
 

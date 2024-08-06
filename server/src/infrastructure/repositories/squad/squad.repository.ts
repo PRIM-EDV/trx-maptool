@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { Squad } from "proto/trx.squad";
 import { ISquadRepository } from "src/core/squad/interfaces/squad.repository.interface";
 import { DbSquadDocument, DbSquad } from "./schemas/squad.schema";
+import { Squad } from "proto/trx/trx.squad";
 
 @Injectable()
 export class SquadRepository implements ISquadRepository {

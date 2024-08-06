@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { MapEntity, MapEntityType } from 'proto/trx.entity';
+import { MapEntityType, MapEntity, MapEntityStatus } from 'proto/trx/trx.entity';
 
 export type DbMapEntityDocument = DbMapEntity & Document;
 
@@ -15,12 +15,13 @@ export class DbMapEntity {
     @Prop({type: {x: {type: Number}, y: {type: Number}}})
     position: { x: number, y: number };
 
-    @Prop({type: {name: { type: String }, callsign: { type: String }, trackerId: { type: Number }, combattants: { type: Number }}})
+    @Prop({type: {name: { type: String }, callsign: { type: String }, trackerId: { type: Number }, combattants: { type: Number }, status: { type: Number }}})
     squad?: {
         name: string,
         callsign: string,
         trackerId: number,
-        combattants: number
+        combattants: number,
+        status: number
     }
 
     @Prop({type: {combattants: {type: Number}}})
