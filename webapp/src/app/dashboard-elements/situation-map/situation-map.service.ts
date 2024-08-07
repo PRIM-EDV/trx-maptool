@@ -50,7 +50,8 @@ export class SituationMapService {
                 name: data.squad.name,
                 callsign: data.squad.callsign,
                 trackerId: Number(data.squad.trackerId),
-                combattants: data.squad.combattants
+                combattants: data.squad.combattants,
+                status: data.squad.status
             }
         }
 

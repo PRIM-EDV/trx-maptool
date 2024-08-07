@@ -1,13 +1,14 @@
 import { v4 } from 'uuid';
 import { MapEntityType } from "../rld-map/common/map-entity";
 import { MapEntityData } from "../rld-map/common/map-entity-data";
+import { MapEntityStatus } from 'proto/trx/trx.entity';
 
 export class SituationMapEntity {
     public id: string = v4();
     public position: {x: number, y: number} = {x: 0, y: 0};
     public type: MapEntityType = MapEntityType.TYPE_UNDEFINED;
 
-    public squad: { name: string, callsign: string, trackerId: number | string, combattants: number } = { name: '', callsign: '', trackerId: -1, combattants: 1};
+    public squad: { name: string, callsign: string, trackerId: number | string, combattants: number, status: MapEntityStatus } = { name: '', callsign: '', trackerId: -1, combattants: 1, status: MapEntityStatus.ENTITY_STATUS_REGULAR };
     public enemy: { combattants: number } = { combattants: 1};
     public objective: { name: string, description: string } = { name: "", description: ""};
 
@@ -29,6 +30,7 @@ export class SituationMapEntity {
             if ( this.squad.combattants >= 30) data.size = 6;
 
             data.text = this.squad.callsign;
+            data.status = this.squad.status;
         }
 
         if(this.type == MapEntityType.TYPE_FOE) {

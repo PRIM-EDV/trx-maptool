@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { MapEntity } from 'proto/trx/trx.entity';
+import { MapEntity, MapEntityStatus } from 'proto/trx/trx.entity';
 import { TrxBackendService } from 'src/app/backend/trx.backend.service';
 import { SituationMapEntity } from './common/situation-map-entity';
 import { CreatePopupComponent } from './popups/create-popup/create-popup.component';
@@ -78,6 +78,17 @@ export class SituationMapComponent implements OnInit, AfterViewInit {
 
     public toggleEntityPing(data: MapEntityData) {
         this.map.toggleEntityPing(data.id);
+
+        const entity = this.situationMapEntities.get(data.id);
+        if (entity) {
+            if (entity.squad.status == MapEntityStatus.ENTITY_STATUS_COMBAT) { 
+                entity.squad.status = MapEntityStatus.ENTITY_STATUS_REGULAR;
+            } else {
+                entity.squad.status = MapEntityStatus.ENTITY_STATUS_COMBAT;
+            }
+
+            this.sitationMapService.setMapEntity(entity);
+        }
     }
 
     public handleEntityMoved(data: MapEntityData) {
