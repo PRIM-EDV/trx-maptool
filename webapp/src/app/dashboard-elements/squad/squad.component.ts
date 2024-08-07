@@ -37,21 +37,12 @@ export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
       this.squadService.getAllSquads().then((squads) => {this.squads = squads});
     })
     this.onRequestSubscription = backend.onRequest.subscribe(this.handleRequest.bind(this));
-
-    // DEBUG
-    this.squads = [
-        {name: "Alpha", callsign: "A", combattants: 10, state: SquadState.SQUAD_STATE_READY, position: 0},
-        {name: "Bravo", callsign: "B", combattants: 10, state: SquadState.SQUAD_STATE_READY, position: 1},
-        {name: "Charlie", callsign: "C", combattants: 10, state: SquadState.SQUAD_STATE_READY, position: 2},
-        {name: "Delta", callsign: "D", combattants: 10, state: SquadState.SQUAD_STATE_QRF_READY, position: 1},
-        {name: "Echo", callsign: "E", combattants: 10, state: SquadState.SQUAD_STATE_QRF_READY, position: 2},
-    ];
   }
 
   ngOnInit(): void {
     if (this.backend.isConnected) {
       this.squadService.getAllSquads().then((squads) => {
-        // this.squads = squads;
+        this.squads = squads;
     });
     }
   }
@@ -68,6 +59,11 @@ export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
       this.onOpenSubscription?.unsubscribe();
       this.onRequestSubscription?.unsubscribe();
+  }
+
+  public async createSquad(squad: Squad) {
+    this.handleSetSquad(squad);
+    await this.squadService.setSquad(squad);
   }
 
   public deleteSquad() {
@@ -116,10 +112,10 @@ export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
         squads.splice(index, 0, squad);
     }
-    squad.state = state;
 
-    squads.map((squad, index) => {squad.position = index});
-    // this.squadService.setSquad(item); 
+    squad.state = state;
+    squads.map((squad, index) => {squad.position = index + 1});
+    squads.map(async (squad) => {await this.squadService.setSquad(squad)});
   }
 
   private handleRequest(e: {id: string, request: Request}) {
@@ -133,9 +129,7 @@ export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private handleSetSquad(squad: Squad) {
-    // this.fixPosition (squad.position, squad.state, squad.name);
     const existing = this.squads.find((item) => item.name == squad.name);
-    console.log(squad)
     if (existing) {
       existing.callsign = squad.callsign;
       existing.combattants = squad.combattants;
@@ -152,20 +146,12 @@ export class SquadComponent implements OnInit, AfterViewInit, OnDestroy {
     if (idx > -1) {
         this.squads.splice(idx, 1);
     }
+
+    this.fixPositions(squad.state);
   }
 
-  // SUPER HACKY, PLEASE REMOVE ME
-//   private fixPosition (position: number, state: SquadState, name: string) {
-//     for (let squad of this.squads) {
-//       if (squad.position >= position && squad.name != name && squad.state == state) {
-//         squad.position += 1;
-//       }
-//     }
-
-//     const squads = this.squads.filter((a) => a.state == state).sort((a,b) => a.position - b.position);
-//     for (let i = 0; i < squads.length; i++) {
-//       const ref = this.squads.find((s) => s.name == squads[i].name);
-//       ref!.position = i;
-//     }
-//   }
+  private fixPositions(state: SquadState) {
+    const squads = this.getSquadsByState(state);
+    squads.map((squad, index) => {squad.position = index + 1});
+  }
 }

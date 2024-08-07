@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common';
-import { SquadRpcService } from './squad.rpc.service';
+import { SquadRpcAdapter } from './squad.rpc.adapter';
 
 @Module({
-    providers: [
-        SquadRpcService
-    ],
-    exports: [
-        SquadRpcService
-    ]
+    providers: [{
+        provide: 'SquadRpcAdapter',
+        useClass: SquadRpcAdapter 
+    }],
+    exports: [{
+        provide: 'SquadRpcAdapter',
+        useClass: SquadRpcAdapter 
+    }]
 })
 export class SquadRpcModule {}
