@@ -42,6 +42,7 @@ export class MapEntityService {
         const repoMapEntity = await this.mapEntityRepository.getBySquadName(event.squad.name);
 
         if (squad.state == SquadState.SQUAD_STATE_IN_FIELD && !repoMapEntity) {
+            console.log('squad placed', squad);
             const mapEntity: MapEntity = {
                 id: uuidv4(),
                 type: MapEntityType.TYPE_FRIEND,
@@ -54,7 +55,6 @@ export class MapEntityService {
                     status: MapEntityStatus.ENTITY_STATUS_REGULAR
                 }
             }
-
             await this.mapEntityRepository.store(mapEntity);
             await this.mapEntityRpcAdapter.set(mapEntity);
         }

@@ -13,7 +13,7 @@ export class MapEntityRepository implements IMapEntityRepository {
     ) {}
 
     public async delete(entity: MapEntity): Promise<void> {
-        await this.mapEntityModel.deleteOne({uuid: entity.id}).exec();
+        await this.mapEntityModel.deleteMany({uuid: entity.id}).exec();
     }
 
     public async store(entity: MapEntity): Promise<void> {
@@ -26,8 +26,9 @@ export class MapEntityRepository implements IMapEntityRepository {
         return entities.map(entity => DbMapEntity.toProto(entity));
     }
 
-    public async getBySquadName(name: string): Promise<MapEntity> {
-        return await this.mapEntityModel.findOne({"squad.name": name});
+    public async getBySquadName(name: string): Promise<MapEntity | null> {
+        const dbMapEntity = await this.mapEntityModel.findOne({"squad.name": name}).exec();
+        return dbMapEntity ? DbMapEntity.toProto(dbMapEntity) : null;
     }
 
     private async upsert(entity: MapEntity): Promise<void> {

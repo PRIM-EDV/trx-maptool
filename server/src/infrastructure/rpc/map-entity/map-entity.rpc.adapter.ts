@@ -10,7 +10,7 @@ export class MapEntityRpcAdatper implements IMapEntityRpcAdapter {
 
     public async delete(entity: MapEntity): Promise<void> {
         const req: Request = {
-            setMapEntity: {
+            deleteMapEntity: {
                 entity: entity
             }
         }
@@ -19,7 +19,7 @@ export class MapEntityRpcAdatper implements IMapEntityRpcAdapter {
     
     public async set(entity: MapEntity): Promise<void> {
         const req: Request = {
-            deleteMapEntity: {
+            setMapEntity: {
                 entity: entity
             }
         }
