@@ -6,6 +6,7 @@ import { Squad, SquadState } from "proto/trx/trx.squad";
 import { EntityPlacedEvent } from "../events/map-entity/entity-placed.event";
 import { MapEntityType } from "proto/trx/trx.entity";
 import { ISquadRpcAdapter } from "./interfaces/squad.rpc.adapter.interface";
+import { EntityRemovedEvent } from "../events/map-entity/entity-removed.event";
 
 const SquadRepository = () => Inject('SquadRepository');
 const SquadRpcAdapter = () => Inject('SquadRpcAdapter');
@@ -47,6 +48,18 @@ export class SquadService {
                 
                 await this.squadRepository.store(squad);
                 await this.squadRpcAdapter.set(squad);
+            }
+        }
+    }
+
+    @OnEvent('entity.removed')
+    async handleEntityRemovedEvent(event: EntityRemovedEvent) {
+        const entity = event.entity;
+        if (entity.type == MapEntityType.TYPE_FRIEND && entity.squad) {
+            const existing = await this.squadRepository.get(entity.squad.name);
+            if (existing) {
+                await this.squadRepository.delete(existing);
+                await this.squadRpcAdapter.delete(existing);
             }
         }
     }
