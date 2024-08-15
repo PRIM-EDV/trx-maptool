@@ -56,6 +56,14 @@ export class AppGateway {
     this.log.info(`Client connected: ${client.id}`);
   }
 
+  public error(clientId: string, msgId: string, err: Error) {
+    const msg: TrxMessage = {
+        id: msgId,
+        error: {type: err.name, message: err.message}
+    }
+    this.sendToClient(this.activeClients.get(clientId), msg);
+  }
+
   public async request(clientId: string, req: Request): Promise<Response> {
     return new Promise((resolve, reject) => {
         const msg: TrxMessage = {
