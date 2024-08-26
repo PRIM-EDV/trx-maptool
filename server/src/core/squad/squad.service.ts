@@ -52,15 +52,15 @@ export class SquadService {
         }
     }
 
-    @OnEvent('entity.removed')
-    async handleEntityRemovedEvent(event: EntityRemovedEvent) {
-        const entity = event.entity;
-        if (entity.type == MapEntityType.TYPE_FRIEND && entity.squad) {
-            const existing = await this.squadRepository.get(entity.squad.name);
-            if (existing) {
-                await this.squadRepository.delete(existing);
-                await this.squadRpcAdapter.delete(existing);
-            }
-        }
-    }
+    // @OnEvent('entity.removed')
+    // async handleEntityRemovedEvent(event: EntityRemovedEvent) {
+    //     const entity = event.entity;
+    //     if (entity.type == MapEntityType.TYPE_FRIEND && entity.squad) {
+    //         const existing = await this.squadRepository.get(entity.squad.name);
+    //         if (existing) {
+    //             await this.squadRepository.delete(existing);
+    //             await this.squadRpcAdapter.delete(existing);
+    //         }
+    //     }
+    // }
 }
