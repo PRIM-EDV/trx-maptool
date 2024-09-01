@@ -9,6 +9,7 @@ RUN npm install
 
 # Build webapp
 COPY ./webapp/src ./src
+COPY ./webapp/lib ./lib
 COPY ./protocol ../protocol
 
 RUN npm run proto:generate
