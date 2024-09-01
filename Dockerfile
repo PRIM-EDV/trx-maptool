@@ -1,4 +1,4 @@
-FROM node:18.1.0 AS webapp
+FROM node:18.13.0 AS webapp
 RUN apt update && apt install protobuf-compiler -y 
 
 WORKDIR /opt/rld/webapp
@@ -15,7 +15,7 @@ COPY ./protocol ../protocol
 RUN npm run proto:generate
 RUN npm run build
 
-FROM node:18.1.0 AS server
+FROM node:18.13.0 AS server
 RUN apt update && apt install protobuf-compiler -y 
 
 WORKDIR /opt/rld/server
